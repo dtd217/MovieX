@@ -37,7 +37,6 @@ const App = () => {
         <Route path='/movie-list' element={<MovieList />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/users' element={<Users />} />
-        <Route path='/users' element={<Users />} />
         <Route path='/add-movie' element={<AddMovie />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
