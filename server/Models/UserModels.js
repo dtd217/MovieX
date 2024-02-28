@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
    },
-   likedMovies: [{
+   bookmarks: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Movie'
    }],

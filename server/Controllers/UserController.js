@@ -3,9 +3,11 @@ import User from '../Models/UserModels.js'
 import bcrypt from 'bcryptjs'
 import { generateToken } from '../middlewares/Auth.js'
 
-// @desc Register user
-// @route POST /api/users/
-// @access Public
+// ********** PUBLIC CONTROLLERS **********
+
+// @desc    Register user
+// @route   POST /api/users/
+// @access  Public
 const registerUser = asyncHandler(async (req, res) => {
    const { name, email, password, avatar } = req.body
    try {
@@ -25,13 +27,13 @@ const registerUser = asyncHandler(async (req, res) => {
          name,
          email,
          password: hashedPassword,
-         avatar
+         avatar,
       })
 
       // Neu co => tra ve cho client
       if (user) {
          res.status(201).json({
-            _id: user.id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             avatar: user.avatar,
@@ -49,9 +51,9 @@ const registerUser = asyncHandler(async (req, res) => {
    }
 })
 
-// @desc Login user
-// @route POST /api/users/login
-// @access Public
+// @desc    Login user
+// @route   POST /api/users/login
+// @access  Public
 const loginUser = asyncHandler(async (req, res) => {
    const { email, password } = req.body
    try {
@@ -61,7 +63,7 @@ const loginUser = asyncHandler(async (req, res) => {
       // Nếu user tồn tại => so sánh password với hased password => gửi dữ liệu và token cho client
       if (user && (await bcrypt.compare(password, user.password))) {
          res.json({
-            _id: user.id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             avatar: user.avatar,
@@ -80,10 +82,11 @@ const loginUser = asyncHandler(async (req, res) => {
    }
 })
 
+// ********** PRIVATE CONTROLLERS **********
 
-// Private Controller
-// @desc Update /api/user/profile
-// @access Private
+// @desc    Update /api/user/profile
+// @route   PUT /api/user
+// @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
    const { name, email, avatar } = req.body
    try {
@@ -99,7 +102,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
          // Gửi dữ liệu và token của user cho client
          res.json({
-            _id: updatedUser.id,
+            _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
             avatar: updatedUser.avatar,
@@ -118,9 +121,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
    }
 })
 
-// @desc Delete user
-// @route DELETE /api/user
-// @access Private
+// @desc    Delete user
+// @route   DELETE /api/user
+// @access  Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
    try {
       // Tìm user trong db
@@ -133,7 +136,7 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
             throw new Error('Không thể xoá admin')
          }
          // Xoá user
-         await user.remove()
+         await user.deleteOne()
          res.json({ message: 'Xoá người dùng thành công' })
       }
       // Nếu user không có trong db => gửi lỗi
@@ -143,8 +146,168 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
       }
    }
    catch (error) {
-      ré.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message })
    }
 })
 
-export { registerUser, loginUser, updateUserProfile, deleteUserProfile }
+// @desc    Change password
+// @route   PUT /api/user/password
+// @access  Private
+const changeUserPassword = asyncHandler(async (req, res) => {
+   const { oldPassword, newPassword } = req.body
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.user._id)
+      // Nếu có user => so sánh password cũ với hased password => update và save
+      if (user && await bcrypt.compare(oldPassword, user.password)) {
+         const salt = await bcrypt.genSalt(10)
+         const hashedPassword = await bcrypt.hash(newPassword, salt)
+         user.password = hashedPassword
+         await user.save()
+         res.json({ message: 'Đổi mật khẩu thành công!' })
+      }
+      // Nếu không có user => gửi lỗi
+      else {
+         res.status(401)
+         throw new Error('Sai mật khẩu')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Get all liked movie
+// @route   GET /api/user/bookmarks
+// @access  Private
+const getUserBookmarks = asyncHandler(async (req, res) => {
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.user._id).populate('bookmarks')
+      // Nếu có user => gửi dữ liệu phim đã theo dõi cho client
+      if (user) {
+         res.json(user.bookmarks)
+      }
+      // Nếu không có user => gửi lỗi
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Add movie to bookmarks
+// @route   POST /api/user/bookmarks
+// @access  Private
+const addBookmarks = asyncHandler(async (req, res) => {
+   const { movieId } = req.body
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.user._id)
+      // Nếu có user => gửi dữ liệu phim đã theo dõi cho client
+      if (user) {
+         // Kiểm tra phim đã được đánh dấu hay chưa
+         // Nếu phim đã được đánh dấu => thông báo
+         if (user.bookmarks.includes(movieId)) {
+            res.status(400)
+            throw new Error('Phim đã được đánh dấu')
+         }
+         // Nếu phim chưa được đánh dâu => đánh dấu và lưu vào db
+         user.bookmarks.push(movieId)
+         await user.save()
+         res.json(user.bookmarks)
+      }
+      // Nếu không có user => gửi lỗi
+      else {
+         res.status(404)
+         throw new Error('Không tìm thấy phim')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Delete movie from bookmarks
+// @route   DELETE /api/movies/bookmarks
+// @access  Private
+const deleteBookmarks = asyncHandler(async (req, res) => {
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.user._id)
+      // Nếu có user => xoá phim đã đánh dấu
+      if (user) {
+         user.bookmarks = []
+         await user.save()
+         res.json({ message: 'Xoá phim đã đánh dấu thành công!' })
+      }
+      // Nếu không có user => gửi lỗi
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// ********** ADMIN CONTROLLERS **********
+
+// @desc    Get all users
+// @route   GET /api/user
+// @access  Private/Admin
+const getUsers = asyncHandler(async (req, res) => {
+   try {
+      // Tìm tất cả users trong db
+      const users = await User.find({})
+      res.json(users)
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Delete users
+// @route   DELETE /api/user/:id
+// @access  Private/Admin
+const deleteUsers = asyncHandler(async (req, res) => {
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.params.id)
+      // Nếu có user => xoá user
+      if (user) {
+         // Nếu user là admin => gửi lỗi
+         if (user.isAdmin) {
+            res.status(400)
+            throw new Error('Không thể xoá admin')
+         }
+         // Xoá user
+         await user.deleteOne()
+         res.json({ message: 'Xoá người dùng thành công' })
+      }
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+export {
+   registerUser,
+   loginUser,
+   updateUserProfile,
+   deleteUserProfile,
+   changeUserPassword,
+   getUserBookmarks,
+   addBookmarks,
+   deleteBookmarks,
+   getUsers,
+   deleteUsers
+}
