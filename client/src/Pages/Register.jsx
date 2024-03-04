@@ -16,7 +16,7 @@ const Register = () => {
                            <div>
                               <label
                                  className="block text-lg font-semibold text-white"
-                                 for="email">Email</label>
+                                 htmlFor="email">Email</label>
                               <input
                                  type="email"
                                  name="email"
@@ -28,7 +28,7 @@ const Register = () => {
                            <div className='mt-4'>
                               <label
                                  className="block text-lg font-semibold text-white"
-                                 for="name">Tên người dùng</label>
+                                 htmlFor="name">Tên người dùng</label>
                               <input
                                  type="text"
                                  name="name"
@@ -40,7 +40,7 @@ const Register = () => {
                            <div className='mt-4'>
                               <label
                                  className="block text-lg font-semibold text-white"
-                                 for="password">Mật khẩu</label>
+                                 htmlFor="password">Mật khẩu</label>
                               <input
                                  type="password"
                                  name="password"

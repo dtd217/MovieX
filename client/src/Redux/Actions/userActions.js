@@ -1,6 +1,5 @@
 import * as userConstants from "../Constants/userConstants";
 import * as userApi from "../APIs/userServices";
-import { toast } from "react-hot-toast";
 import { ErrorsAction } from "../Protection";
 
 // LOGIN ACTIONS

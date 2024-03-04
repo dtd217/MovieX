@@ -16,31 +16,35 @@ import MovieList from './Pages/Dashboard/Admin/MovieList'
 import Categories from './Pages/Dashboard/Admin/Categories'
 import Users from './Pages/Dashboard/Admin/Users'
 import AddMovie from './Pages/Dashboard/Admin/AddMovie'
+import ToastContainer from './Components/Notifications/ToastContainer'
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/tv-series' element={<TvSeries />} />
-        <Route path='/movie-ova' element={<MovieOVA />} />
-        <Route path='/filters' element={<Filters />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/movie/:id' element={<SingleMovie />} />
-        <Route path='/watch/:id' element={<WatchPage />} />
-        {/* Dashboard */}
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/password' element={<Password />} />
-        <Route path='/bookmarks' element={<Bookmarks />} />
+    <>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/tv-series' element={<TvSeries />} />
+          <Route path='/movie-ova' element={<MovieOVA />} />
+          <Route path='/filters' element={<Filters />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/movie/:id' element={<SingleMovie />} />
+          <Route path='/watch/:id' element={<WatchPage />} />
+          {/* Dashboard */}
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/password' element={<Password />} />
+          <Route path='/bookmarks' element={<Bookmarks />} />
 
-        <Route path='/movie-list' element={<MovieList />} />
-        <Route path='/categories' element={<Categories />} />
-        <Route path='/users' element={<Users />} />
-        <Route path='/add-movie' element={<AddMovie />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </Router>
+          <Route path='/movie-list' element={<MovieList />} />
+          <Route path='/categories' element={<Categories />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='/add-movie' element={<AddMovie />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Router>
+    </>
   )
 }
 

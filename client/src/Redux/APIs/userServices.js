@@ -21,6 +21,7 @@ const loginService = async (user) => {
    if (data) {
       localStorage.setItem('userInfo', JSON.stringify(data));
    }
+   return data;
 }
 
 export { registerService, logoutService, loginService };
