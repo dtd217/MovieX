@@ -1,62 +1,95 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Drawer } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../Redux/Actions/userActions';
+import toast from 'react-hot-toast';
 
 const DashboardLayout = ({ children, title }) => {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const { userInfo } = useSelector((state) => state.userLogin);
+
+   const logoutHandler = () => {
+      dispatch(logoutAction());
+      navigate('/login');
+      toast.success('Bạn đã đăng xuất');
+   }
+
    const [collapsed, setCollapsed] = useState(false);
-   const onClose = () => {
-      setCollapsed(false);
-   };
    const currentTab = window.location.href
 
-   const SideLinks = [
-      {
-         key: 0,
-         icon: '/images/dashboard-icon/movie-list.png',
-         href: '/movie-list',
-         title: 'Danh sách phim',
-      },
-      {
-         key: 1,
-         icon: '/images/dashboard-icon/add-movie.png',
-         href: '/add-movie',
-         title: 'Thêm phim ',
-      },
-      {
-         key: 2,
-         icon: '/images/dashboard-icon/categories.png',
-         href: '/categories',
-         title: 'Thể loại phim',
-      },
-      {
-         key: 3,
-         icon: '/images/dashboard-icon/users.png',
-         href: '/users',
-         title: 'Người dùng',
-      },
-      {
-         key: 4,
-         icon: '/images/dashboard-icon/update-profile.png',
-         href: '/profile',
-         title: 'Cập nhật thông tin',
-      },
-      {
-         key: 5,
-         icon: '/images/dashboard-icon/change-password.png',
-         href: '/password',
-         title: 'Đổi mật khẩu',
-      },
-      {
-         key: 6,
-         icon: '/images/dashboard-icon/bookmark.png',
-         href: '/bookmarks',
-         title: 'Theo dõi',
-      },
-   ]
+   const SideLinks =
+      userInfo?.isAdmin ?
+         ([
+            {
+               key: 0,
+               icon: '/images/dashboard-icon/movie-list.png',
+               href: '/movie-list',
+               title: 'Danh sách phim',
+            },
+            {
+               key: 1,
+               icon: '/images/dashboard-icon/add-movie.png',
+               href: '/add-movie',
+               title: 'Thêm phim ',
+            },
+            {
+               key: 2,
+               icon: '/images/dashboard-icon/categories.png',
+               href: '/categories',
+               title: 'Thể loại phim',
+            },
+            {
+               key: 3,
+               icon: '/images/dashboard-icon/users.png',
+               href: '/users',
+               title: 'Người dùng',
+            },
+            {
+               key: 4,
+               icon: '/images/dashboard-icon/update-profile.png',
+               href: '/profile',
+               title: 'Cập nhật thông tin',
+            },
+            {
+               key: 5,
+               icon: '/images/dashboard-icon/change-password.png',
+               href: '/password',
+               title: 'Đổi mật khẩu',
+            },
+            {
+               key: 6,
+               icon: '/images/dashboard-icon/bookmark.png',
+               href: '/bookmarks',
+               title: 'Theo dõi',
+            },
+         ]) :
+         userInfo ?
+            ([
+               {
+                  key: 1,
+                  icon: '/images/dashboard-icon/update-profile.png',
+                  href: '/profile',
+                  title: 'Cập nhật thông tin',
+               },
+               {
+                  key: 2,
+                  icon: '/images/dashboard-icon/change-password.png',
+                  href: '/password',
+                  title: 'Đổi mật khẩu',
+               },
+               {
+                  key: 3,
+                  icon: '/images/dashboard-icon/bookmark.png',
+                  href: '/bookmarks',
+                  title: 'Theo dõi',
+               },
+            ]) : []
    return (
       <div className="bg-gray-700 py-4">
-         <div className="max-w-6xl mx-auto p-8 bg-black z-10">
-            <div className="flex relative size-full">
+         <div className="max-w-screen-lg mx-auto p-8 bg-black z-10">
+            <div className="flex relative">
                <Drawer
                   placement='left'
                   closable
@@ -83,11 +116,17 @@ const DashboardLayout = ({ children, title }) => {
                               </Link>
                            </li>
                         ))}
+                        <button onClick={logoutHandler} className="hover:bg-gray-500 duration-200 ease-linear">
+                           <Link to="/login" className='flex items-center text-base w-full'>
+                              <img src="/images/dashboard-icon/logout.png" alt="" className='size-7 mr-3 invert' />
+                              <span>Đăng xuất</span>
+                           </Link>
+                        </button>
                      </ul>
                   </aside>
                </Drawer>
-               <div className={`slide-top rounded-md bg-gray-300 transition-all ease-linear duration-300 w-full`}>
-                  <header className='sticky rounded-t-md top-0 z-10 bg-gray-400 border-b-2 border-gray-400 border-opacity-30 overflow-hidden flex items-center'>
+               <div className="slide-top rounded-md bg-gray-300 transition-all ease-linear duration-300 w-full">
+                  <header className='sticky rounded-tl-md rounded-t-md md:rounded-r-md top-0 z-10 bg-gray-400 border-b-2 border-gray-400 border-opacity-30 overflow-hidden flex items-center'>
                      <button
                         onClick={() => setCollapsed(!collapsed)}
                         className='flex items-center p-4 size-fit hover:bg-gray-500 hover:bg-opacity-20'>
@@ -95,7 +134,7 @@ const DashboardLayout = ({ children, title }) => {
                            <img src="/images/dashboard-icon/fold-in.png" alt="Open" className='size-5' /> :
                            <img src="/images/dashboard-icon/fold-out.png" alt="Close" className='size-5' />}
                      </button>
-                     <h1 className='ml-2 text-black text-xl sm:text-2xl font-bold'>{title}</h1>
+                     <h1 className='ml-2 md:ml-6 text-black text-xl sm:text-2xl font-bold'>{title}</h1>
                   </header>
                   <main className='p-6'>
                      <div className="rounded-lg size-full ">

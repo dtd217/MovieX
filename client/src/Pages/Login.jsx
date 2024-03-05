@@ -31,8 +31,8 @@ const Login = () => {
    }
 
    useEffect(() => {
-      // if (userInfo?.isAdmin) navigate('/movie-list');
-      // else if (userInfo) navigate('/');
+      if (userInfo?.isAdmin) navigate('/movie-list');
+      else if (userInfo) navigate('/');
       if (isSuccess) {
          toast.success(`Chào mừng ${userInfo?.name}`);
       }
