@@ -1,6 +1,6 @@
 import * as userConstants from "../Constants/userConstants";
 
-// ĐĂNG NHẬP
+// LOGIN
 export const userLoginReducer = (state = {}, action) => {
    switch (action.type) {
       case userConstants.USER_LOGIN_REQUEST:
@@ -18,7 +18,7 @@ export const userLoginReducer = (state = {}, action) => {
    }
 };
 
-// ĐĂNG KÝ
+// REGISTER
 export const userRegisterReducer = (state = {}, action) => {
    switch (action.type) {
       case userConstants.USER_REGISTER_REQUEST:
@@ -34,18 +34,18 @@ export const userRegisterReducer = (state = {}, action) => {
    }
 };
 
-// THONG TIN TAI KHOAN
-export const userDetailsReducer = (state = { user: {} }, action) => {
+// UPDATE PROFILE
+export const userUpdateProfileReducer = (state = {}, action) => {
    switch (action.type) {
-      case userConstants.USER_DETAILS_REQUEST:
-         return { ...state, isLoading: true };
-      case userConstants.USER_DETAILS_SUCCESS:
-         return { isLoading: false, user: action.payload };
-      case userConstants.USER_DETAILS_FAIL:
+      case userConstants.USER_UPDATE_PROFILE_REQUEST:
+         return { isLoading: true };
+      case userConstants.USER_UPDATE_PROFILE_SUCCESS:
+         return { isLoading: false, userInfo: action.payload, isSuccess: true };
+      case userConstants.USER_UPDATE_PROFILE_FAIL:
          return { isLoading: false, isError: action.payload };
-      case userConstants.USER_DETAILS_RESET:
-         return { user: {} };
+      case userConstants.USER_UPDATE_PROFILE_RESET:
+         return {};
       default:
          return state;
    }
-};
+}

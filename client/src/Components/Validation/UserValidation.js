@@ -19,7 +19,15 @@ const RegisterValidation = yup.object().shape({
       .max(20, "Mật khẩu phải ít hơn 20 ký tự"),
    name: yup.string().required("Xin hãy điền đầy đủ tên!")
       .max(20, "Tên phải ít hơn 20 ký tự")
-      .matches(/^[a-zA-Z]*$/, "Tên phải có 1 ký tự đặc biệt")
+      .matches(/^[a-zA-Z]/)
 });
 
-export { LoginValidation, RegisterValidation };
+const ProfileValidation = yup.object().shape({
+   name: yup.string()
+      .required("Xin hãy điền đầy đủ tên!")
+      .max(20, "Tên phải là 20 ký tự")
+      .matches(/^[a-zA-Z]/).trim(),
+   email: yup.string().email().required("Xin hãy điền đầy đủ email!").trim(),
+})
+
+export { LoginValidation, RegisterValidation, ProfileValidation };

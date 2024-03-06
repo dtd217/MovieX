@@ -88,7 +88,7 @@ const Hero = () => {
                            {/* Cast */}
                            <div className='mb-2'>
                               {movie?.characters.slice(0, 5).map((c, index) => (
-                                 <Tooltip placement="bottom" title={c} arrow={mergedArrow}>
+                                 <Tooltip placement="bottom" title={c} arrow={mergedArrow} key={index}>
                                     <span className='w-10 h-10 rounded-full bg-black/40 inline-flex items-center justify-center align-top mr-2.5 mb-2.5'>
                                        <i className="fa-solid fa-user fa-xs"></i>
                                     </span>

@@ -52,9 +52,7 @@ const Login = () => {
                         <p className='text-white font-bold text-3xl text-center'>Đăng nhập</p>
                         <form onSubmit={handleSubmit(onSubmit)} className='mt-4'>
                            <div>
-                              <label
-                                 className="block text-lg font-semibold text-white"
-                                 htmlFor="email">Email</label>
+                              <label className="block text-lg font-semibold text-white" htmlFor="email">Email</label>
                               <input
                                  type="email"
                                  name="email"
@@ -67,9 +65,7 @@ const Login = () => {
                               {errors.email && <InlineError error={errors.email.message} />}
                            </div>
                            <div className='mt-4'>
-                              <label
-                                 className="block text-lg font-semibold text-white"
-                                 htmlFor="password">Mật khẩu</label>
+                              <label className="block text-lg font-semibold text-white" htmlFor="password">Mật khẩu</label>
                               <input
                                  type="password"
                                  name="password"
@@ -101,7 +97,6 @@ const Login = () => {
                               type="submit"
                               disabled={isLoading}
                               className="w-full mt-4 text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-lg px-5 py-2.5 text-center">
-
                               {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
                            </button>
                            <p className="text-sm mt-6 font-light text-gray-300">

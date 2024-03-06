@@ -126,7 +126,7 @@ const DashboardLayout = ({ children, title }) => {
                   </aside>
                </Drawer>
                <div className="slide-top rounded-md bg-gray-300 transition-all ease-linear duration-300 w-full">
-                  <header className='sticky rounded-tl-md rounded-t-md md:rounded-r-md top-0 z-10 bg-gray-400 border-b-2 border-gray-400 border-opacity-30 overflow-hidden flex items-center'>
+                  <header className='sticky rounded-t-md top-0 z-10 bg-gray-400 border-b-2 border-gray-400 border-opacity-30 overflow-hidden flex items-center'>
                      <button
                         onClick={() => setCollapsed(!collapsed)}
                         className='flex items-center p-4 size-fit hover:bg-gray-500 hover:bg-opacity-20'>

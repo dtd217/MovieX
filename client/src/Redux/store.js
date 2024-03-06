@@ -5,6 +5,7 @@ const rootReducer = combineReducers({
    // User Reducers
    userLogin: User.userLoginReducer,
    userRegister: User.userRegisterReducer,
+   userUpdateProfile: User.userUpdateProfileReducer,
 });
 
 // Lấy userInfo từ localStorage

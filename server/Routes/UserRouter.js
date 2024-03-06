@@ -9,7 +9,7 @@ router.post('/', userController.registerUser)
 router.post('/login', userController.loginUser)
 
 // ********** PRIVATE ROUTES **********
-router.put('/', protect, userController.updateUserProfile)
+router.put('/profile', protect, userController.updateUserProfile)
 router.delete('/', protect, userController.deleteUserProfile)
 router.put('/password', protect, userController.changeUserPassword)
 router.get('/bookmarks', protect, userController.getUserBookmarks)
