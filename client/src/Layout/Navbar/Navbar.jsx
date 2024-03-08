@@ -15,35 +15,43 @@ const Navbar = () => {
       navigate('/login');
       toast.success('Bạn đã đăng xuất');
    }
-   const items = [
-      {
-         key: '1',
-         label: (<Link to="/movie-list" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Bảng điều khiển</Link>),
-      },
-      {
-         key: '2',
-         label: (<Link to="/profile" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Thông tin cá nhân</Link>),
-      },
-      {
-         key: '3',
-         label: (<Link to="/bookmarks" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Hộp phim</Link>),
-      },
-      {
-         key: '4',
-         label: (<Link to="/history" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Lịch sử xem</Link>),
-      },
-      {
-         key: '5',
-         label: (
-            <button onClick={logoutHandler} className='w-full block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg'>
-               <Link to="/login" className='float-left'>
-                  <span>Đăng xuất</span>
-               </Link>
-            </button>
-         ),
-      },
-   ];
-   const change = 1;
+   const items = userInfo?.isAdmin ?
+      ([
+         {
+            key: '1',
+            label: (<Link to="/movie-list" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Bảng điều khiển</Link>),
+         },
+         {
+            key: '2',
+            label: (
+               <button onClick={logoutHandler} className='w-full block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg'>
+                  <Link to="/login" className='float-left'>
+                     <span>Đăng xuất</span>
+                  </Link>
+               </button>
+            ),
+         },
+      ]) :
+      ([
+         {
+            key: '1',
+            label: (<Link to="/profile" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Thông tin cá nhân</Link>),
+         },
+         {
+            key: '2',
+            label: (<Link to="/bookmarks" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Hộp phim</Link>),
+         },
+         {
+            key: '3',
+            label: (
+               <button onClick={logoutHandler} className='w-full block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg'>
+                  <Link to="/login" className='float-left'>
+                     <span>Đăng xuất</span>
+                  </Link>
+               </button>
+            ),
+         },
+      ]);
    const [isOpened, setIsOpened] = useState(false);
    const [isClicked, setIsClicked] = useState(false);
    const activeTab = window.location.href
@@ -88,11 +96,16 @@ const Navbar = () => {
                            <div className='w-9 h-9 mr-1 rounded-full transitions flex items-center justify-center text-center bg-gray-600 hover:opacity-80'>
                               <span className="sr-only">Open user menu</span>
                               {userInfo ?
-                                 <img src={userInfo?.avatar} alt={userInfo?.name} className='size-full rounded-full border object-cover box-border' /> 
+                                 <img src={userInfo?.avatar} alt={userInfo?.name} className='size-full rounded-full object-cover' />
                                  :
-                                 <svg className="size-6 text-white rounded-full transitions focus:outline-none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-                                 </svg>
+                                 // <svg className="size-6 text-white rounded-full transitions focus:outline-none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
+                                 //    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
+                                 // </svg>
+                                 <img
+                                    src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                                    alt="user-avatar"
+                                    className='size-full rounded-full object-cover'
+                                 />
                               }
                            </div>
                         </button>

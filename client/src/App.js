@@ -17,6 +17,7 @@ import Categories from './Pages/Dashboard/Admin/Categories'
 import Users from './Pages/Dashboard/Admin/Users'
 import AddMovie from './Pages/Dashboard/Admin/AddMovie'
 import ToastContainer from './Components/Notifications/ToastContainer'
+import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
       <ToastContainer />
       <Router>
         <Routes>
+          {/* PUBLIC ROUTES */}
           <Route path='/' element={<HomePage />} />
           <Route path='/tv-series' element={<TvSeries />} />
           <Route path='/movie-ova' element={<MovieOVA />} />
@@ -32,18 +34,24 @@ const App = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/movie/:id' element={<SingleMovie />} />
           <Route path='/watch/:id' element={<WatchPage />} />
-          {/* Dashboard */}
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/password' element={<Password />} />
-          <Route path='/bookmarks' element={<Bookmarks />} />
-
-          <Route path='/movie-list' element={<MovieList />} />
-          <Route path='/categories' element={<Categories />} />
-          <Route path='/users' element={<Users />} />
-          <Route path='/add-movie' element={<AddMovie />} />
           <Route path='*' element={<NotFound />} />
-        </Routes>
-      </Router>
+
+          {/* PRIVATE ROUTES */}
+          <Route element={<ProtectedRouter />}>
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/password' element={<Password />} />
+            <Route path='/bookmarks' element={<Bookmarks />} />
+
+            {/* ADMIN ROUTES */}
+            <Route element={<AdminProtectedRouter />}>
+              <Route path='/movie-list' element={<MovieList />} />
+              <Route path='/categories' element={<Categories />} />
+              <Route path='/users' element={<Users />} />
+              <Route path='/add-movie' element={<AddMovie />} />
+            </Route>
+          </Route>
+        </Routes >
+      </Router >
     </>
   )
 }

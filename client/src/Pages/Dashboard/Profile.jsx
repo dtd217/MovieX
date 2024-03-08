@@ -3,24 +3,23 @@ import Layout from '../../Layout/Layout'
 import { useDropzone } from 'react-dropzone'
 import DashboardLayout from '../../Components/DashboardLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileValidation } from '../../Components/Validation/UserValidation';
 import { InlineError } from '../../Components/Notifications/Error';
 import { ImagePreview } from '../../Components/ImagePreview';
-import { updateProfileAction } from '../../Redux/Actions/userActions';
+import { deleteProfileAction, updateProfileAction } from '../../Redux/Actions/userActions';
 import Loader from '../../Components/Notifications/Loader';
 import uploadImageService from '../../Redux/APIs/imageUploadServices';
 
 const Profile = () => {
    const dispatch = useDispatch();
-   const navigate = useNavigate();
 
    const { userInfo } = useSelector((state) => state.userLogin);
    const [imageUrl, setImageUrl] = useState(userInfo ? userInfo?.avatar : '');
    const { isLoading, isError, isSuccess } = useSelector((state) => state.userUpdateProfile);
+   const { isLoading: deleteLoading, isError: deleteError } = useSelector((state) => state.userDeleteProfile);
 
    const [loading, setLoading] = useState(false);
 
@@ -43,9 +42,14 @@ const Profile = () => {
       resolver: yupResolver(ProfileValidation)
    });
 
-   // On submit
+   // Update profile
    const onSubmit = (data) => {
       dispatch(updateProfileAction({ ...data, avatar: imageUrl }));
+   }
+
+   // Delete profile
+   const deleteProfile = () => {
+      window.confirm('Bạn có chắc muốn xóa tài khoản?') && dispatch(deleteProfileAction());
    }
 
    useEffect(() => {
@@ -55,14 +59,15 @@ const Profile = () => {
       }
       if (isSuccess) {
          dispatch({ type: 'USER_UPDATE_PROFILE_RESET' });
-         // toast.success('Cập nhật thành công');
       }
-      if (isError) {
-         toast.error(isError);
+      if (isError || deleteError) {
+         toast.error(isError || deleteError);
+         dispatch({ type: 'USER_UPDATE_PROFILE_RESET' });
+         dispatch({ type: 'USER_DELETE_PROFILE_RESET' });
       }
-   }, [userInfo, setValue, isSuccess, isError, dispatch]);
+   }, [userInfo, setValue, isSuccess, isError, dispatch, deleteError]);
 
-   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({ multiple: false, onDrop })
+   const { getRootProps, getInputProps } = useDropzone({ multiple: false, onDrop })
 
    return (
       <Layout>
@@ -73,13 +78,6 @@ const Profile = () => {
                   <span className='text-gray-800 flex flex-col items-center'>
                      <i className="fa-solid fa-cloud-arrow-up sm:fa-4x fa-3x text-red-600"></i>
                      <p className='sm:text-xl text-lg leading-5 mt-3 mb-2'>Tải ảnh tại đây.</p>
-                     {
-                        isDragActive ?
-                           "Drop the files here" :
-                           isDragReject ?
-                              "Unsupported file type" :
-                              "Drag and drop your image here"
-                     }
                   </span>
                </div>
                {loading ? (<div className="text-center"><Loader /></div>) : (<></>)}
@@ -112,10 +110,17 @@ const Profile = () => {
                   </div>
                </div>
                <div className="flex justify-between md:flex-row flex-col mt-4 *:p-2.5 *:rounded-md *:transitions">
-                  <button className='hover:bg-gray-700 bg-gray-600'>
+                  <button
+                     disabled={deleteLoading || isLoading}
+                     className='hover:bg-gray-700 bg-gray-600'>
                      {isLoading ? "Đang cập nhật..." : "Cập nhật thông tin"}
                   </button>
-                  <button className='hover:bg-red-700 bg-red-600 md:mt-0 mt-2'>Xoá tài khoản</button>
+                  <button
+                     disabled={deleteLoading || isLoading}
+                     onClick={deleteProfile}
+                     className='hover:bg-red-700 bg-red-600 md:mt-0 mt-2'>
+                     {deleteLoading ? "Đang xoá tài khoản..." : "Xoá tài khoản"}
+                  </button>
                </div>
             </form>
          </DashboardLayout>
