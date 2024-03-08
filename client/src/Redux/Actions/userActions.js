@@ -64,4 +64,50 @@ const deleteProfileAction = () => async (dispatch, getState) => {
    }
 }
 
-export { loginAction, registerAction, logoutAction, updateProfileAction, deleteProfileAction }
+// CHANGE PASSWORD ACTIONS
+const changePasswordAction = (password) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.USER_CHANGE_PASSWORD_REQUEST });
+      const response = await userApi.changePasswordService(password, tokenProtection(getState));
+      dispatch({ type: userConstants.USER_CHANGE_PASSWORD_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL);
+   }
+}
+
+// GET ALL BOOKMARKS ACTIONS
+const getBookmarksAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.GET_BOOKMARKS_REQUEST });
+      const response = await userApi.getBookmarks(tokenProtection(getState));
+      dispatch({ type: userConstants.GET_BOOKMARKS_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.GET_BOOKMARKS_FAIL);
+   }
+}
+
+// DELETE BOOKMARK ACTIONS
+const deleteBookmarksAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.DELETE_BOOKMARKS_REQUEST });
+      await userApi.deleteBookmarks(tokenProtection(getState));
+      dispatch({ type: userConstants.DELETE_BOOKMARKS_SUCCESS});
+      toast.success('Bỏ theo dõi phim thành công');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.DELETE_BOOKMARKS_FAIL);
+   }
+}
+
+export {
+   loginAction,
+   registerAction,
+   logoutAction,
+   updateProfileAction,
+   deleteProfileAction,
+   changePasswordAction,
+   getBookmarksAction,
+   deleteBookmarksAction
+}

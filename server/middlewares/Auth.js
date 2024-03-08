@@ -26,7 +26,7 @@ const protect = asyncHandler(async (req, res, next) => {
       catch (error) {
          console.log(error)
          res.status(401)
-         throw new Error('Xác thực được token thất bại')
+         throw new Error('Xác thực token thất bại')
       }
    }
    // nếu token không tồn tại trong headers => gửi lỗi

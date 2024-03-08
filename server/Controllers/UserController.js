@@ -232,7 +232,7 @@ const addBookmarks = asyncHandler(async (req, res) => {
 })
 
 // @desc    Delete movie from bookmarks
-// @route   DELETE /api/movies/bookmarks
+// @route   DELETE /api/user/bookmarks
 // @access  Private
 const deleteBookmarks = asyncHandler(async (req, res) => {
    try {

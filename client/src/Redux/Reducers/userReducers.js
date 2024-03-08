@@ -65,3 +65,51 @@ export const userDeleteProfileReducer = (state = {}, action) => {
          return state;
    }
 }
+
+// CHANGE PASSWORD
+export const userChangePasswordReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.USER_CHANGE_PASSWORD_REQUEST:
+         return { isLoading: true };
+      case userConstants.USER_CHANGE_PASSWORD_SUCCESS:
+         return { isLoading: false, isSuccess: true, message: action.payload.message };
+      case userConstants.USER_CHANGE_PASSWORD_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.USER_CHANGE_PASSWORD_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
+// GET ALL BOOKMARKS
+export const userGetBookmarksReducer = (state = { bookmarks: [] }, action) => {
+   switch (action.type) {
+      case userConstants.GET_BOOKMARKS_REQUEST:
+         return { isLoading: true };
+      case userConstants.GET_BOOKMARKS_SUCCESS:
+         return { isLoading: false, bookmarks: action.payload };
+      case userConstants.GET_BOOKMARKS_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.GET_BOOKMARKS_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
+// DELETE ALL BOOKMARKS
+export const userDeleteBookmarksReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.DELETE_BOOKMARKS_REQUEST:
+         return { isLoading: true };
+      case userConstants.DELETE_BOOKMARKS_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.DELETE_BOOKMARKS_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.DELETE_BOOKMARKS_RESET:
+         return {};
+      default:
+         return state;
+   }
+}

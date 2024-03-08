@@ -7,6 +7,9 @@ const rootReducer = combineReducers({
    userRegister: User.userRegisterReducer,
    userUpdateProfile: User.userUpdateProfileReducer,
    userDeleteProfile: User.userDeleteProfileReducer,
+   userChangePassword: User.userChangePasswordReducer,
+   userGetBookmarks: User.userGetBookmarksReducer,
+   userDeleteBookmarks: User.userDeleteBookmarksReducer
 });
 
 // Lấy userInfo từ localStorage

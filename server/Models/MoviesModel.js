@@ -49,6 +49,14 @@ const MovieSchema = new mongoose.Schema({
       type: String,
       required: true
    },
+   status: {
+      type: String,
+      required: true
+   },
+   slug: {
+      type: String,
+      required: true
+   },
    video: {
       type: String,
       // required: true

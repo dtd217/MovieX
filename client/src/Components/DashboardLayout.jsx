@@ -98,8 +98,10 @@ const DashboardLayout = ({ children, title }) => {
                   key='left'
                   getContainer={false}
                   zIndex={0}
-                  bodyStyle={{ padding: 0 }}
-                  headerStyle={{ display: 'none' }}
+                  styles={{
+                     header: { display: 'none' },
+                     body: { padding: 0 },
+                  }}
                   width={220}
                   className='!bg-gray-700 !rounded-l-md'
                >
@@ -134,7 +136,7 @@ const DashboardLayout = ({ children, title }) => {
                            <img src="/images/dashboard-icon/fold-in.png" alt="Open" className='size-5' /> :
                            <img src="/images/dashboard-icon/fold-out.png" alt="Close" className='size-5' />}
                      </button>
-                     <h1 className='ml-2 md:ml-6 text-black text-xl sm:text-2xl font-bold'>{title}</h1>
+                     <h1 className='ml-2 text-black text-2xl font-bold'>{title}</h1>
                   </header>
                   <main className='p-6'>
                      <div className="rounded-lg size-full ">
@@ -144,7 +146,7 @@ const DashboardLayout = ({ children, title }) => {
                </div>
             </div>
          </div>
-      </div>
+      </div >
    )
 }
 

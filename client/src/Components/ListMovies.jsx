@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Movie from './Movie';
 
 const ListMovies = ({ movies, title }) => {
    const maxPage = 10;
@@ -14,7 +15,7 @@ const ListMovies = ({ movies, title }) => {
          <ul className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 mt-5">
             {movies.slice(0, page)?.map((movie, index) => (
                <li className='col-span-1' key={index}>
-                  <div>
+                  {/* <div>
                      <Link to={`/movie/${movie?.slug}`} className='relative movie-card h-auto w-full block'>
                         <div className='absolute left-1.5 top-1.5 px-2 py-1.5 bg-opacity-70 bg-black flex justify-between rounded-3xl z-20 text-yellow-200'>
                            <svg className="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -38,14 +39,14 @@ const ListMovies = ({ movies, title }) => {
                         <p className='text-center mt-2 text-lg font-semibold hover:text-gray-500 transitions'>{movie.title}</p>
                         <p className='text-center mt-0.5 text-gray-500'>{movie?.viewNumber}</p>
                      </Link>
-                  </div>
+                  </div> */}
+                  <Movie movie={movie} />
                </li>
             ))}
          </ul>
          <div className={`${page >= movies.length ? 'hidden' : ''} w-full text-center mt-6`}>
             <button onClick={handleLoadingMore} className='py-3 px-4 font-semibold bg-gradient-to-tr bg-red-600 hover:opacity-70 transitions rounded-lg w-fit'>
                LOAD MORE
-               {/* <i className="fa-solid fa-circle-notch fa-spin ml-2 fa-lg"></i> */}
             </button>
          </div>
       </section>

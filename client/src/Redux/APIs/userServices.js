@@ -42,5 +42,38 @@ const deleteProfileService = async (token) => {
    return data;
 }
 
-export { registerService, logoutService, loginService, updateProfileService, deleteProfileService };
+// Change password call API
+const changePasswordService = async (password, token) => {
+   const { data } = await Axios.put('/user/password', password, {
+      headers: { Authorization: `Bearer ${token}` }
+   });
+   return data;
+}
+
+// Get all bookmarks 
+const getBookmarks = async (token) => {
+   const { data } = await Axios.get('/user/bookmarks', {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
+// Delete bookmark
+const deleteBookmarks = async (id, token) => {
+   const { data } = await Axios.delete(`/user/bookmarks`, {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
+export {
+   registerService,
+   logoutService,
+   loginService,
+   updateProfileService,
+   deleteProfileService,
+   changePasswordService,
+   getBookmarks,
+   deleteBookmarks
+};
 
