@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Layout from '../../Layout/Layout'
 import DashboardLayout from '../../Components/DashboardLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBookmarksAction, getBookmarksAction } from '../../Redux/Actions/userActions';
+import { userDeleteBookmarksAction, userGetBookmarksAction } from '../../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 import Loader from '../../Components/Notifications/Loader';
 import { Link } from 'react-router-dom';
@@ -14,23 +14,23 @@ const Bookmarks = () => {
    const { isLoading, isError, bookmarks } = useSelector((state) => state.userGetBookmarks)
    // Delete bookmarks
    const {
-      isLoading: deleteIsLoading,
-      isError: deleteIsError,
+      isLoading: deleteLoading,
+      isError: deleteError,
       isSuccess
    } = useSelector((state) => state.userDeleteBookmarks)
 
+   // Delete bookmarks handler
    const deleteBookmarksHandler = () => {
-      window.confirm('Bạn có muôn bỏ theo dõi toàn bộ phim?') && dispatch(deleteBookmarksAction())
+      window.confirm('Bạn có muôn bỏ theo dõi toàn bộ phim?') && dispatch(userDeleteBookmarksAction())
    }
 
    useEffect(() => {
-      dispatch(getBookmarksAction())
-      if (isError || deleteIsError) {
-         toast.error(isError || deleteIsError)
+      dispatch(userGetBookmarksAction())
+      if (isError || deleteError) {
+         toast.error(isError || deleteError)
          dispatch({ type: isError ? 'GET_BOOKMARKS_RESET' : 'DELETE_BOOKMARKS_RESET' })
       }
-
-   }, [dispatch, isError, deleteIsError, isSuccess])
+   }, [dispatch, isError, deleteError, isSuccess])
 
    return (
       <Layout>
@@ -41,10 +41,10 @@ const Bookmarks = () => {
                   <div className='flex flex-col'>
                      {bookmarks?.length > 0 &&
                         <button
-                           disabled={deleteIsLoading}
+                           disabled={deleteLoading}
                            onClick={deleteBookmarksHandler}
                            className='py-2 px-4 self-end text-lg mb-4 w-fit tracking-wide bg-red-600 hover:opacity-80 rounded-md'>
-                           {deleteIsLoading ? "Đang xử lý..." : "Bỏ theo dõi toàn bộ phim"}
+                           {deleteLoading ? "Đang xử lý..." : "Bỏ theo dõi toàn bộ phim"}
                         </button>
                      }
                      <ul className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5">

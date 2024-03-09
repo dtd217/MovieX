@@ -77,7 +77,7 @@ const changePasswordAction = (password) => async (dispatch, getState) => {
 }
 
 // GET ALL BOOKMARKS ACTIONS
-const getBookmarksAction = () => async (dispatch, getState) => {
+const userGetBookmarksAction = () => async (dispatch, getState) => {
    try {
       dispatch({ type: userConstants.GET_BOOKMARKS_REQUEST });
       const response = await userApi.getBookmarks(tokenProtection(getState));
@@ -89,15 +89,40 @@ const getBookmarksAction = () => async (dispatch, getState) => {
 }
 
 // DELETE BOOKMARK ACTIONS
-const deleteBookmarksAction = () => async (dispatch, getState) => {
+const userDeleteBookmarksAction = () => async (dispatch, getState) => {
    try {
       dispatch({ type: userConstants.DELETE_BOOKMARKS_REQUEST });
       await userApi.deleteBookmarks(tokenProtection(getState));
-      dispatch({ type: userConstants.DELETE_BOOKMARKS_SUCCESS});
+      dispatch({ type: userConstants.DELETE_BOOKMARKS_SUCCESS });
       toast.success('Bỏ theo dõi phim thành công');
    }
    catch (error) {
       ErrorsAction(error, dispatch, userConstants.DELETE_BOOKMARKS_FAIL);
+   }
+}
+
+// ADMIN GET ALL USERS ACTIONS
+const adminGetAllUsersAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
+      const response = await userApi.getAllUsersService(tokenProtection(getState));
+      dispatch({ type: userConstants.GET_ALL_USERS_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.GET_ALL_USERS_FAIL);
+   }
+}
+
+// ADMIN DELETE USER ACTIONS
+const adminDeleteUserAction = (id) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.DELETE_USER_REQUEST });
+      await userApi.deleteUserService(id, tokenProtection(getState));
+      dispatch({ type: userConstants.DELETE_USER_SUCCESS });
+      toast.success('Xóa người dùng thành công');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.DELETE_USER_FAIL);
    }
 }
 
@@ -108,6 +133,8 @@ export {
    updateProfileAction,
    deleteProfileAction,
    changePasswordAction,
-   getBookmarksAction,
-   deleteBookmarksAction
+   userGetBookmarksAction,
+   userDeleteBookmarksAction,
+   adminGetAllUsersAction,
+   adminDeleteUserAction
 }

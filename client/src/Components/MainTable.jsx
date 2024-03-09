@@ -25,7 +25,7 @@ const total = [
    }
 ]
 
-const MainTable = ({ data, admin, type, user }) => {
+const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
    const [api, contextHolderNotification] = notification.useNotification();
    const openNotificationWithIcon = (type) => {
       api[type]({
@@ -235,68 +235,7 @@ const MainTable = ({ data, admin, type, user }) => {
                         </td>
                      </table>
                   </>
-                  : type === 'users' && user ?
-                     <>
-                        <div onClick={showModal} className="rounded-md mb-6 bg-red-600 hover:bg-gray-400 cursor-pointer transitions py-3 px-2.5 w-fit">
-                           <i className="fa-solid fa-plus fa-lg mr-2"></i>Thêm mới
-                        </div>
-                        {/* <Modal
-                           title="Thêm mới người dùng"
-                           open={openModal}
-                           onCancel={handleCancel}
-                           centered
-                           okButtonProps={{ className: 'hidden' }}
-                           cancelButtonProps={{ className: 'hidden' }}
-                           className='!w-4/5 md:!w-[500px]'
-                        >
-                           <Input onChange={(e) => setModalText(e.target.value)} />
-                           <button
-                              className='rounded-md mt-3 text-lg text-white bg-red-600 hover:bg-gray-600 cursor-pointer transitions py-2 w-full'
-                              onClick={handleOk}
-                           >
-                              <i className="fa-solid fa-plus fa-lg mr-1.5"></i>
-                              Thêm
-                           </button>
-                        </Modal> */}
-                        <table className="w-full text-left rtl:text-right">
-                           <thead className="text-gray-800 uppercase bg-gray-100">
-                              <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
-                                 <th scope="col" className="text-center">Id</th>
-                                 <th scope="col" className="text-center">Hình ảnh</th>
-                                 <th scope="col" className="text-center">Tên</th>
-                                 <th scope="col" className="text-center">Email</th>
-                                 <th scope="col" className="text-center">Ngày tạo</th>
-                                 <th scope="col" className="text-center">Cài đặt</th>
-                              </tr>
-                           </thead>
-                           {data.map((user, i) => (
-                              <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-                                 <td className="text-center">{user.id ? user.id : `user${i + 1}`}</td>
-                                 <td>
-                                    <div className="flex justify-center items-center">
-                                       <img className='size-12 rounded-md object-cover' src={user.avatar} alt={user.name} />
-                                    </div>
-                                 </td>
-                                 <td className="text-center whitespace-nowrap">{user.name}</td>
-                                 <td className="text-center whitespace-nowrap">{user.email}</td>
-                                 <td className="text-center whitespace-nowrap">{user.date ? user.date : '02, Jan 2024'}</td>
-                                 <td className="text-center">
-                                    <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                                       {/* <button className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
-                                          <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
-                                       </button> */}
-                                       <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
-                                          <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
-                                       </button>
-                                    </div>
-                                 </td>
-                              </tr >
-                           ))}
-                           <td colSpan="6" className="bg-gray-100">
-                              <Pagination />
-                           </td>
-                        </table>
-                     </> : null
+                  : null
          }
       </div >
    )
