@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
    userChangePassword: User.userChangePasswordReducer,
    userGetBookmarks: User.userGetBookmarksReducer,
    userDeleteBookmarks: User.userDeleteBookmarksReducer,
+   userDeleteBookmarkById: User.userDeleteBookmarkByIdReducer,
    adminGetAllUsers: User.adminGetAllUsersReducer,
    adminDeleteUser: User.adminDeleteUserReducer,
 });

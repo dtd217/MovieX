@@ -88,16 +88,29 @@ const userGetBookmarksAction = () => async (dispatch, getState) => {
    }
 }
 
-// DELETE BOOKMARK ACTIONS
+// DELETE BOOKMARKS ACTIONS
 const userDeleteBookmarksAction = () => async (dispatch, getState) => {
    try {
       dispatch({ type: userConstants.DELETE_BOOKMARKS_REQUEST });
       await userApi.deleteBookmarks(tokenProtection(getState));
       dispatch({ type: userConstants.DELETE_BOOKMARKS_SUCCESS });
-      toast.success('Bỏ theo dõi phim thành công');
+      toast.success('Bỏ theo dõi phim thành công!');
    }
    catch (error) {
       ErrorsAction(error, dispatch, userConstants.DELETE_BOOKMARKS_FAIL);
+   }
+}
+
+// DELETE BOOKMARKS BY ID ACTIONS
+const userDeleteBookmarkByIdAction = (id) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.DELETE_BOOKMARK_BY_ID_REQUEST });
+      await userApi.deleteBookmarkById(id, tokenProtection(getState));
+      dispatch({ type: userConstants.DELETE_BOOKMARK_BY_ID_SUCCESS });
+      toast.success('Xóa phim thành công!');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.DELETE_BOOKMARK_BY_ID_FAIL);
    }
 }
 
@@ -135,6 +148,7 @@ export {
    changePasswordAction,
    userGetBookmarksAction,
    userDeleteBookmarksAction,
+   userDeleteBookmarkByIdAction,
    adminGetAllUsersAction,
    adminDeleteUserAction
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Layout from '../../Layout/Layout'
 import DashboardLayout from '../../Components/DashboardLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { userDeleteBookmarksAction, userGetBookmarksAction } from '../../Redux/Actions/userActions';
+import { userDeleteBookmarkByIdAction, userDeleteBookmarksAction, userGetBookmarksAction } from '../../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 import Loader from '../../Components/Notifications/Loader';
 import { Link } from 'react-router-dom';
@@ -16,21 +16,39 @@ const Bookmarks = () => {
    const {
       isLoading: deleteLoading,
       isError: deleteError,
-      isSuccess
+      isSuccess: deleteSuccess
    } = useSelector((state) => state.userDeleteBookmarks)
+
+   // Delete bookmark by id 
+   const {
+      isLoading: deleteByIdLoading,
+      isError: deleteByIdError,
+      isSuccess: deleteByIdSuccess
+   } = useSelector((state) => state.userDeleteBookmarkById)
 
    // Delete bookmarks handler
    const deleteBookmarksHandler = () => {
-      window.confirm('Bạn có muôn bỏ theo dõi toàn bộ phim?') && dispatch(userDeleteBookmarksAction())
+      window.confirm('Bạn có muốn bỏ theo dõi toàn bộ phim?') && dispatch(userDeleteBookmarksAction())
+   }
+
+   // Delete bookmark by id handler
+   const deleteBookmarkByIdHandler = (id) => {
+      window.confirm('Bạn có muốn bỏ theo dõi phim này?') && dispatch(userDeleteBookmarkByIdAction(id))
    }
 
    useEffect(() => {
       dispatch(userGetBookmarksAction())
-      if (isError || deleteError) {
-         toast.error(isError || deleteError)
-         dispatch({ type: isError ? 'GET_BOOKMARKS_RESET' : 'DELETE_BOOKMARKS_RESET' })
+      if (isError || deleteError || deleteByIdError) {
+         toast.error(isError || deleteError || deleteByIdError)
+         dispatch({
+            type: isError ?
+               'GET_BOOKMARKS_RESET' :
+               deleteSuccess ?
+                  'DELETE_BOOKMARKS_RESET' :
+                  'DELETE_BOOKMARK_BY_ID_RESET'
+         })
       }
-   }, [dispatch, isError, deleteError, isSuccess])
+   }, [dispatch, isError, deleteError, deleteByIdError, deleteSuccess, deleteByIdSuccess])
 
    return (
       <Layout>
@@ -72,7 +90,12 @@ const Bookmarks = () => {
                                  </div>
                                  <p className='text-center mt-2 text-lg font-semibold text-gray-600 hover:text-gray-500 transitions whitespace-nowrap text-ellipsis overflow-hidden'>{movie.title}</p>
                               </Link>
-                              <button className='py-1.5 mt-1 w-full tracking-wide bg-red-600 hover:opacity-90 rounded-md'>Bỏ theo dõi</button>
+                              <button
+                                 disabled={deleteByIdLoading}
+                                 onClick={() => deleteBookmarkByIdHandler(movie._id)}
+                                 className='py-1.5 mt-1 w-full tracking-wide bg-red-600 hover:opacity-90 rounded-md'>
+                                 {deleteByIdLoading ? "Đang xử lý..." : "Bỏ theo dõi"}
+                              </button>
                            </li>
                         ))}
                      </ul>

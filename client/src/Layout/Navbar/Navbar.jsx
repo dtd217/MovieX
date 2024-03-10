@@ -9,6 +9,7 @@ const Navbar = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const { userInfo } = useSelector((state) => state.userLogin);
+   // const [bookmarks] = useSelector((state) => state.userGetBookmarks)
 
    const logoutHandler = () => {
       dispatch(logoutAction());
@@ -95,18 +96,7 @@ const Navbar = () => {
                         >
                            <div className='w-9 h-9 mr-1 rounded-full transitions flex items-center justify-center text-center bg-gray-600 hover:opacity-80'>
                               <span className="sr-only">Open user menu</span>
-                              {userInfo ?
-                                 <img src={userInfo?.avatar} alt={userInfo?.name} className='size-full rounded-full object-cover' />
-                                 :
-                                 // <svg className="size-6 text-white rounded-full transitions focus:outline-none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
-                                 //    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-                                 // </svg>
-                                 <img
-                                    src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
-                                    alt="user-avatar"
-                                    className='size-full rounded-full object-cover'
-                                 />
-                              }
+                              <img src={userInfo?.avatar ? userInfo?.avatar : 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'} alt={userInfo?.name} className='size-full rounded-full object-cover' />
                            </div>
                         </button>
                      </Dropdown>

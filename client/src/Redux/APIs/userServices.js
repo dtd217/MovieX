@@ -58,9 +58,17 @@ const getBookmarks = async (token) => {
    return data
 }
 
-// Delete bookmark
+// Delete bookmarks
 const deleteBookmarks = async (token) => {
    const { data } = await Axios.delete(`/user/bookmarks`, {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
+// Delete bookmark by id
+const deleteBookmarkById = async (id, token) => {
+   const { data } = await Axios.delete(`/user/bookmarks/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
    })
    return data
@@ -91,6 +99,7 @@ export {
    changePasswordService,
    getBookmarks,
    deleteBookmarks,
+   deleteBookmarkById,
    getAllUsersService,
    deleteUserService
 };

@@ -15,6 +15,7 @@ router.put('/password', protect, userController.changeUserPassword)
 router.get('/bookmarks', protect, userController.getUserBookmarks)
 router.post('/bookmarks', protect, userController.addBookmarks)
 router.delete('/bookmarks', protect, userController.deleteBookmarks)
+router.delete('/bookmarks/:id', protect, userController.deleteBookmarkById)
 
 // ********** ADMIN ROUTES **********
 router.get('/', protect, admin, userController.getUsers)

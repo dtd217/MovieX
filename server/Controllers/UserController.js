@@ -242,7 +242,36 @@ const deleteBookmarks = asyncHandler(async (req, res) => {
       if (user) {
          user.bookmarks = []
          await user.save()
-         res.json({ message: 'Xoá phim đã đánh dấu thành công!' })
+         res.json({ message: 'Xoá tất cả phim đã đánh dấu thành công!' })
+      }
+      // Nếu không có user => gửi lỗi
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Delete movie from bookmarks by id
+// @route   DELETE /api/user/bookmarks/:id
+// @access  Private
+const deleteBookmarkById = asyncHandler(async (req, res) => {
+   try {
+      // Tìm user trong db
+      const user = await User.findById(req.user._id)
+      if (user) {
+         // Nếu không có phim => gửi thông báo
+         if (!user.bookmarks.includes(req.params.id)) {
+            res.status(400)
+            throw new Error('Không tìm thấy phim')
+         }
+         // Nếu có phim => xoá phim
+         user.bookmarks = user.bookmarks.filter((movie) => movie._id !== req.params.id)
+         await user.save()
+         res.json({ message: 'Xoá phim thành công!' })
       }
       // Nếu không có user => gửi lỗi
       else {
@@ -308,6 +337,7 @@ export {
    getUserBookmarks,
    addBookmarks,
    deleteBookmarks,
+   deleteBookmarkById,
    getUsers,
-   deleteUsers
+   deleteUsers,
 }
