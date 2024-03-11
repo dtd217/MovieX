@@ -1,5 +1,7 @@
 import Axios from './Axios.js';
 
+// ********** PUBLIC APIS **********
+
 // Register user call API
 const registerService = async (user) => {
    const { data } = await Axios.post('/user', user);
@@ -23,6 +25,8 @@ const loginService = async (user) => {
    }
    return data;
 }
+
+// ********** PRIVATE APIS **********
 
 // Update profile call API
 const updateProfileService = async (user, token) => {
@@ -73,6 +77,8 @@ const deleteBookmarkById = async (id, token) => {
    })
    return data
 }
+
+// ********** ADMIN APIS **********
 
 // Admin get all users
 const getAllUsersService = async (token) => {
