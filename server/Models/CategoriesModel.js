@@ -1,14 +1,18 @@
 import mongoose from 'mongoose'
 
 const CategoriesSchema = new mongoose.Schema({
-   title: {
+   label: {
       type: String,
       required: true
    },
    value: {
       type: String,
-      // required: true
+      required: true
    },
+   desc: {
+      type: String,
+      required: true
+   }
 
 }, { timestamps: true })
 

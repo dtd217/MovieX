@@ -4,7 +4,7 @@ import { ErrorsAction, tokenProtection } from "../Protection";
 import toast from "react-hot-toast";
 
 // GET ALL CATEGORIES ACTIONS
-export const getCategoriesAction = () => async (dispatch) => {
+export const getAllCategoriesAction = () => async (dispatch) => {
    try {
       dispatch({ type: categoriesConstants.GET_ALL_CATEGORIES_REQUEST });
       const { data } = await categoriesApi.getAllCategoriesService()
@@ -35,5 +35,17 @@ export const updateCategoryAction = (id, title) => async (dispatch, getState) =>
       toast.success("Cập nhật thể loại thành công");
    } catch (error) {
       ErrorsAction(error, dispatch, categoriesConstants.UPDATE_CATEGORY_FAIL);
+   }
+}
+
+// DELETE CATEGORY ACTIONS
+export const deleteCategoryAction = (id) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: categoriesConstants.DELETE_CATEGORY_REQUEST });
+      await categoriesApi.deleteCategoryService(id, tokenProtection(getState));
+      dispatch({ type: categoriesConstants.DELETE_CATEGORY_SUCCESS });
+      toast.success("Xoá thể loại thành công");
+   } catch (error) {
+      ErrorsAction(error, dispatch, categoriesConstants.DELETE_CATEGORY_FAIL);
    }
 }

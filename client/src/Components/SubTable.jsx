@@ -41,6 +41,7 @@ const SubTable = ({ data, admin, type, user }) => {
                <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
                   <th scope="col" className="text-center">Id</th>
                   <th scope="col" className="text-center">Tên</th>
+                  <th scope="col" className="text-center">Mô tả</th>
                   <th scope="col" className="text-center">Ngày tạo</th>
                   <th scope="col" className="text-center">Hành động</th>
                </tr>
@@ -49,7 +50,8 @@ const SubTable = ({ data, admin, type, user }) => {
                <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
                   <td className="text-center">{c.id}</td>
                   <td className="text-center whitespace-nowrap">{c.label}</td>
-                  <td className="text-center">{c.createAt ? c.createAt : '02, Jan 2024'}</td>
+                  <td className="text-justify">{c.desc}</td>
+                  <td className="text-center whitespace-nowrap">{c.createdAt ? c.createdAt : '02, Jan 2024'}</td>
                   <td className="text-center">
                      <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
                         <button
@@ -72,59 +74,6 @@ const SubTable = ({ data, admin, type, user }) => {
                handleOk={() => setOpenModalEditCategory(false)}
                category={category}
             />
-
-            {/* <tr className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-               <td className="text-center">#SADASD</td>
-               <td className="text-center whitespace-nowrap">asdasd</td>
-               <td className="text-center">02, Jan 2024</td>
-               <td className="text-center">
-                  <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                     <button
-                        onClick={() => {
-                           showModal('editCategory')
-                           OnEditFunction('asdasd')
-                        }}
-                        className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
-                        <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i>Sửa
-                     </button>
-                     <SubModal
-                        openModal={openModalEditCategory}
-                        handleCancel={() => setOpenModalEditCategory(false)}
-                        handleOk={() => setOpenModalEditCategory(false)}
-                        category={category}
-                     />
-                     <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
-                        <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
-                     </button>
-                  </div>
-               </td>
-            </tr >
-            <tr className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-               <td className="text-center">#SADASD</td>
-               <td className="text-center whitespace-nowrap">asdasdasdddddasd</td>
-               <td className="text-center">02, Jan 2024</td>
-               <td className="text-center">
-                  <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                     <button
-                        onClick={() => {
-                           showModal('editCategory')
-                           OnEditFunction('asdaasddddsd')
-                        }}
-                        className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
-                        <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i>Sửa
-                     </button>
-                     <SubModal
-                        openModal={openModalEditCategory}
-                        handleCancel={() => setOpenModalEditCategory(false)}
-                        handleOk={() => setOpenModalEditCategory(false)}
-                        category={category}
-                     />
-                     <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
-                        <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
-                     </button>
-                  </div>
-               </td>
-            </tr > */}
             <td colSpan="4" className="bg-gray-100">
                <Pagination />
             </td>
