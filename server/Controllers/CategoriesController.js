@@ -8,9 +8,7 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 const getCategories = asyncHandler(async (req, res) => {
    try {
-      // Tìm tất cả categories trong db
       const categories = await Categories.find({})
-      // Gửi categories đến client
       res.json(categories)
    }
    catch (error) {

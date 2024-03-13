@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export const getAllCategoriesAction = () => async (dispatch) => {
    try {
       dispatch({ type: categoriesConstants.GET_ALL_CATEGORIES_REQUEST });
-      const { data } = await categoriesApi.getAllCategoriesService()
+      const data = await categoriesApi.getAllCategoriesService()
       dispatch({ type: categoriesConstants.GET_ALL_CATEGORIES_SUCCESS, payload: data });
    } catch (error) {
       ErrorsAction(error, dispatch, categoriesConstants.GET_ALL_CATEGORIES_FAIL);
@@ -15,10 +15,10 @@ export const getAllCategoriesAction = () => async (dispatch) => {
 }
 
 // CREATE CATEGORY ACTIONS
-export const createCategoryAction = (title) => async (dispatch, getState) => {
+export const createCategoryAction = (label, desc) => async (dispatch, getState) => {
    try {
       dispatch({ type: categoriesConstants.CREATE_CATEGORY_REQUEST });
-      await categoriesApi.createCategoryService(title, tokenProtection(getState));
+      await categoriesApi.createCategoryService(label, desc, tokenProtection(getState));
       dispatch({ type: categoriesConstants.CREATE_CATEGORY_SUCCESS });
       toast.success("Thêm thể loại thành công");
    } catch (error) {
@@ -27,10 +27,10 @@ export const createCategoryAction = (title) => async (dispatch, getState) => {
 }
 
 // UPDATE CATEGORY ACTIONS
-export const updateCategoryAction = (id, title) => async (dispatch, getState) => {
+export const updateCategoryAction = (id, label, desc) => async (dispatch, getState) => {
    try {
       dispatch({ type: categoriesConstants.UPDATE_CATEGORY_REQUEST });
-      await categoriesApi.updateCategoryService(id, title, tokenProtection(getState));
+      await categoriesApi.updateCategoryService(id, label, desc, tokenProtection(getState));
       dispatch({ type: categoriesConstants.UPDATE_CATEGORY_SUCCESS });
       toast.success("Cập nhật thể loại thành công");
    } catch (error) {

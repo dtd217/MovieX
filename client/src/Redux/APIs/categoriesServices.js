@@ -11,8 +11,8 @@ const getAllCategoriesService = async () => {
 // ********** ADMIN APIS **********
 
 // Create new category
-const createCategoryService = async (title, token) => {
-   const { data } = await Axios.post('/categories', title, {
+const createCategoryService = async (label, desc, token) => {
+   const { data } = await Axios.post('/categories', label, desc, {
       headers: { Authorization: `Bearer ${token}` }
    });
    return data
@@ -27,8 +27,8 @@ const deleteCategoryService = async (id, token) => {
 }
 
 // Update category
-const updateCategoryService = async (id, title, token) => {
-   const { data } = await Axios.put(`/categories/${id}`, title, {
+const updateCategoryService = async (id, label, desc, token) => {
+   const { data } = await Axios.put(`/categories/${id}`, label, desc, {
       headers: { Authorization: `Bearer ${token}` }
    });
    return data

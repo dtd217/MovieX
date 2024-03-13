@@ -33,6 +33,7 @@ const Users = () => {
          dispatch({ type: isError ? 'DELETE_USER_RESET' : 'GET_ALL_USERS_RESET' })
       }
    }, [dispatch, isError, deleteError, isSuccess])
+   
    return (
       <Layout>
          <DashboardLayout title='Danh sách người dùng'>
@@ -54,7 +55,7 @@ const Users = () => {
                         </thead>
                         {users.map((user, i) => (
                            <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-                              <td className="text-left">{user._id ? (user._id).slice(0, 8).toUpperCase() : `user${i + 1}`}</td>
+                              <td className="text-left">{user._id ? (user._id).slice(0, 8) : `user${i + 1}`}</td>
                               <td>
                                  <div className="flex justify-center items-center">
                                     <img className='size-12 rounded-md object-cover' src={user.avatar ? user.avatar : '/images/user-avatar/user-default.png'} alt={user.name} />

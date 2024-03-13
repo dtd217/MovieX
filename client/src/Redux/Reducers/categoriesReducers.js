@@ -52,7 +52,7 @@ export const deleteCategoryReducer = (state = {}, action) => {
       case categoriesConstants.DELETE_CATEGORY_REQUEST:
          return { isLoading: true };
       case categoriesConstants.DELETE_CATEGORY_SUCCESS:
-         return { isLoading: false, category: action.payload };
+         return { isLoading: false, isSuccess: true };
       case categoriesConstants.DELETE_CATEGORY_FAIL:
          return { isLoading: false, isError: action.payload };
       case categoriesConstants.DELETE_CATEGORY_RESET:
