@@ -41,8 +41,8 @@ const updateCategory = asyncHandler(async (req, res) => {
       const category = await Categories.findById(req.params.id)
       if (category) {
          category.label = req.body.label || category.label
-         category.value = req.body.value || category.value
          category.desc = req.body.desc || category.desc
+         category.value = req.body.value || category.value
          const updatedCategory = await category.save()
          res.json(updatedCategory)
       }

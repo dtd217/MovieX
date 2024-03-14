@@ -15,11 +15,11 @@ export const getAllCategoriesAction = () => async (dispatch) => {
 }
 
 // CREATE CATEGORY ACTIONS
-export const createCategoryAction = (label, desc) => async (dispatch, getState) => {
+export const createCategoryAction = ({ label, desc, value }) => async (dispatch, getState) => {
    try {
       dispatch({ type: categoriesConstants.CREATE_CATEGORY_REQUEST });
-      await categoriesApi.createCategoryService(label, desc, tokenProtection(getState));
-      dispatch({ type: categoriesConstants.CREATE_CATEGORY_SUCCESS });
+      const data = await categoriesApi.createCategoryService({ label, desc, value }, tokenProtection(getState));
+      dispatch({ type: categoriesConstants.CREATE_CATEGORY_SUCCESS, payload: data });
       toast.success("Thêm thể loại thành công");
    } catch (error) {
       ErrorsAction(error, dispatch, categoriesConstants.CREATE_CATEGORY_FAIL);
@@ -27,10 +27,10 @@ export const createCategoryAction = (label, desc) => async (dispatch, getState) 
 }
 
 // UPDATE CATEGORY ACTIONS
-export const updateCategoryAction = (id, label, desc) => async (dispatch, getState) => {
+export const updateCategoryAction = (id, { label, desc, value }) => async (dispatch, getState) => {
    try {
       dispatch({ type: categoriesConstants.UPDATE_CATEGORY_REQUEST });
-      await categoriesApi.updateCategoryService(id, label, desc, tokenProtection(getState));
+      await categoriesApi.updateCategoryService(id, { label, desc, value }, tokenProtection(getState));
       dispatch({ type: categoriesConstants.UPDATE_CATEGORY_SUCCESS });
       toast.success("Cập nhật thể loại thành công");
    } catch (error) {

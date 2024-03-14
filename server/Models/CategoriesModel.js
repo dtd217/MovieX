@@ -5,15 +5,14 @@ const CategoriesSchema = new mongoose.Schema({
       type: String,
       required: true
    },
-   value: {
-      type: String,
-      // required: true
-   },
    desc: {
       type: String,
       required: true
+   },
+   value: {
+      type: String,
+      required: true
    }
-
 }, { timestamps: true })
 
 export default mongoose.model('Categories', CategoriesSchema)
