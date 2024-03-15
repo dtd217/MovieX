@@ -1,6 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Scrollbar } from 'swiper/modules';
+import { FreeMode } from 'swiper/modules';
 
 const MovieCasts = ({ movie }) => {
    return (

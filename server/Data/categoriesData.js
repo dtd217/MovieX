@@ -45,25 +45,25 @@ export const CategoriesData = [
       id: 8,
       label: 'Kinh dị',
       value: 'horror',
-      desc: 'Horror là: rùng rợn, nghe cái tên là bạn đã hiểu thể loại này có nội dung thế nào. Nó làm cho bạn kinh hãi, khiếp sợ, ghê tởm, run rẩy, có thể gây sock - một thể loại không dành cho người yếu tim'
+      desc: 'Thể loại làm cho bạn kinh hãi, khiếp sợ, ghê tởm, run rẩy, có thể gây shock - một thể loại không dành cho người yếu tim'
    },
    {
       id: 9,
       label: 'Lãng mạn',
       value: 'romance',
-      desc: 'Thường là những câu chuyện về tình yêu, tình cảm lãng mạn. Ớ đây chúng ta sẽ lấy ví dụ như tình yêu giữa một người con trai và con gái, bên cạnh đó đặc điểm thể loại này là kích thích trí tưởng tượng của bạn về tình yêu'
+      desc: 'Thường là những câu chuyện về tình yêu, tình cảm lãng mạn. Bên cạnh đó đặc điểm thể loại này là kích thích trí tưởng tượng của bạn về tình yêu'
    },
    {
       id: 10,
       label: 'Khoa học',
       value: 'sci-fi',
-      desc: 'Bao gồm những chuyện khoa học viễn tưởng, đa phần chúng xoay quanh nhiều hiện tượng mà liên quan tới khoa học, công nghệ, tuy vậy thường thì những câu chuyện đó không gắn bó chặt chẽ với các thành tựu khoa học hiện thời, mà là do con người tưởng tượng ra'
+      desc: 'Bao gồm những chuyện khoa học viễn tưởng, đa phần chúng xoay quanh nhiều hiện tượng mà liên quan tới khoa học, công nghệ, tuy vậy thường thì những câu chuyện này là do con người tưởng tượng ra'
    },
    {
       id: 11,
       label: 'Võ thuật',
       value: 'martial-arts',
-      desc: 'Giống với tên gọi, bất cứ gì liên quan đến võ thuật trong truyện từ các trận đánh nhau, tự vệ đến các môn võ thuật như akido, karate, judo hay taekwondo, kendo, các cách né tránh'
+      desc: 'Giống với tên gọi, bất cứ gì liên quan đến võ thuật trong truyện từ các trận đánh nhau, tự vệ đến các môn võ thuật như akido, karate, judo, taekwondo,...'
    },
    {
       id: 12,

@@ -30,6 +30,11 @@ html {
 
 *::-webkit-scrollbar-thumb {
    background: #DC2626 !important;
+   border-radius: 20px !important;
+}
+
+::-webkit-scrollbar-thumb{
+   background: #DC2626 !important;
    border-radius: 10px !important;
 }
 

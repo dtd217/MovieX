@@ -10,6 +10,7 @@ import { Input, Modal } from 'antd';
 
 const Categories = () => {
    const dispatch = useDispatch()
+
    const { categories, isLoading } = useSelector((state) => state.getAllCategories)
    const { isSuccess, isError } = useSelector((state) => state.deleteCategory)
    const {
@@ -131,7 +132,7 @@ const Categories = () => {
                {isLoading ?
                   <Loader /> :
                   categories?.length > 0 ?
-                     <table className="w-full text-left rtl:text-right">
+                     <table className="min-w-full text-left rtl:text-right table-fixed border border-green-800 overflow-hidden">
                         <thead className="text-gray-800 uppercase bg-gray-100">
                            <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
                               <th scope="col" className="text-center">Id</th>
@@ -146,10 +147,10 @@ const Categories = () => {
                               <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
                                  <td className="text-center">{c._id ? (c._id).slice(0, 8) : `c${i + 1}`}</td>
                                  <td className="text-center whitespace-nowrap">{c.label}</td>
-                                 <td className="text-left">{c.desc}</td>
-                                 <td className="text-left">{c.value}</td>
-                                 <td className="text-center">
-                                    <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
+                                 <td className="text-left min-w-[390px]">{c.desc}</td>
+                                 <td className="text-center">{c.value}</td>
+                                 <td className="text-center min-w-[190px]">
+                                    <div className="flex gap-2 *:py-2.5 *:px-4 *:rounded-lg *:sm:text-sm *:flex *:items-center *:justify-center">
                                        <button
                                           onClick={() => {
                                              setOpenModalEditCategory(true);
@@ -158,10 +159,10 @@ const Categories = () => {
                                              setCategoryValue(c.value)
                                              setCategory(c._id)
                                           }}
-                                          className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
+                                          className='text-gray-100 bg-green-500 transitions hover:bg-gray-600'>
                                           <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
                                        </button>
-                                       <button onClick={() => adminDeleteCategoryHandler(c._id)} className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
+                                       <button onClick={() => adminDeleteCategoryHandler(c._id)} className='text-gray-100 bg-red-500 transitions hover:bg-gray-600'>
                                           <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
                                        </button>
                                     </div>
