@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import TvSeries from './Pages/TvSeries'
@@ -18,8 +18,16 @@ import Users from './Pages/Dashboard/Admin/Users'
 import AddMovie from './Pages/Dashboard/Admin/AddMovie'
 import ToastContainer from './Components/Notifications/ToastContainer'
 import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
+import { useDispatch } from 'react-redux'
+import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
 
 const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction())
+  }, [dispatch])
+
   return (
     <>
       <ToastContainer />

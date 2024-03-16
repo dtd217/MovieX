@@ -12,13 +12,8 @@ const Hero = () => {
    const [arrow, setArrow] = useState('Show');
 
    const mergedArrow = useMemo(() => {
-      if (arrow === 'Hide') {
-         return false;
-      }
-
-      if (arrow === 'Show') {
-         return true;
-      }
+      if (arrow === 'Hide') { return false; }
+      if (arrow === 'Show') { return true; }
 
       return {
          pointAtCenter: true,

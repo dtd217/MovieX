@@ -15,7 +15,7 @@ html {
 
 * {
    scrollbar-width: thin;
-   scrollbar-color: #DC2626 #E5E7EB;
+   scrollbar-color: #DC2626 #000;
    scroll-behavior: smooth;
 }
 
@@ -24,7 +24,7 @@ html {
 }
 
 *::-webkit-scrollbar-track {
-   background: black !important;
+   background: #fff000 !important;
    border-radius: 20px !important;
 }
 
@@ -33,7 +33,7 @@ html {
    border-radius: 20px !important;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
    background: #DC2626 !important;
    border-radius: 10px !important;
 }
