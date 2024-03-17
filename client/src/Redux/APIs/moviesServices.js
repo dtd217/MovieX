@@ -4,7 +4,7 @@ import Axios from './Axios.js';
 
 // Get all movies
 const getAllMoviesService = async ({ categories, year, rate, search, pageNumber }) => {
-   const { data } = await Axios.get(`/movies?categories=${categories.join(", ")}&year=${year}&rate=${rate}&search=${search}&pageNumber=${pageNumber}`);
+   const { data } = await Axios.get(`/movies?categories=${categories.join("&")}&year=${year}&rate=${rate}&search=${search}&pageNumber=${pageNumber}`);
    return data
 }
 
@@ -13,3 +13,5 @@ const getMovieByIdService = async (id) => {
    const { data } = await Axios.get(`/movies/${id}`);
    return data
 }
+
+export { getAllMoviesService, getMovieByIdService }

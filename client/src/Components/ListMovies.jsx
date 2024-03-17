@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Movies } from '../Data/movieData';
 import Movie from './Movie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,13 +26,20 @@ const ListMovies = ({ moviess, title }) => {
          <ul className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 mt-5">
             {isLoading ?
                <Loader /> :
-               Movies?.length > 0 ?
-                  <>{Movies.slice(0, page)?.map((movie, index) => (
-                     <li className='col-span-1' key={index}>
-                        <Movie movie={movie} />
-                     </li>
-                  ))}</> :
-                  null
+               Movies?.length < 0 ?
+                  <>
+                     {Movies.slice(0, page)?.map((movie, index) => (
+                        <li className='col-span-1' key={index}>
+                           <Movie movie={movie} />
+                        </li>
+                     ))}
+                  </> :
+                  <div className='bg-[#78909c] col-span-5 py-12 bg-opacity-20 rounded-md flex flex-col items-center justify-center'>
+                     <div className="h-28 flex justify-center items-center">
+                        <i className="fa-regular fa-circle-xmark fa-4x text-red-500"></i>
+                     </div>
+                     <p className='text-3xl py-2 font-semibold'>Không có phim nào</p>
+                  </div>
             }
          </ul>
          {/* <div className={`${page >= movies.length ? 'hidden' : ''} w-full text-center mt-6`}>

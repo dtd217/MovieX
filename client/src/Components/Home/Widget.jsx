@@ -13,7 +13,7 @@ const Widget = () => {
          <section className="p-3 h-auto mb-5 rounded-md bg-[#78909c] bg-opacity-20 w-full">
             <div className="text-white mb-6 font-semibold pb-4 text-base border-b-4 border-[#b5e745]">Hôm nay xem gì?</div>
             <p className='text-sm text-gray-400 tracking-tight text-justify mb-6'><strong>MẸO SỬ DỤNG:</strong> Sử dụng chức năng Lọc Phim trên thanh công cụ để lọc những phim bạn đang cần xem chính xác nhất.</p>
-            <Link to="/filters" className='rounded-sm bg-red-600 text-white font-semibold px-3 py-2.5 leading-9 hover:bg-gray-600 duration-100 ease-in tracking-tight'>
+            <Link to="/filters" className='rounded bg-red-600 text-white font-semibold px-3 py-2.5 leading-9 hover:bg-gray-600 duration-100 ease-in tracking-tight'>
                <i className="fa-solid fa-filter fa-lg"></i> Lọc phim
             </Link>
          </section>

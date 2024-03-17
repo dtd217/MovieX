@@ -1,26 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Widget from '../Components/Home/Widget'
 import { CategoriesData } from '../Data/categoriesData'
 import { Movies } from '../Data/movieData'
 import ListMovies from '../Components/ListMovies'
-
-const typeMovieData = [
-   { id: 'all', title: 'Tất cả' },
-   { id: 'movie/ova', title: 'Phim lẻ (Movie/OVA)' },
-   { id: 'tv/series', title: 'Phim bộ (TV/Series)' },
-]
-
-const yearData = [
-   { id: 'all', title: 'Tất cả' },
-   { id: '2023', title: '2023' },
-   { id: '2022', title: '2022' },
-   { id: '2021', title: '2021' },
-   { id: '2020', title: '2020' },
-   { id: 'older', title: 'Cũ hơn' },
-]
+import { useDispatch } from 'react-redux'
+import { typeMovieData, yearData } from '../Data/FilterData'
+import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
 
 const Filters = () => {
+   const dispatch = useDispatch()
+
+
    const [isFilter, setIsFilter] = useState(false)
    const [selectedTypeMovie, setSelectedTypeMovie] = useState(typeMovieData[0].id);
    const [selectedCategories, setSelectedCategories] = useState([]);
@@ -28,14 +19,11 @@ const Filters = () => {
    const [isSelectedSortType, setIsSelectedSortType] = useState("")
 
    const handleCheckboxChange = (event) => {
-      const value = event.target.value;
-      const isChecked = event.target.checked;
-
-      if (isChecked) {
-         setSelectedCategories((prevSelected) => [...prevSelected, value]);
+      if (event.target.checked) {
+         setSelectedCategories((prevSelected) => [...prevSelected, event.target.value]);
       } else {
          setSelectedCategories((prevSelected) =>
-            prevSelected.filter((category) => category !== value)
+            prevSelected.filter((category) => category !== event.target.value)
          );
       }
       setIsFilter(false);
@@ -79,6 +67,16 @@ const Filters = () => {
             return Movies
       }
    }
+
+   useEffect(() => {
+      if (setSelectedCategories.length > 0) {
+         dispatch(getAllMoviesAction({
+            categories: selectedCategories,
+            selectedTypeMovie,
+            selectedYear
+         }))
+      }
+   }, [selectedCategories, dispatch, selectedTypeMovie, selectedYear])
 
    return (
       <Layout>
@@ -125,6 +123,9 @@ const Filters = () => {
                                  </ul>
                               </div>
                            </div>
+                           {/* {selectedTypeMovie}
+                           {selectedCategories}
+                           {selectedYear} */}
                            <div className='w-full md:w-4/5 md:pl-5 md:border-l border-gray-300'>
                               {/* Type */}
                               <div className="size-fit mb-5">
@@ -147,7 +148,7 @@ const Filters = () => {
                                     ))}
                                  </ul>
                               </div>
-                              {/* Category */}
+                              {/* Categories */}
                               <div className="size-fit mb-5">
                                  <span className='text-xl font-bold text-blue-500'>Thể loại</span>
                                  <ul className='list-none border border-gray-400 mt-1 font-semibold text-sm flex flex-wrap pb-2.5 px-4 bg-gray-300 rounded-sm overflow-hidden *:mr-5'>
@@ -156,7 +157,7 @@ const Filters = () => {
                                           <label className='text-gray-700 flex items-center mt-2.5'>
                                              <input
                                                 type="checkbox"
-                                                value={category.label}
+                                                value={category.value}
                                                 className='mr-2 cursor-pointer border-2'
                                                 name='category'
                                                 onChange={handleCheckboxChange} />
