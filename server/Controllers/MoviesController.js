@@ -20,12 +20,15 @@ const importMovies = asyncHandler(async (req, res) => {
 // @access  Public
 const getMovies = asyncHandler(async (req, res) => {
    try {
-      // Phân loại phim theo thể loại, quốc gia, lượt đánh giá, năm sản xuất và tìm kiếm
-      const { categories, episode, language, rate, year, search } = req.query
+      // Phân loại phim theo thể loại, lượt đánh giá, năm sản xuất và tìm kiếm
+      const { categories, year, type, search } = req.query
+
+      // Cài đặt điều kiện tiếm phim
+
+
       let query = {
-         ...(categories && { categories }),
-         ...(episode && { episode }),
-         ...(language && { language }),
+         ...(categories && { c: { $all: categories } }),
+         ...(type && { type }),
          ...(rate && { rate }),
          ...(year && { year }),
          ...(search && { title: { $regex: search, $options: 'i' } })

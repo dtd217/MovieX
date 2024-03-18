@@ -8,7 +8,6 @@ import Loader from '../Components/Notifications/Loader';
 const ListMovies = ({ moviess, title }) => {
    const dispatch = useDispatch()
 
-
    const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
    const { categories } = useSelector((state) => state.getAllCategories)
 
@@ -26,7 +25,7 @@ const ListMovies = ({ moviess, title }) => {
          <ul className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 mt-5">
             {isLoading ?
                <Loader /> :
-               Movies?.length < 0 ?
+               Movies?.length > 0 ?
                   <>
                      {Movies.slice(0, page)?.map((movie, index) => (
                         <li className='col-span-1' key={index}>
