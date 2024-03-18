@@ -11,7 +11,6 @@ import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
 const Filters = () => {
    const dispatch = useDispatch()
 
-
    const [isFilter, setIsFilter] = useState(false)
    const [selectedTypeMovie, setSelectedTypeMovie] = useState(typeMovieData[0].id);
    const [selectedCategories, setSelectedCategories] = useState([]);
@@ -72,10 +71,13 @@ const Filters = () => {
       if (setSelectedCategories.length > 0) {
          dispatch(getAllMoviesAction({
             categories: selectedCategories,
-            selectedTypeMovie,
-            selectedYear
+            year: selectedYear,
+            type: selectedTypeMovie,
+            search: "",
+
          }))
       }
+      // console.log(selectedCategories, selectedYear, selectedTypeMovie)
    }, [selectedCategories, dispatch, selectedTypeMovie, selectedYear])
 
    return (
@@ -123,9 +125,6 @@ const Filters = () => {
                                  </ul>
                               </div>
                            </div>
-                           {/* {selectedTypeMovie}
-                           {selectedCategories}
-                           {selectedYear} */}
                            <div className='w-full md:w-4/5 md:pl-5 md:border-l border-gray-300'>
                               {/* Type */}
                               <div className="size-fit mb-5">
