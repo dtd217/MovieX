@@ -41,10 +41,10 @@ const MovieSchema = new mongoose.Schema({
       type: String,
       required: true
    },
-   year: {
+   year: [{
       type: String,
       required: true
-   },
+   }],
    episode: {
       type: String,
       required: true

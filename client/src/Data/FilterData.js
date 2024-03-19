@@ -1,7 +1,7 @@
 export const typeMovieData = [
    { id: 'all', title: 'Tất cả' },
-   { id: 'movie/ova', title: 'Phim lẻ (Movie/OVA)' },
-   { id: 'tv/series', title: 'Phim bộ (TV/Series)' },
+   { id: 'movie-ova', title: 'Phim lẻ (Movie/OVA)' },
+   { id: 'tv-series', title: 'Phim bộ (TV/Series)' },
 ]
 
 export const yearData = [

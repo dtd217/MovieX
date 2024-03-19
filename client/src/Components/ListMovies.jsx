@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Movies } from '../Data/movieData';
+import React, { useEffect } from 'react'
 import Movie from './Movie';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Loader from '../Components/Notifications/Loader';
 
-const ListMovies = ({ moviess, title }) => {
+const ListMovies = ({ title }) => {
    const dispatch = useDispatch()
 
    const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
@@ -25,9 +24,9 @@ const ListMovies = ({ moviess, title }) => {
          <ul className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 mt-5">
             {isLoading ?
                <Loader /> :
-               Movies?.length > 0 ?
+               movies?.length > 0 ?
                   <>
-                     {Movies.slice(0, page)?.map((movie, index) => (
+                     {movies.map((movie, index) => (
                         <li className='col-span-1' key={index}>
                            <Movie movie={movie} />
                         </li>

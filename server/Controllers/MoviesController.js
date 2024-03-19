@@ -23,20 +23,16 @@ const getMovies = asyncHandler(async (req, res) => {
       // Phân loại phim theo thể loại, lượt đánh giá, năm sản xuất và tìm kiếm
       const { categories, year, type, search } = req.query
 
-      // Cài đặt điều kiện tiếm phim
-
-
       let query = {
-         ...(categories && { c: { $all: categories } }),
-         ...(type && { type }),
-         ...(rate && { rate }),
+         ...(categories && { categories: { $all: categories } }),
+         ...(type && { type: { $in: type } }),
          ...(year && { year }),
          ...(search && { title: { $regex: search, $options: 'i' } })
       }
 
       // Chức năng tải thêm phim
       const page = Number(req.query.pageNumber) || 1 //Nếu pageNumber trống => set băng 1
-      const limit = 2
+      const limit = 100
       const skip = (page - 1) * limit // bỏ qua 2 movies trong mỗi page
 
       // Tìm phim bằng câu lệnh, tiếp theo và giới hạn trang

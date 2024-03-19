@@ -4,12 +4,13 @@ import Widget from '../Components/Home/Widget'
 import { CategoriesData } from '../Data/categoriesData'
 import { Movies } from '../Data/movieData'
 import ListMovies from '../Components/ListMovies'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { typeMovieData, yearData } from '../Data/FilterData'
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
 
 const Filters = () => {
    const dispatch = useDispatch()
+   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
 
    const [isFilter, setIsFilter] = useState(false)
    const [selectedTypeMovie, setSelectedTypeMovie] = useState(typeMovieData[0].id);
@@ -37,15 +38,6 @@ const Filters = () => {
       setSelectedYear(event.target.value);
       setIsFilter(false);
    }
-
-   const resultFilterMovies = Movies.filter(movie => (
-      movie.type.includes(selectedTypeMovie) &&
-      movie.year.includes(selectedYear) &&
-      selectedCategories.every(
-         category => movie.category.includes(category)
-      )
-   ))
-
    const resultSortedMovies = (selectedTypeSort) => {
       // if (selectedTypeSort === "nameaz") {
       //    (Movies.sort((a, b) => (a.title > b.title) ? 1 : -1));
@@ -68,17 +60,15 @@ const Filters = () => {
    }
 
    useEffect(() => {
-      if (setSelectedCategories.length > 0) {
+      if (selectedCategories.length > 0) {
          dispatch(getAllMoviesAction({
             categories: selectedCategories,
             year: selectedYear,
             type: selectedTypeMovie,
             search: "",
-
          }))
       }
-      // console.log(selectedCategories, selectedYear, selectedTypeMovie)
-   }, [selectedCategories, dispatch, selectedTypeMovie, selectedYear])
+   }, [selectedCategories, selectedTypeMovie, selectedYear, dispatch])
 
    return (
       <Layout>
@@ -193,28 +183,23 @@ const Filters = () => {
                            <button
                               type='button'
                               className='bg-red-600 lg:mr-8 mr-4 transtions border-0 text-xl font-semibold text-white px-5 py-2.5 rounded hover:bg-gray-600 transitions'
-                              onClick={() => { setIsFilter(true) }}
-                           >Lọc phim</button>
+                              onClick={() => { setIsFilter(true) }}>Lọc phim</button>
                            <button
                               type='button'
                               className='bg-red-600 transtions border-0 text-xl font-semibold text-white px-5 py-2.5 rounded hover:bg-gray-600 transitions'
                               onClick={() => {
                                  setIsFilter(false)
                                  // setIsSorted(false)
-                                 setSelectedTypeMovie(typeMovieData[0].id)
-                                 setSelectedYear(yearData[0].id)
-                                 setSelectedCategories([])
-                              }}
-                           >Làm mới</button>
+                              }}>Làm mới</button>
                         </div>
                      </div>
 
                      {/* List Movies */}
-                     {isFilter && resultFilterMovies ?
+                     {isFilter && movies.length > 0 ?
                         <div className="text-center w-full">
-                           <ListMovies movies={resultFilterMovies} title={"Kết quả tìm kiếm"} />
+                           <ListMovies title={"Kết quả tìm kiếm"} />
                         </div> :
-                        ((<div className={`${resultFilterMovies ? 'hidden' : 'block'} mt-5 rounded-md w-full h-96 bg-red-500`}>
+                        ((<div className={`${movies ? 'hidden' : 'block'} mt-5 rounded-md w-full h-96 bg-red-500`}>
                         </div>))
                      }
                      {/* {resultSortedMovies('nameaz') ?
