@@ -60,14 +60,12 @@ const Filters = () => {
    }
 
    useEffect(() => {
-      if (selectedCategories.length > 0) {
-         dispatch(getAllMoviesAction({
-            categories: selectedCategories,
-            year: selectedYear,
-            type: selectedTypeMovie,
-            search: "",
-         }))
-      }
+      dispatch(getAllMoviesAction({
+         categories: selectedCategories,
+         year: selectedYear,
+         type: selectedTypeMovie,
+         search: "",
+      }))
    }, [selectedCategories, selectedTypeMovie, selectedYear, dispatch])
 
    return (
@@ -195,7 +193,7 @@ const Filters = () => {
                      </div>
 
                      {/* List Movies */}
-                     {isFilter && movies.length > 0 ?
+                     {isFilter && movies?.length > 0 ?
                         <div className="text-center w-full">
                            <ListMovies title={"Kết quả tìm kiếm"} />
                         </div> :

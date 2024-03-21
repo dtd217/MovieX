@@ -26,7 +26,7 @@ const MovieCasts = ({ movie }) => {
                <SwiperSlide key={index}>
                   <div className='flex items-center justify-center flex-col'>
                      <img src="/images/user-img.jpg" alt="" className='rounded-full mb-2 opacity-60 hover:opacity-90' />
-                     <span className='font-semibold text-sm'>{character}</span>
+                     <span className='font-semibold text-sm text-center'>{character}</span>
                   </div>
                </SwiperSlide>
                // <li className='bg-transparent rounded-full flex flex-col items-center' key={index}>

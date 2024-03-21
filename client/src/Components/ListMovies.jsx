@@ -3,6 +3,7 @@ import Movie from './Movie';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Loader from '../Components/Notifications/Loader';
+import { getAllMoviesAction } from '../Redux/Actions/moviesActions';
 
 const ListMovies = ({ title }) => {
    const dispatch = useDispatch()
@@ -10,11 +11,20 @@ const ListMovies = ({ title }) => {
    const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
    const { categories } = useSelector((state) => state.getAllCategories)
 
+   const nextPage = () => {
+      dispatch(getAllMoviesAction({ pageNumber: page + 1 }))
+   }
+
+   const prevPage = () => {
+      dispatch(getAllMoviesAction({ pageNumber: page - 1 }))
+   }
+
    useEffect(() => {
       if (isError) {
          toast.error(isError)
       }
    }, [dispatch, isError])
+
 
    return (
       <section className='text-center w-full block rounded-md mt-5'>
@@ -40,11 +50,14 @@ const ListMovies = ({ title }) => {
                   </div>
             }
          </ul>
-         {/* <div className={`${page >= movies.length ? 'hidden' : ''} w-full text-center mt-6`}>
-            <button onClick={handleLoadingMore} className='py-3 px-4 font-semibold bg-gradient-to-tr bg-red-600 hover:opacity-70 transitions rounded-lg w-fit'>
-               LOAD MORE
+         <div className={`${page >= movies?.length ? '' : ''} w-full flex gap-2 justify-center text-center mt-6 *:py-1.5 *:px-4 *:bg-red-600 *:rounded *:w-fit`}>
+            <button onClick={prevPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
+               <i className="fa-solid fa-backward"></i>
             </button>
-         </div> */}
+            <button onClick={nextPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
+               <i className="fa-solid fa-forward"></i>
+            </button>
+         </div>
       </section>
    )
 }
