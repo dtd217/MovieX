@@ -32,7 +32,7 @@ const getMovies = asyncHandler(async (req, res) => {
 
       // Chức năng tải thêm phim
       const page = Number(req.query.pageNumber) || 1 //Nếu pageNumber trống => set băng 1
-      const limit = 4
+      const limit = 8
       const skip = (page - 1) * limit // bỏ qua 2 movies trong mỗi page
 
       // Tìm phim bằng câu lệnh, tiếp theo và giới hạn trang

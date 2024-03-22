@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Widget from '../Components/Home/Widget'
-import { CategoriesData } from '../Data/categoriesData'
 import { Movies } from '../Data/movieData'
 import ListMovies from '../Components/ListMovies'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,13 +9,14 @@ import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
 
 const Filters = () => {
    const dispatch = useDispatch()
-   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
+   const { movies } = useSelector((state) => state.getAllMovies)
+   const { categories } = useSelector((state) => state.getAllCategories)
 
    const [isFilter, setIsFilter] = useState(false)
    const [selectedTypeMovie, setSelectedTypeMovie] = useState(typeMovieData[0].id);
    const [selectedCategories, setSelectedCategories] = useState([]);
    const [selectedYear, setSelectedYear] = useState(yearData[0].id);
-   const [isSelectedSortType, setIsSelectedSortType] = useState("")
+   // const [isSelectedSortType, setIsSelectedSortType] = useState("")
 
    const handleCheckboxChange = (event) => {
       if (event.target.checked) {
@@ -61,11 +61,12 @@ const Filters = () => {
 
    useEffect(() => {
       dispatch(getAllMoviesAction({
-         categories: selectedCategories,
+         categories: [...selectedCategories],
          year: selectedYear,
          type: selectedTypeMovie,
          search: "",
       }))
+      // console.log(selectedCategories, selectedTypeMovie, selectedYear)
    }, [selectedCategories, selectedTypeMovie, selectedYear, dispatch])
 
    return (
@@ -139,7 +140,7 @@ const Filters = () => {
                               <div className="size-fit mb-5">
                                  <span className='text-xl font-bold text-blue-500'>Thể loại</span>
                                  <ul className='list-none border border-gray-400 mt-1 font-semibold text-sm flex flex-wrap pb-2.5 px-4 bg-gray-300 rounded-sm overflow-hidden *:mr-5'>
-                                    {CategoriesData.map((category, index) => (
+                                    {categories?.map((category, index) => (
                                        <li key={index}>
                                           <label className='text-gray-700 flex items-center mt-2.5'>
                                              <input
@@ -193,12 +194,10 @@ const Filters = () => {
                      </div>
 
                      {/* List Movies */}
-                     {isFilter && movies?.length > 0 ?
+                     {isFilter && movies?.length > 0 &&
                         <div className="text-center w-full">
                            <ListMovies title={"Kết quả tìm kiếm"} />
-                        </div> :
-                        ((<div className={`${movies ? 'hidden' : 'block'} mt-5 rounded-md w-full h-96 bg-red-500`}>
-                        </div>))
+                        </div>
                      }
                      {/* {resultSortedMovies('nameaz') ?
                         <div className="text-center w-full">

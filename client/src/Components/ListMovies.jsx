@@ -9,7 +9,6 @@ const ListMovies = ({ title }) => {
    const dispatch = useDispatch()
 
    const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
-   const { categories } = useSelector((state) => state.getAllCategories)
 
    const nextPage = () => {
       dispatch(getAllMoviesAction({ pageNumber: page + 1 }))
@@ -17,6 +16,14 @@ const ListMovies = ({ title }) => {
 
    const prevPage = () => {
       dispatch(getAllMoviesAction({ pageNumber: page - 1 }))
+   }
+
+   const firstPage = () => {
+      dispatch(getAllMoviesAction({ pageNumber: 1 }))
+   }
+
+   const lastPage = () => {
+      dispatch(getAllMoviesAction({ pageNumber: pages }))
    }
 
    useEffect(() => {
@@ -35,13 +42,11 @@ const ListMovies = ({ title }) => {
             {isLoading ?
                <Loader /> :
                movies?.length > 0 ?
-                  <>
-                     {movies.map((movie, index) => (
-                        <li className='col-span-1' key={index}>
-                           <Movie movie={movie} />
-                        </li>
-                     ))}
-                  </> :
+                  <>{movies.map((movie, index) => (
+                     <li className='col-span-1' key={index}>
+                        <Movie movie={movie} />
+                     </li>
+                  ))}</> :
                   <div className='bg-[#78909c] col-span-5 py-12 bg-opacity-20 rounded-md flex flex-col items-center justify-center'>
                      <div className="h-28 flex justify-center items-center">
                         <i className="fa-regular fa-circle-xmark fa-4x text-red-500"></i>
@@ -50,12 +55,18 @@ const ListMovies = ({ title }) => {
                   </div>
             }
          </ul>
-         <div className={`${page >= movies?.length ? '' : ''} w-full flex gap-2 justify-center text-center mt-6 *:py-1.5 *:px-4 *:bg-red-600 *:rounded *:w-fit`}>
+         <div className='w-full flex gap-2 justify-center text-center mt-6 *:py-1.5 *:px-4 *:bg-red-600 *:rounded *:w-fit'>
+            <button onClick={firstPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
+               <i className="fa-solid fa-backward-fast"></i>
+            </button>
             <button onClick={prevPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
                <i className="fa-solid fa-backward"></i>
             </button>
             <button onClick={nextPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
                <i className="fa-solid fa-forward"></i>
+            </button>
+            <button onClick={lastPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
+               <i className="fa-solid fa-forward-fast"></i>
             </button>
          </div>
       </section>
