@@ -5,10 +5,9 @@ import toast from 'react-hot-toast';
 import Loader from '../Components/Notifications/Loader';
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions';
 
-const ListMovies = ({ title }) => {
+const ListMovies = ({ movies, title }) => {
    const dispatch = useDispatch()
-
-   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
+   const { isLoading, isError, page, pages } = useSelector((state) => state.getAllMovies)
 
    const nextPage = () => {
       dispatch(getAllMoviesAction({ pageNumber: page + 1 }))
@@ -16,14 +15,6 @@ const ListMovies = ({ title }) => {
 
    const prevPage = () => {
       dispatch(getAllMoviesAction({ pageNumber: page - 1 }))
-   }
-
-   const firstPage = () => {
-      dispatch(getAllMoviesAction({ pageNumber: 1 }))
-   }
-
-   const lastPage = () => {
-      dispatch(getAllMoviesAction({ pageNumber: pages }))
    }
 
    useEffect(() => {
@@ -42,7 +33,7 @@ const ListMovies = ({ title }) => {
             {isLoading ?
                <Loader /> :
                movies?.length > 0 ?
-                  <>{movies.map((movie, index) => (
+                  <>{movies?.map((movie, index) => (
                      <li className='col-span-1' key={index}>
                         <Movie movie={movie} />
                      </li>
@@ -56,17 +47,11 @@ const ListMovies = ({ title }) => {
             }
          </ul>
          <div className='w-full flex gap-2 justify-center text-center mt-6 *:py-1.5 *:px-4 *:bg-red-600 *:rounded *:w-fit'>
-            <button onClick={firstPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
-               <i className="fa-solid fa-backward-fast"></i>
-            </button>
             <button onClick={prevPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
                <i className="fa-solid fa-backward"></i>
             </button>
             <button onClick={nextPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
                <i className="fa-solid fa-forward"></i>
-            </button>
-            <button onClick={lastPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
-               <i className="fa-solid fa-forward-fast"></i>
             </button>
          </div>
       </section>

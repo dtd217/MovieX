@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import Movie from '../Movie';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../Notifications/Loader';
+import { Empty } from '../../Components/Notifications/Empty';
+import { getAllMoviesAction } from '../../Redux/Actions/moviesActions';
+import toast from 'react-hot-toast';
 
-const Banner = ({ movies }) => {
+const Banner = () => {
+   const dispatch = useDispatch()
+   const { isLoading, isError, movies } = useSelector((state) => state.getAllMovies)
+
+   useEffect(() => {
+      dispatch(getAllMoviesAction({}))
+      if (isError) {
+         toast.error(isError)
+      }
+   }, [dispatch, isError])
+
    return (
       <div className='h-full mb-4 flex items-center'>
          <Swiper
@@ -24,11 +39,17 @@ const Banner = ({ movies }) => {
                1280: { slidesPerView: 8 }
             }}
          >
-            {movies.map((movie, index) => (
-               <SwiperSlide key={index}>
-                  <Movie movie={movie} />
-               </SwiperSlide>
-            ))}
+            {isLoading ? <Loader /> :
+               movies?.length > 0 ?
+                  <>
+                     {movies?.map((movie, index) => (
+                        <SwiperSlide key={index}>
+                           <Movie movie={movie} />
+                        </SwiperSlide>
+                     ))}
+                  </> :
+                  <Empty message="Không tìm thấy phim" />
+            }
          </Swiper>
       </div>
    )

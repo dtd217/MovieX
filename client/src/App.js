@@ -20,6 +20,7 @@ import ToastContainer from './Components/Notifications/ToastContainer'
 import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
 import { useDispatch } from 'react-redux'
 import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
+import MoviesPage from './Pages/MoviesPage'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/movie/:id' element={<SingleMovie />} />
+          <Route path='/movies/:search' element={<MoviesPage />} />
           <Route path='/watch/:id' element={<WatchPage />} />
           <Route path='*' element={<NotFound />} />
 

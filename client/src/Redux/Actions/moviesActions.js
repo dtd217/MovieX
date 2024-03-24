@@ -14,4 +14,35 @@ export const getAllMoviesAction = ({ categories = [], year = [], type = [], sear
    }
 }
 
-// 
+// GET MOVIE BY ID ACTIONS
+export const getDetailsMovieAction = (id) => async (dispatch) => {
+   try {
+      dispatch({ type: moviesConstants.GET_DETAILS_MOVIE_REQUEST });
+      const response = await moviesApi.getMovieByIdService(id);
+      dispatch({ type: moviesConstants.GET_DETAILS_MOVIE_SUCCESS, payload: response });
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.GET_DETAILS_MOVIE_FAIL);
+   }
+}
+
+// GET RANDOM MOVIES ACTIONS
+export const getRandomMoviesAction = () => async (dispatch) => {
+   try {
+      dispatch({ type: moviesConstants.GET_RANDOM_MOVIES_REQUEST });
+      const response = await moviesApi.getRandomMovieService();
+      dispatch({ type: moviesConstants.GET_RANDOM_MOVIES_SUCCESS, payload: response });
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.GET_RANDOM_MOVIES_FAIL);
+   }
+}
+
+// GET TOP RATED MOVIES ACTIONS
+export const getTopRatedMoviesAction = () => async (dispatch) => {
+   try {
+      dispatch({ type: moviesConstants.GET_TOP_RATED_MOVIES_REQUEST });
+      const response = await moviesApi.getTopRatedMoviesService();
+      dispatch({ type: moviesConstants.GET_TOP_RATED_MOVIES_SUCCESS, payload: response });
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.GET_TOP_RATED_MOVIES_FAIL);
+   }
+}

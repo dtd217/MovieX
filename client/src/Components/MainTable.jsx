@@ -130,48 +130,45 @@ const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
                   </td>
                </table>
             </div>
-            : type === 'movieList' && admin ?
+            : type === 'categories' && admin ?
                <>
-                  <div className="rounded-md mb-6 flex justify-evenly gap-8 w-[800px] min-w-full">
-                     {total.map((item, index) => (
-                        <div key={index} className="flex justify-start items-center bg-gray-400 w-full rounded-md px-4 py-6">
-                           <div className={`rounded-full mr-2 p-4 size-12 flex items-center justify-center ${item.background}`}>{item.icon}</div>
-                           <div className="*:block lg:*:text-lg">
-                              <span>{item.title}</span>
-                              <span className='font-bold'>{item.value}</span>
-                           </div>
-                        </div>
-                     ))}
-                  </div>
+                  <button
+                     onClick={() => showModal('addCategory')}
+                     className="rounded-md mb-6 bg-red-600 hover:bg-gray-400 cursor-pointer transitions py-3 px-2.5 w-fit">
+                     <i className="fa-solid fa-plus fa-lg mr-2"></i>Thêm mới
+                  </button>
+                  <SubModal
+                     openModal={openModalAddCategory}
+                     handleCancel={() => setOpenModalAddCategory(false)}
+                     handleOk={() => setOpenModalAddCategory(false)}
+                  />
                   <table className="w-full text-left rtl:text-right">
                      <thead className="text-gray-800 uppercase bg-gray-100">
                         <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
-                           <th scope="col" className="">Hình ảnh</th>
-                           <th scope="col" className="">Tên phim</th>
-                           <th scope="col" className="">Thể loại</th>
-                           <th scope="col" className="text-center">Ngôn ngữ</th>
-                           <th scope="col" className="text-center">Năm</th>
-                           <th scope="col" className="text-center">Thời lượng</th>
-                           <th scope="col" className="text-center">Cài đặt</th>
+                           <th scope="col" className="text-center">Id</th>
+                           <th scope="col" className="text-center">Tên</th>
+                           <th scope="col" className="text-center">Ngày tạo</th>
+                           <th scope="col" className="text-center">Hành động</th>
                         </tr>
                      </thead>
-                     {data.slice(0, 6).map((movie, i) => (
+                     {data.map((c, i) => (
                         <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-                           <td>
-                              <div className="flex justify-center items-center">
-                                 <img src={movie.image} className='size-12 rounded-md object-cover' alt={movie.title} />
-                              </div>
-                           </td>
-                           <td>{`${movie.title}`.substring(0, 30).slice(0) + "..."}</td>
-                           <td>{movie.category.join(", ")}</td>
-                           <td className="text-center">{movie.language}</td>
-                           <td className="text-center">{movie.year[0]}</td>
-                           <td className="text-center">{movie.episode}</td>
+                           <td className="text-center">{c.id}</td>
+                           <td className="text-center whitespace-nowrap">{c.title}</td>
+                           <td className="text-center">{c.createAt ? c.createAt : '02, Jan 2024'}</td>
                            <td className="text-center">
-                              <div className="flex flex-col sm:flex-row justify-center *:p-2.5 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                                 <button className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
+                              <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
+                                 <button
+                                    onClick={() => showModal('editCategory')}
+                                    className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
                                     <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
                                  </button>
+                                 <SubModal
+                                    openModal={openModalEditCategory}
+                                    handleCancel={() => setOpenModalEditCategory(false)}
+                                    handleOk={() => setOpenModalEditCategory(false)}
+                                    category={c.title}
+                                 />
                                  <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
                                     <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
                                  </button>
@@ -179,63 +176,12 @@ const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
                            </td>
                         </tr >
                      ))}
-                     <td colSpan="7" className="bg-gray-100">
+                     <td colSpan="4" className="bg-gray-100">
                         <Pagination />
                      </td>
                   </table>
                </>
-               : type === 'categories' && admin ?
-                  <>
-                     <button
-                        onClick={() => showModal('addCategory')}
-                        className="rounded-md mb-6 bg-red-600 hover:bg-gray-400 cursor-pointer transitions py-3 px-2.5 w-fit">
-                        <i className="fa-solid fa-plus fa-lg mr-2"></i>Thêm mới
-                     </button>
-                     <SubModal
-                        openModal={openModalAddCategory}
-                        handleCancel={() => setOpenModalAddCategory(false)}
-                        handleOk={() => setOpenModalAddCategory(false)}
-                     />
-                     <table className="w-full text-left rtl:text-right">
-                        <thead className="text-gray-800 uppercase bg-gray-100">
-                           <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
-                              <th scope="col" className="text-center">Id</th>
-                              <th scope="col" className="text-center">Tên</th>
-                              <th scope="col" className="text-center">Ngày tạo</th>
-                              <th scope="col" className="text-center">Hành động</th>
-                           </tr>
-                        </thead>
-                        {data.map((c, i) => (
-                           <tr key={i} className="bg-gray-100 *:border-2 *:px-4 *:py-2 *:text-gray-500">
-                              <td className="text-center">{c.id}</td>
-                              <td className="text-center whitespace-nowrap">{c.title}</td>
-                              <td className="text-center">{c.createAt ? c.createAt : '02, Jan 2024'}</td>
-                              <td className="text-center">
-                                 <div className="flex flex-col sm:flex-row justify-center *:py-2.5 *:px-4 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                                    <button
-                                       onClick={() => showModal('editCategory')}
-                                       className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
-                                       <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
-                                    </button>
-                                    <SubModal
-                                       openModal={openModalEditCategory}
-                                       handleCancel={() => setOpenModalEditCategory(false)}
-                                       handleOk={() => setOpenModalEditCategory(false)}
-                                       category={c.title}
-                                    />
-                                    <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
-                                       <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
-                                    </button>
-                                 </div>
-                              </td>
-                           </tr >
-                        ))}
-                        <td colSpan="4" className="bg-gray-100">
-                           <Pagination />
-                        </td>
-                     </table>
-                  </>
-                  : null
+               : null
          }
       </div >
    )

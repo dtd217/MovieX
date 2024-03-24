@@ -7,9 +7,22 @@ import toast from 'react-hot-toast';
 
 const Navbar = () => {
    const dispatch = useDispatch();
-   const navigate = useNavigate();
    const { userInfo } = useSelector((state) => state.userLogin);
    // const [bookmarks] = useSelector((state) => state.userGetBookmarks)
+
+   const navigate = useNavigate();
+   const [search, setSearch] = useState('')
+
+   const handleSearch = (e) => {
+      e.preventDefault()
+      if (search.trim()) {
+         navigate(`/movies/${search}`)
+         setSearch(search)
+      }
+      else {
+         navigate('/movies')
+      }
+   }
 
    const logoutHandler = () => {
       dispatch(logoutAction());
@@ -71,7 +84,7 @@ const Navbar = () => {
 
                {userInfo ?
                   (<div className="flex lg:order-2">
-                     <div className="relative hidden lg:block">
+                     <form onSubmit={handleSearch} className="relative hidden lg:block">
                         <button
                            type='submit'
                            className="absolute inset-y-0 left-0 flex items-center px-3 bg-red-600 rounded-l-lg">
@@ -80,8 +93,13 @@ const Navbar = () => {
                            </svg>
                            <span className="sr-only">Search icon</span>
                         </button>
-                        <input type="text" id="search-navbar" className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 border-gray-700 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Tìm kiếm. . ." />
-                     </div>
+                        <input
+                           type="search"
+                           value={search}
+                           onChange={(e) => setSearch(e.target.value)}
+                           id="search-navbar"
+                           className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 border-gray-700 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Tìm kiếm. . ." />
+                     </form>
                      {/* User icon */}
                      <Dropdown
                         menu={{ items }}
@@ -123,7 +141,7 @@ const Navbar = () => {
                      </button>
                   </div>) :
                   (<div className="flex lg:order-2">
-                     <div className="relative hidden lg:block">
+                     <form onSubmit={handleSearch} className="relative hidden lg:block">
                         <button
                            type='submit'
                            className="absolute inset-y-0 left-0 flex items-center px-3 bg-red-600 rounded-l-md">
@@ -132,8 +150,13 @@ const Navbar = () => {
                            </svg>
                            <span className="sr-only">Search icon</span>
                         </button>
-                        <input type="text" id="search-navbar" className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 border-gray-700 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Tìm kiếm. . ." />
-                     </div>
+                        <input
+                           type="search"
+                           value={search}
+                           onChange={(e) => setSearch(e.target.value)}
+                           id="search-navbar"
+                           className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 border-gray-700 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Tìm kiếm. . ." />
+                     </form>
                      <Link to="/login" className="text-white bg-red-600 hover:bg-red-700 font-medium rounded-md text-sm px-4 py-2 text-center mx-3 lg:mr-0 uppercase transitions">Đăng nhập</Link>
                      {/* Menu icon */}
                      <button
@@ -160,7 +183,7 @@ const Navbar = () => {
                {/* Dropdown menu */}
                {isOpened ?
                   (<div className="items-center justify-between block w-full lg:hidden lg:w-auto lg:order-1">
-                     <div className="relative mt-3 lg:hidden">
+                     <form onSubmit={handleSearch} className="relative mt-3 lg:hidden">
                         <button
                            type='submit'
                            className="absolute inset-y-0 left-0 flex items-center px-3 bg-red-600 rounded-l-lg">
@@ -168,8 +191,13 @@ const Navbar = () => {
                               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                            </svg>
                         </button>
-                        <input type="text" id="search-navbar" className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Search . . ." />
-                     </div>
+                        <input
+                           type="search"
+                           value={search}
+                           onChange={(e) => setSearch(e.target.value)}
+                           id="search-navbar"
+                           className="block w-full p-2 pl-14 text-sm rounded-md outline-0 border-0 bg-gray-600 placeholder-gray-100 text-gray-100 focus:placeholder-white" placeholder="Search . . ." />
+                     </form>
                      <ul className="flex flex-col p-4 lg:p-0 mt-4 font-medium rounded-md lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 bg-gray-800 lg:bg-black">
                         <li>
                            <Link to="/" className={`${activeTab === tabLink ? 'bg-red-600 text-white hover:bg-red-600 hover:text-white' : ''} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`} aria-current="page">Trang chủ</Link>

@@ -24,6 +24,9 @@ const rootReducer = combineReducers({
 
    // Movie Reducers
    getAllMovies: Movies.getAllMoviesReducer,
+   getRandomMovies: Movies.getRandomMoviesReducer,
+   getTopRatedMovies: Movies.getTopRatedMoviesReducer,
+   getDetailsMovie: Movies.getDetailsMovieReducer,
 });
 
 // Lấy userInfo từ localStorage

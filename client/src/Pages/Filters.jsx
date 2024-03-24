@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Widget from '../Components/Home/Widget'
 import { Movies } from '../Data/movieData'
-import ListMovies from '../Components/ListMovies'
 import { useDispatch, useSelector } from 'react-redux'
 import { typeMovieData, yearData } from '../Data/FilterData'
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
+import Loader from '../Components/Notifications/Loader'
+import Movie from '../Components/Movie'
+import toast from 'react-hot-toast'
+import ListMovies from '../Components/ListMovies'
 
 const Filters = () => {
    const dispatch = useDispatch()
-   const { movies } = useSelector((state) => state.getAllMovies)
+   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
    const { categories } = useSelector((state) => state.getAllCategories)
 
    const [isFilter, setIsFilter] = useState(false)
@@ -64,10 +67,12 @@ const Filters = () => {
          categories: [...selectedCategories],
          year: selectedYear,
          type: selectedTypeMovie,
-         search: "",
+         search: '',
       }))
-      // console.log(selectedCategories, selectedTypeMovie, selectedYear)
-   }, [selectedCategories, selectedTypeMovie, selectedYear, dispatch])
+      if (isError) {
+         toast.error(isError)
+      }
+   }, [selectedCategories, selectedTypeMovie, selectedYear, isError, dispatch])
 
    return (
       <Layout>
@@ -196,7 +201,7 @@ const Filters = () => {
                      {/* List Movies */}
                      {isFilter && movies?.length > 0 &&
                         <div className="text-center w-full">
-                           <ListMovies title={"Kết quả tìm kiếm"} />
+                           <ListMovies movies={movies} title={"Kết quả tìm kiếm"} />
                         </div>
                      }
                      {/* {resultSortedMovies('nameaz') ?

@@ -5,25 +5,24 @@ import ListMovies from '../Components/ListMovies'
 import { Breadcrumb } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
-import toast from 'react-hot-toast'
+import { useParams } from 'react-router-dom'
 
-const TvSeries = () => {
+const MoviesPage = () => {
    const dispatch = useDispatch()
-   const { movies, isError } = useSelector((state) => state.getAllMovies)
+   const { movies } = useSelector((state) => state.getAllMovies)
+   const { search } = useParams()
+   console.log(search)
 
    useEffect(() => {
-      if (isError) {
-         toast.error(isError)
-      }
-      dispatch(getAllMoviesAction({ type: "tv-series" }))
-   }, [dispatch, isError])
+      dispatch(getAllMoviesAction({ search: search }))
+   }, [dispatch, search])
 
    return (
       <Layout>
          <div className="bg-gray-700 py-4">
             <div className="max-w-6xl p-4 mx-auto bg-black xl:rounded">
                <div className='flex justify-between lg:flex-row flex-col'>
-                  <div className='lg:w-3/4 size-full flex flex-col justify-center items-start lg:pr-1 rounded-md'>
+                  <div className='lg:w-3/4 w-full flex flex-col justify-center items-start lg:pr-1 rounded-md h-full'>
                      <Breadcrumb
                         separator=">"
                         items={[
@@ -32,12 +31,16 @@ const TvSeries = () => {
                               href: '/',
                            },
                            {
-                              title: "Danh sách phim bộ (Tv/Series)",
-                              href: '/tv-series'
+                              title: 'Tìm kiếm',
+                              href: '/',
+                           },
+                           {
+                              title: `${search}`,
+                              href: '/movie-ova'
                            },
                         ]}
                      />
-                     <ListMovies movies={movies} title={"Danh sách phim bộ (TV/Series)"} />
+                     <ListMovies movies={movies} title={`Kết quả tìm kiếm: ${search}`} />
                   </div>
                   <Widget />
                </div>
@@ -47,4 +50,4 @@ const TvSeries = () => {
    )
 }
 
-export default TvSeries
+export default MoviesPage

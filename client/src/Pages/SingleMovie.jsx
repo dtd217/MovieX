@@ -1,24 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
-import { Movies } from '../Data/movieData'
 import Widget from '../Components/Home/Widget'
 import Stars from '../Components/Stars'
 import { Breadcrumb, Progress, Space, notification } from 'antd';
 import MovieRates from '../Components/Single/MovieRates'
 import MovieInfo from '../Components/Single/MovieInfo'
 import MovieCasts from '../Components/Single/MovieCasts'
+import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
+import { getDetailsMovieAction } from '../Redux/Actions/moviesActions'
 
 const SingleMovie = () => {
-   // window.scrollTo(0, 0)
    const [isFollowed, setIsFollowed] = useState(false)
-
+   const dispatch = useDispatch()
    const { id } = useParams()
-   const movie = Movies.find(movie => movie.slug === id)
+   const { movies } = useSelector((state) => state.getAllMovies)
+   const movie = movies.find(movie => movie.slug === id)
 
-   // const similarMovies = Movies.filter(m => movie.category.includes(m.category))
-   const similarMovies = Movies.filter(m => m.category.includes("Lãng mạn"))
+   // const { isLoading, isError, movie } = useSelector((state) => state.getDetailsMovie)
+
+   // const similarMovies = movies.filter(m => m.categories.includes(movie.category))
+
+   const similarMovies = movies?.filter(m => movie.categories.map(mv => m?.categories.includes(mv)))
+
+   // const similarMovies = Movies.filter(m => m.category.includes("Lãng mạn"))
 
    const [api, contextHolder] = notification.useNotification();
    const openNotificationWithIcon = (type) => {
@@ -34,6 +40,10 @@ const SingleMovie = () => {
          });
    };
 
+   useEffect(() => {
+      dispatch(getDetailsMovieAction(id))
+   }, [dispatch, id])
+
    return (
       <Layout>
          <div className="bg-gray-700 py-4">
@@ -41,7 +51,7 @@ const SingleMovie = () => {
                <div className='flex justify-between lg:flex-row flex-col'>
                   <div className='relative lg:w-3/4 lg:inline-block block h-full'>
                      <nav className="flex">
-                        <Breadcrumb
+                        {/* <Breadcrumb
                            separator=">"
                            items={[
                               {
@@ -49,8 +59,8 @@ const SingleMovie = () => {
                                  href: '/',
                               },
                               {
-                                 title: `${movie.type.includes("movie/ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
-                                 href: `${movie.type.includes("movie/ova") ? "/movie-ova" : "/tv-series"}`
+                                 title: `${movie.type.includes("movie-ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
+                                 href: `${movie.type.includes("movie-ova") ? "/movie-ova" : "/tv-series"}`
                               },
                               {
                                  title: `${movie.title}`,
@@ -60,7 +70,7 @@ const SingleMovie = () => {
                                  title: 'Thông tin',
                               },
                            ]}
-                        />
+                        /> */}
                      </nav>
                      <div
                         className='w-full rounded-md flex flex-col h-full md:p-10 p-4 py-8 mt-4'
@@ -106,7 +116,6 @@ const SingleMovie = () => {
                            </Link>
                            <div className='flex flex-col items-start md:ml-6 mx-0 md:h-72 h-96 tracking-tight justify-between'>
                               <h1 className='text-3xl font-semibold text-[#b5e745] mb-2 md:text-left text-center w-full'>{movie.title}</h1>
-                              {/* <h2 className='text-xl mb-2 md:text-left text-center w-full'>{movie.subTitle}</h2> */}
                               <div className='md:text-balance text-justify h-full text-gray-400 overflow-auto scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-red-600 scrollbar-track-slate-300 scrollbar-w-1.5'>{movie.desc}</div>
                            </div>
                         </header>
