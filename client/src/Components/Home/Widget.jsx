@@ -68,7 +68,7 @@ const Widget = () => {
                            {movies?.filter(movie => movie?.type.includes("tv-series")).slice(0, 4).map((movie, index) => (
                               <li className="mb-5" key={index}>
                                  <div className='flex'>
-                                    <Link to={`/movie/${movie?.slug}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
+                                    <Link to={`/movies/${movie?._id}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
                                        <img src={`${movie?.image}`} className='h-full rounded-md w-full' alt="" />
                                        <div className='absolute top-0'>
                                           <div className='bg-[#b5e745] w-6 h-6 relative flex items-center justify-center text-xs font-bold rounded-tl-md text-black'>#{index + 1}</div>
@@ -84,7 +84,7 @@ const Widget = () => {
                                        </div>
                                     </Link>
                                     <div className="ml-2 w-60">
-                                       <Link to={`/movie/${movie?.slug}`} className='font-semibold tracking-tight hover:text-gray-500 duration-200 ease-in'>{movie?.title}</Link>
+                                       <Link to={`/movies/${movie?._id}`} className='font-semibold tracking-tight hover:text-gray-500 duration-200 ease-in'>{movie?.title}</Link>
                                        <div className='flex justify-between flex-wrap mt-2'>
                                           <span className='font-bold text-sm inline-flex items-center lg:mr-3 text-[#b5e745]'>
                                              <svg className="w-3 h-3 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -116,7 +116,7 @@ const Widget = () => {
                            {movies?.filter(movie => movie?.type.includes("movie-ova")).slice(0, 4).map((movie, index) => (
                               <li className="mb-5" key={index}>
                                  <div className='flex'>
-                                    <Link to={`/movie/${movie?.slug}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
+                                    <Link to={`/movies/${movie?._id}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
                                        <img src={`${movie?.image}`} className='h-full rounded-md w-full' alt="" />
                                        <div className='absolute top-0'>
                                           <div className='bg-[#b5e745] w-6 h-6 relative flex items-center justify-center text-xs font-bold rounded-tl-md text-black'>#{index + 1}</div>
@@ -132,7 +132,7 @@ const Widget = () => {
                                        </div>
                                     </Link>
                                     <div className="ml-2 w-60">
-                                       <Link to={`/movie/${movie?.slug}`} className='font-semibold tracking-tight hover:text-gray-500 duration-200 ease-in'>{movie?.title}</Link>
+                                       <Link to={`/movies/${movie?._id}`} className='font-semibold tracking-tight hover:text-gray-500 duration-200 ease-in'>{movie?.title}</Link>
                                        <div className='flex justify-between flex-wrap mt-2'>
                                           <span className='font-bold text-sm inline-flex items-center text-[#b5e745]'>
                                              <svg className="w-3 h-3 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">

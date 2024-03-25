@@ -86,7 +86,7 @@ const MovieList = () => {
                                  </div>
                               </td>
                               <td>{`${movie.title}`.substring(0, 30).slice(0) + "..."}</td>
-                              <td>{categories?.map((category) => (movie.categories?.map((cate) => (cate === category.value ? category.label + ', ' : null))))}</td>
+                              <td>{categories?.map((category) => (movie?.categories?.map((cate) => (cate === category.value ? category.label + ', ' : null))))}</td>
                               <td className="text-center">{movie.year[0]}</td>
                               <td className="text-center">{movie.episode}</td>
                               <td className="text-center">

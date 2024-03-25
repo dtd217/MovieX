@@ -135,7 +135,7 @@ const AddMovie = () => {
                            controls
                            poster='/images/bgBlack.png'
                            playsInline
-                           controlslist="nodownload"
+                           controlsList="nodownload"
                            className='rounded-md max-w-md w-full'
                            onPause={() => setIsPlayed(false)}
                         >

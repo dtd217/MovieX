@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Stars from '../Stars';
 import { UsersData } from '../../Data/usersData';
+import { Empty } from '../Notifications/Empty';
 
-const MovieRates = () => {
+const MovieRates = ({ movie }) => {
    const getTimeDifference = () => {
       const currentDate = new Date();
       const desiredDate = new Date("2024-01-12 15:00:00");
@@ -37,7 +38,7 @@ const MovieRates = () => {
 
    return (
       <div className='size-full text-black'>
-         <h1 className='text-4xl font-bold mb-4'>Reviews (34)</h1>
+         <h1 className='text-4xl font-bold mb-4'>Reviews ({movie?.reviewNumber ? movie?.reviewNumber : 0})</h1>
          <div className='flex flex-col'>
             <h2 className='text-lg mb-0.5'>Select Rating</h2>
             <select
@@ -60,21 +61,28 @@ const MovieRates = () => {
             </form>
          </div>
          <div className="mt-5 border-t-2 border-gray-300">
-            {UsersData?.slice(5, 10).map((user, index) => (
-               <div key={index} className="pt-6">
-                  <div className="flex">
-                     <img src={user?.avatar} alt="user-avatar" className='rounded-md size-12 bg-gradient-to-t from-red-700 to-red-900' />
-                     <div className="ml-4">
-                        <h4 className='text-lg font-semibold'>{user?.name}</h4>
-                        <p className='text-sm text-gray-500'>{getTimeDifference()}</p>
-                        <div className=""><Stars value={user?.rating} /></div>
+            {movie?.reviews?.length > 0 ?
+               movie?.reviews?.map((userReview, index) => (
+                  <div key={index} className="pt-6">
+                     <div className="flex">
+                        <img
+                           src={userReview?.userImage ? `${userReview?.userImage}` : '/images/user-avatar/user-default.jpg'}
+                           alt={userReview?.userName}
+                           className='rounded-md size-12 bg-gradient-to-t from-red-700 to-red-900'
+                        />
+                        <div className="ml-4">
+                           <h4 className='text-lg font-semibold'>{userReview?.userName}</h4>
+                           <p className='text-sm text-gray-500'>{getTimeDifference()}</p>
+                           <div className=""><Stars value={userReview?.rate} /></div>
+                        </div>
+                     </div>
+                     <div className="mt-1 ml-16">
+                        <p className='italic text-gray-700 text-sm xs:text-base'>{userReview?.comment}</p>
                      </div>
                   </div>
-                  <div className="mt-1 ml-16">
-                     <p className='italic text-gray-700 text-sm xs:text-base'>{user?.review}</p>
-                  </div>
-               </div>
-            ))}
+               )) :
+               <Empty message={`Hãy là người đầu tiên đánh giá ${movie?.title}`} />
+            }
          </div>
       </div>
    )

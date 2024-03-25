@@ -15,13 +15,13 @@ export const getAllMoviesAction = ({ categories = [], year = [], type = [], sear
 }
 
 // GET MOVIE BY ID ACTIONS
-export const getDetailsMovieAction = (id) => async (dispatch) => {
+export const getMovieByIdAction = (id) => async (dispatch) => {
    try {
-      dispatch({ type: moviesConstants.GET_DETAILS_MOVIE_REQUEST });
+      dispatch({ type: moviesConstants.GET_MOVIE_BY_ID_REQUEST });
       const response = await moviesApi.getMovieByIdService(id);
-      dispatch({ type: moviesConstants.GET_DETAILS_MOVIE_SUCCESS, payload: response });
+      dispatch({ type: moviesConstants.GET_MOVIE_BY_ID_SUCCESS, payload: response });
    } catch (error) {
-      ErrorsAction(error, dispatch, moviesConstants.GET_DETAILS_MOVIE_FAIL);
+      ErrorsAction(error, dispatch, moviesConstants.GET_MOVIE_BY_ID_FAIL);
    }
 }
 

@@ -1,20 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Widget from '../Components/Home/Widget'
-import { useParams } from 'react-router-dom'
-import { Movies } from '../Data/movieData'
 import { Breadcrumb, notification } from 'antd';
 import MovieRates from '../Components/Single/MovieRates'
+import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
+import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions';
+import { useParams } from 'react-router-dom';
 
 const WatchPage = () => {
+   const { id } = useParams()
+   const dispatch = useDispatch()
+   const { movies } = useSelector((state) => state.getAllMovies)
+   const { movie } = useSelector((state) => state.getMovieById)
+
    const videoRef = useRef(null);
    const [isPlayed, setIsPlayed] = useState(false)
 
-   const { id } = useParams()
-   const movie = Movies.find(movie => movie.slug === id)
-
-   const similarMovies = Movies.filter(m => m.category.includes(movie.category[0]))
+   const similarMovies = movies?.filter(m =>
+      m.categories &&
+      movie &&
+      movie.categories &&
+      movie.categories.length > 0 &&
+      m.categories.includes(movie.categories[0])
+   )
 
    const [isFollowed, setIsFollowed] = useState(false)
    const [errorNotice, setErrorNotice] = useState(false)
@@ -41,34 +50,29 @@ const WatchPage = () => {
          });
    };
 
+   useEffect(() => {
+      dispatch(getMovieByIdAction(id))
+      dispatch(getAllMoviesAction({}))
+   }, [dispatch, id])
+
    return (
       <Layout>
          <div className="bg-gray-700 py-4">
             <div className="max-w-6xl p-4 mx-auto bg-black xl:rounded">
                <div className='flex justify-between lg:flex-row flex-col'>
                   <div className='relative lg:w-3/4 lg:inline-block block h-full'>
-                     <nav className="flex">
-                        <Breadcrumb
-                           separator=">"
-                           items={[
-                              {
-                                 title: 'Trang chủ',
-                                 href: '/',
-                              },
-                              {
-                                 title: `${movie.type.includes("movie/ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
-                                 href: `${movie.type.includes("movie/ova") ? "/movie-ova" : "/tv-series"}`
-                              },
-                              {
-                                 title: `${movie.title}`,
-                                 href: `/movie/${movie.slug}`
-                              },
-                              {
-                                 title: 'Xem phim',
-                              },
-                           ]}
-                        />
-                     </nav>
+                     <Breadcrumb
+                        separator=">"
+                        items={[
+                           { title: 'Trang chủ', href: '/' },
+                           {
+                              title: `${movie?.type?.includes("movie-ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
+                              href: `${movie?.type?.includes("movie-ova") ? "/movie-ova" : "/tv-series"}`
+                           },
+                           { title: `${movie?.title}`, href: `/movies/${movie?._id}` },
+                           { title: 'Xem phim' },
+                        ]}
+                     />
                      <div className='size-full rounded-md mt-4 relative'>
                         <div onClick={playVideo} className={`${isPlayed ? 'hidden' : 'flex'} z-10 items-center justify-center size-full absolute`}>
                            <div className="xs:size-28 size-12 cursor-pointer popBeat flex items-center justify-center text-4xl rounded-full bg-transparent  absolute">
@@ -80,11 +84,11 @@ const WatchPage = () => {
                            controls
                            poster='/images/bgBlack.png'
                            playsInline
-                           controlslist="nodownload"
+                           controlsList="nodownload"
                            className='rounded-md h-[520px] w-full'
                            onPause={() => setIsPlayed(false)}
                         >
-                           <source src={movie.video} />
+                           <source src={movie?.video} />
                         </video>
                      </div>
                      <div className="h-full mb-2 flex justify-center flex-wrap *:text-lg *:p-2 *:font-semibold *:text-gray-400 ">
@@ -94,7 +98,7 @@ const WatchPage = () => {
                         </div>
                         <div className="hover:bg-gray-700 cursor-pointer">
                            <button onClick={() => {
-                              const element = document.getElementById('comments');
+                              const element = document.getElementById('beforeComments');
                               if (element) {
                                  element.scrollIntoView({ behavior: 'smooth' });
                               }
@@ -155,7 +159,7 @@ const WatchPage = () => {
                            <button>HDX(ADS)</button>
                         </div>
                      </div>
-                     <div className="p-3 bg-opacity-20 bg-[#78909c] size-full rounded text-lg">
+                     <div id='beforeComments' className="p-3 bg-opacity-20 bg-[#78909c] size-full rounded text-lg">
                         <div className='text-gray-400 font-semibold '>
                            <i className="fa-solid fa-film mr-2"></i>
                            MovieX
@@ -176,13 +180,13 @@ const WatchPage = () => {
                            <div className='hover:bg-red-400 transitions'>13</div>
                         </div>
                      </div>
-                     <div id='comments' className="bg-gray-200 rounded mt-5 px-6 py-8">
-                        <MovieRates />
+                     <div className="bg-gray-200 rounded mt-5 px-6 py-8">
+                        <MovieRates movie={movie} />
                      </div>
                      <div className="bg-[#78909c] bg-opacity-20 size-full rounded-md mt-5 p-2">
                         <div className="border-[#b5e745] border-b-4 font-semibold w-fit mb-6 pb-2 text-lg">Phim liên quan</div>
                         <div className="grid md:grid-cols-5 sm:grid-cols-4 min-[360px]:grid-cols-2 min-[420px]:grid-cols-3 grid-cols-2 gap-4">
-                           {similarMovies.slice(0, 5).map((movie, index) => (
+                           {similarMovies?.slice(0, 5).map((movie, index) => (
                               <Movie movie={movie} key={index} />
                            ))}
                         </div>

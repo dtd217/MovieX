@@ -46,13 +46,13 @@ const Hero = () => {
          {movies?.slice(0, 5).map((movie, index) => (
             <SwiperSlide>
                <div key={index}>
-                  <Link to={`/movie/${movie?.slug}`} className='relative w-full h-full block'>
+                  <Link to={`/movies/${movie?._id}`} className='relative w-full h-full block'>
                      <img src={movie?.banner} alt={movie?.title} className='w-full max-h-[440px] rounded-md object-cover lg:object-fill max-w-full object-top hover:opacity-90 duration-100 ease-in' />
                   </Link>
                   {/* PC */}
                   <div className='absolute lg:block hidden w-1/2 bg-opacity-40 h-full text-white top-0 left-0 bg-black rounded-l-md overflow min-w-min'>
                      <div className="p-5 block">
-                        <Link to={`/movie/${movie?.slug}`} className='font-semibold hover:text-red-500 transitions'>
+                        <Link to={`/movies/${movie?._id}`} className='font-semibold hover:text-red-500 transitions'>
                            <div className='pb-0.5 text-3xl max-h-16 p-0 mb-2.5 leading-none text-left overflow-hidden'>{movie?.title}</div>
                         </Link>
                         {/* Info */}
@@ -100,7 +100,7 @@ const Hero = () => {
                               <i className="fa-solid fa-ellipsis"></i>
                            </button>
                         </div>
-                        <Link to={`/movie/${movie?.slug}`} className="font-semibold bg-red-600 mr-1.5 flex items-center justify-center rounded py-2.5 px-5 max-w-fit hover:bg-gray-600 duration-200 ease-in">
+                        <Link to={`/movies/${movie?._id}`} className="font-semibold bg-red-600 mr-1.5 flex items-center justify-center rounded py-2.5 px-5 max-w-fit hover:bg-gray-600 duration-200 ease-in">
                            <svg className="w-4 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
                               <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z" />
                            </svg>
@@ -111,7 +111,7 @@ const Hero = () => {
                   {/* Mobile & Tablet */}
                   <div className='relative block lg:hidden w-full h-full text-white'>
                      <div className="p-5 block bg-[#78909c] bg-opacity-30 h-full rounded-b-md">
-                        <Link to={`/movie/${movie?.slug}`} className='font-semibold hover:text-red-500 transitions'>
+                        <Link to={`/movies/${movie?._id}`} className='font-semibold hover:text-red-500 transitions'>
                            <div className='pb-0.5 text-3xl p-0 mb-2.5 leading-none text-left overflow-hidden'>{movie?.title}</div>
                         </Link>
                         {/* Info */}
@@ -167,7 +167,7 @@ const Hero = () => {
                               <i className="fa-solid fa-ellipsis"></i>
                            </button>
                         </div>
-                        <Link to={`/movie/${movie?.slug}`} className="font-semibold bg-red-600 mr-1.5 flex items-center justify-center rounded py-2.5 px-5 max-w-fit hover:bg-gray-600">
+                        <Link to={`/movies/${movie?._id}`} className="font-semibold bg-red-600 mr-1.5 flex items-center justify-center rounded py-2.5 px-5 max-w-fit hover:bg-gray-600">
                            <svg className="w-4 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
                               <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z" />
                            </svg>

@@ -76,10 +76,42 @@ const MovieSchema = new mongoose.Schema({
       default: 0
    },
    reviews: [reviewSchema],
+   rateNumber: {
+      type: Number,
+      required: true,
+      default: 0
+   },
+   comment: {
+      type: Number,
+      required: true,
+      default: 0
+   },
    characters: [{
       type: String,
       required: true
    }],
+   director: {
+      type: String,
+      required: true
+   },
+   studio: {
+      type: String,
+      required: true
+   },
+   age: {
+      type: String,
+      required: true
+   },
+   viewNumber: {
+      type: Number,
+      required: true,
+      default: 0
+   },
+   followNumber: {
+      type: Number,
+      required: true,
+      default: 0
+   },
 }, { timestamps: true })
 
 export default mongoose.model('Movie', MovieSchema)

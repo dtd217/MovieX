@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
    getAllMovies: Movies.getAllMoviesReducer,
    getRandomMovies: Movies.getRandomMoviesReducer,
    getTopRatedMovies: Movies.getTopRatedMoviesReducer,
-   getDetailsMovie: Movies.getDetailsMovieReducer,
+   getMovieById: Movies.getMovieByIdReducer,
 });
 
 // Lấy userInfo từ localStorage

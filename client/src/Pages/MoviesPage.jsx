@@ -11,7 +11,6 @@ const MoviesPage = () => {
    const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
    const { search } = useParams()
-   console.log(search)
 
    useEffect(() => {
       dispatch(getAllMoviesAction({ search: search }))
@@ -36,7 +35,7 @@ const MoviesPage = () => {
                            },
                            {
                               title: `${search}`,
-                              href: '/movie-ova'
+                              href: '#',
                            },
                         ]}
                      />

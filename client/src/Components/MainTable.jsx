@@ -99,16 +99,16 @@ const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
                         <td>
                            <div className="flex justify-center items-center">
                               <img
-                                 src={movie.image}
+                                 src={movie?.image}
                                  className='size-12 rounded-md object-cover'
-                                 alt={movie.title} />
+                                 alt={movie?.title} />
                            </div>
                         </td>
-                        <td>{`${movie.title}`.substring(0, 30).slice(0) + "..."}</td>
-                        <td>{movie.categories.join(', ')}</td>
-                        <td className="text-center">{movie.language}</td>
-                        <td className="text-center">{movie.year}</td>
-                        <td className="text-center">{movie.episode}</td>
+                        <td>{`${movie?.title}`.substring(0, 30).slice(0) + "..."}</td>
+                        <td>{movie?.categories.join(', ')}</td>
+                        <td className="text-center">{movie?.language}</td>
+                        <td className="text-center">{movie?.year}</td>
+                        <td className="text-center">{movie?.episode}</td>
                         <td className="text-center">
                            <div className="flex flex-col sm:flex-row justify-center *:p-2.5 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
                               <button
@@ -118,7 +118,7 @@ const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
                               </button>
                               {contextHolderModal}
                               {contextHolderNotification}
-                              <Link to={`/movie/${movie?.slug}`} className='text-gray-100 bg-blue-600 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
+                              <Link to={`/movies/${movie?.id}`} className='text-gray-100 bg-blue-600 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
                                  <i className="fa-solid fa-eye fa-lg mr-1"></i> Xem
                               </Link>
                            </div>

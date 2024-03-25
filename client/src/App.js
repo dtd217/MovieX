@@ -41,8 +41,8 @@ const App = () => {
           <Route path='/filters' element={<Filters />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/movie/:id' element={<SingleMovie />} />
-          <Route path='/movies/:search' element={<MoviesPage />} />
+          <Route path='/movies/:id' element={<SingleMovie />} />
+          <Route path='/movies/search/:search' element={<MoviesPage />} />
           <Route path='/watch/:id' element={<WatchPage />} />
           <Route path='*' element={<NotFound />} />
 

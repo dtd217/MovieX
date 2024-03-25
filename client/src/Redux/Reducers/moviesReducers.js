@@ -35,13 +35,13 @@ export const getRandomMoviesReducer = (state = { movies: [] }, action) => {
 }
 
 // GET MOVIE BY ID
-export const getDetailsMovieReducer = (state = { movie: {} }, action) => {
+export const getMovieByIdReducer = (state = { movie: {} }, action) => {
    switch (action.type) {
-      case moviesConstants.GET_DETAILS_MOVIE_REQUEST:
+      case moviesConstants.GET_MOVIE_BY_ID_REQUEST:
          return { isLoading: true };
-      case moviesConstants.GET_DETAILS_MOVIE_SUCCESS:
+      case moviesConstants.GET_MOVIE_BY_ID_SUCCESS:
          return { isLoading: false, movie: action.payload };
-      case moviesConstants.GET_DETAILS_MOVIE_FAIL:
+      case moviesConstants.GET_MOVIE_BY_ID_FAIL:
          return { isLoading: false, isError: action.payload };
       default:
          return state;

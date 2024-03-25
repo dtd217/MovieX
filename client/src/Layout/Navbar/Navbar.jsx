@@ -16,7 +16,7 @@ const Navbar = () => {
    const handleSearch = (e) => {
       e.preventDefault()
       if (search.trim()) {
-         navigate(`/movies/${search}`)
+         navigate(`/movies/search/${search}`)
          setSearch(search)
       }
       else {

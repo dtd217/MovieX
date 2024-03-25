@@ -9,22 +9,22 @@ import MovieInfo from '../Components/Single/MovieInfo'
 import MovieCasts from '../Components/Single/MovieCasts'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
-import { getDetailsMovieAction } from '../Redux/Actions/moviesActions'
+import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions'
 
 const SingleMovie = () => {
-   const [isFollowed, setIsFollowed] = useState(false)
-   const dispatch = useDispatch()
    const { id } = useParams()
+   const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
-   const movie = movies.find(movie => movie.slug === id)
+   const { movie } = useSelector((state) => state.getMovieById)
+   const [isFollowed, setIsFollowed] = useState(false)
 
-   // const { isLoading, isError, movie } = useSelector((state) => state.getDetailsMovie)
-
-   // const similarMovies = movies.filter(m => m.categories.includes(movie.category))
-
-   const similarMovies = movies?.filter(m => movie.categories.map(mv => m?.categories.includes(mv)))
-
-   // const similarMovies = Movies.filter(m => m.category.includes("Lãng mạn"))
+   const similarMovies = movies?.filter(m =>
+      m?.categories &&
+      movie &&
+      movie?.categories &&
+      movie?.categories.length > 0 &&
+      m?.categories?.includes(movie?.categories[0])
+   )
 
    const [api, contextHolder] = notification.useNotification();
    const openNotificationWithIcon = (type) => {
@@ -41,7 +41,8 @@ const SingleMovie = () => {
    };
 
    useEffect(() => {
-      dispatch(getDetailsMovieAction(id))
+      dispatch(getMovieByIdAction(id))
+      dispatch(getAllMoviesAction({}))
    }, [dispatch, id])
 
    return (
@@ -50,32 +51,22 @@ const SingleMovie = () => {
             <div className="max-w-6xl p-4 mx-auto bg-black xl:rounded">
                <div className='flex justify-between lg:flex-row flex-col'>
                   <div className='relative lg:w-3/4 lg:inline-block block h-full'>
-                     <nav className="flex">
-                        {/* <Breadcrumb
-                           separator=">"
-                           items={[
-                              {
-                                 title: 'Trang chủ',
-                                 href: '/',
-                              },
-                              {
-                                 title: `${movie.type.includes("movie-ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
-                                 href: `${movie.type.includes("movie-ova") ? "/movie-ova" : "/tv-series"}`
-                              },
-                              {
-                                 title: `${movie.title}`,
-                                 href: `${movie.slug}`
-                              },
-                              {
-                                 title: 'Thông tin',
-                              },
-                           ]}
-                        /> */}
-                     </nav>
+                     <Breadcrumb
+                        separator=">"
+                        items={[
+                           { title: 'Trang chủ', href: '/' },
+                           {
+                              title: `${movie?.type?.includes("movie-ova") ? "Danh sách phim lẻ (Movie/OVA)" : "Danh sách phim bộ (TV/Series)"}`,
+                              href: `${movie?.type?.includes("movie-ova") ? "/movie-ova" : "/tv-series"}`
+                           },
+                           { title: `${movie?.title}`, href: `${movie?._id}` },
+                           { title: 'Thông tin' },
+                        ]}
+                     />
                      <div
                         className='w-full rounded-md flex flex-col h-full md:p-10 p-4 py-8 mt-4'
                         style={{
-                           backgroundImage: `url(${movie.banner})`,
+                           backgroundImage: `url(${movie?.banner})`,
                            backgroundPosition: 'center',
                            backgroundSize: 'cover',
                            backgroundRepeat: 'no-repeat',
@@ -84,8 +75,8 @@ const SingleMovie = () => {
                            backgroundOpacity: '0.5',
                         }}>
                         <header className='text-white font-semibold w-full flex justify-center items-center md:items-start h-4/5 md:flex-row flex-col'>
-                           <Link to={`/watch/${movie.slug}`} className='w-48 h-72 relative toWatchPage'>
-                              <img src={`${movie.image}`} alt={movie.title} className='rounded-md min-w-48 h-full mb-6' />
+                           <Link to={`/watch/${movie?._id}`} className='w-48 h-72 relative toWatchPage'>
+                              <img src={`${movie?.image}`} alt={movie?.title} className='rounded-md min-w-48 h-full mb-6' />
                               <Space>
                                  {contextHolder}
                                  <button
@@ -115,21 +106,21 @@ const SingleMovie = () => {
                               </div>
                            </Link>
                            <div className='flex flex-col items-start md:ml-6 mx-0 md:h-72 h-96 tracking-tight justify-between'>
-                              <h1 className='text-3xl font-semibold text-[#b5e745] mb-2 md:text-left text-center w-full'>{movie.title}</h1>
-                              <div className='md:text-balance text-justify h-full text-gray-400 overflow-auto scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-red-600 scrollbar-track-slate-300 scrollbar-w-1.5'>{movie.desc}</div>
+                              <h1 className='text-3xl font-semibold text-[#b5e745] mb-2 md:text-left text-center w-full'>{movie?.title}</h1>
+                              <div className='md:text-balance text-justify h-full text-gray-400 overflow-auto scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-red-600 scrollbar-track-slate-300 scrollbar-w-1.5'>{movie?.desc}</div>
                            </div>
                         </header>
                         <footer className='border-t relative border-gray-400 items-start md:ml-[200px] mt-6 md:mt-0 ml-0 flex flex-col xl:flex-row'>
                            <div className='flex flex-row'>
                               <div className='relative mt-2 text-white'>
                                  <Space wrap>
-                                    <Progress type="circle" percent={movie.rate * 10} size={50} strokeColor={"#b5e745"} strokeWidth={10} format={() => `${movie.rate * 10}%`} colortext={'#b5e745'} />
+                                    <Progress type="circle" percent={movie?.rate * 10} size={50} strokeColor={"#b5e745"} strokeWidth={10} format={() => `${movie?.rate * 10}%`} colortext={'#b5e745'} />
                                  </Space>
                               </div>
                               <div className="flex flex-col items-center justify-center mt-2 ml-2">
                                  {/* Stars */}
                                  <div className='flex items-center w-full justify-between my-2'>
-                                    <Stars value={movie.rate} />
+                                    <Stars value={movie?.rate} />
                                  </div>
                                  <p className='font-semibold'>(Đánh giá {movie?.rate}/10 từ {movie?.rateNumber} thành viên)</p>
                               </div>
@@ -153,12 +144,12 @@ const SingleMovie = () => {
                         </div>
                      </div>
                      <div className="bg-gray-200 rounded mt-5 px-6 py-8">
-                        <MovieRates />
+                        <MovieRates movie={movie} />
                      </div>
                      <div className="bg-[#78909c] bg-opacity-20 size-full rounded-md mt-5 p-2">
                         <div className="border-[#b5e745] border-b-4 font-semibold w-fit mb-6 pb-2 text-lg">Phim liên quan</div>
                         <div className="grid md:grid-cols-5 sm:grid-cols-4 min-[360px]:grid-cols-2 min-[420px]:grid-cols-3 grid-cols-2 gap-4">
-                           {similarMovies.slice(0, 5).map((movie, index) => (
+                           {similarMovies?.slice(0, 5).map((movie, index) => (
                               <Movie movie={movie} key={index} />
                            ))}
                         </div>
