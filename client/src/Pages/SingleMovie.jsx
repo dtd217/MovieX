@@ -10,12 +10,13 @@ import MovieCasts from '../Components/Single/MovieCasts'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
 import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions'
+import toast from 'react-hot-toast'
 
 const SingleMovie = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
-   const { movie } = useSelector((state) => state.getMovieById)
+   const { isError, movie } = useSelector((state) => state.getMovieById)
    const [isFollowed, setIsFollowed] = useState(false)
 
    const similarMovies = movies?.filter(m =>
@@ -43,7 +44,10 @@ const SingleMovie = () => {
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
       dispatch(getAllMoviesAction({}))
-   }, [dispatch, id])
+      if (isError) {
+         toast.error(isError)
+      }
+   }, [dispatch, id, isError])
 
    return (
       <Layout>
@@ -149,7 +153,7 @@ const SingleMovie = () => {
                      <div className="bg-[#78909c] bg-opacity-20 size-full rounded-md mt-5 p-2">
                         <div className="border-[#b5e745] border-b-4 font-semibold w-fit mb-6 pb-2 text-lg">Phim liên quan</div>
                         <div className="grid md:grid-cols-5 sm:grid-cols-4 min-[360px]:grid-cols-2 min-[420px]:grid-cols-3 grid-cols-2 gap-4">
-                           {similarMovies?.slice(0, 5).map((movie, index) => (
+                           {similarMovies?.length > 0 && similarMovies?.slice(0, 5).map((movie, index) => (
                               <Movie movie={movie} key={index} />
                            ))}
                         </div>

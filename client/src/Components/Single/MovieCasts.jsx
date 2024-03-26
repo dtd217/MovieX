@@ -17,11 +17,11 @@ const MovieCasts = ({ movie }) => {
                900: { slidesPerView: 6 },
             }}
          >
-            {movie?.characters?.map((character, index) => (
+            {movie?.characters?.length > 0 && movie?.characters?.map((character, index) => (
                <SwiperSlide key={index}>
                   <div className='flex items-center justify-center flex-col'>
-                     <img src="/images/user-img.jpg" alt="" className='rounded-full mb-2 opacity-60 hover:opacity-90' />
-                     <span className='font-semibold text-sm text-center'>{character}</span>
+                     <img src={character?.image ? character?.image : '/images/user-img.jpg'} alt="" className='rounded-full mb-2 opacity-60 hover:opacity-90' />
+                     <span className='font-semibold text-sm text-center'>{character?.name}</span>
                   </div>
                </SwiperSlide>
             ))}

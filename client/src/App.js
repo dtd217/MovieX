@@ -21,12 +21,14 @@ import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
 import { useDispatch } from 'react-redux'
 import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
 import MoviesPage from './Pages/MoviesPage'
+import { getAllMoviesAction } from './Redux/Actions/moviesActions'
 
 const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getAllCategoriesAction())
+    dispatch(getAllMoviesAction({}))
   }, [dispatch])
 
   return (

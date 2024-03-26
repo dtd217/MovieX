@@ -39,7 +39,8 @@ const Banner = () => {
                1280: { slidesPerView: 8 }
             }}
          >
-            {isLoading ? <Loader /> :
+            {isLoading ?
+               <Loader /> :
                movies?.length > 0 ?
                   <>
                      {movies?.map((movie, index) => (

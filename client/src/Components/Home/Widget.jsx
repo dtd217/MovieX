@@ -65,7 +65,7 @@ const Widget = () => {
                      <Loader /> :
                      movies?.length > 0 ?
                         <>
-                           {movies?.filter(movie => movie?.type.includes("tv-series")).slice(0, 4).map((movie, index) => (
+                           {movies?.filter(movie => movie?.type.includes("tv-series")).slice(0, 5).map((movie, index) => (
                               <li className="mb-5" key={index}>
                                  <div className='flex'>
                                     <Link to={`/movies/${movie?._id}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
@@ -113,7 +113,7 @@ const Widget = () => {
                      <Loader /> :
                      movies?.length > 0 ?
                         <>
-                           {movies?.filter(movie => movie?.type.includes("movie-ova")).slice(0, 4).map((movie, index) => (
+                           {movies?.filter(movie => movie?.type.includes("movie-ova")).slice(0, 5).map((movie, index) => (
                               <li className="mb-5" key={index}>
                                  <div className='flex'>
                                     <Link to={`/movies/${movie?._id}`} className="w-[70px] h-24 lg:h-[85px] relative topSearchCard" key={index}>
