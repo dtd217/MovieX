@@ -74,9 +74,6 @@ const SubTable = ({ data, admin, type, user }) => {
                handleOk={() => setOpenModalEditCategory(false)}
                category={category}
             />
-            <td colSpan="4" className="bg-gray-100">
-               <Pagination />
-            </td>
          </table>
       </div >
    )

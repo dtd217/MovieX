@@ -18,18 +18,30 @@ import Users from './Pages/Dashboard/Admin/Users'
 import AddMovie from './Pages/Dashboard/Admin/AddMovie'
 import ToastContainer from './Components/Notifications/ToastContainer'
 import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
 import MoviesPage from './Pages/MoviesPage'
 import { getAllMoviesAction } from './Redux/Actions/moviesActions'
+import { userGetBookmarksAction } from './Redux/Actions/userActions'
+import toast from 'react-hot-toast'
 
 const App = () => {
   const dispatch = useDispatch()
+  const { userInfo } = useSelector(state => state.userLogin)
+  const { isSuccess, isError } = useSelector(state => state.userGetBookmarks)
+  const { isError: categoriesError } = useSelector(state => state.getAllCategories)
 
   useEffect(() => {
     dispatch(getAllCategoriesAction())
     dispatch(getAllMoviesAction({}))
-  }, [dispatch])
+    if (userInfo) {
+      dispatch(userGetBookmarksAction())
+    }
+    if (isError || categoriesError) {
+      toast.error(isError || categoriesError)
+      dispatch({ type: 'GET_BOOKMARKS_RESET' })
+    }
+  }, [dispatch, userInfo, isError, categoriesError, isSuccess])
 
   return (
     <>

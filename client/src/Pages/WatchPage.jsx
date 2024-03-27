@@ -5,14 +5,16 @@ import { Breadcrumb, notification } from 'antd';
 import MovieRates from '../Components/Single/MovieRates'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
-import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions';
+import { getMovieByIdAction } from '../Redux/Actions/moviesActions';
 import { useParams } from 'react-router-dom';
+import Loader from '../Components/Notifications/Loader';
+import { Empty } from '../Components/Notifications/Empty';
 
 const WatchPage = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
-   const { movie } = useSelector((state) => state.getMovieById)
+   const { isLoading, isError, movie } = useSelector((state) => state.getMovieById)
 
    const videoRef = useRef(null);
    const [isPlayed, setIsPlayed] = useState(false)
@@ -31,7 +33,13 @@ const WatchPage = () => {
    const playVideo = () => {
       if (videoRef.current) {
          videoRef.current.play();
-         setIsPlayed(true);
+         videoRef.onseeking = () => {
+            if (videoRef.current) {
+               videoRef.current.pause();
+            }
+            setIsPlayed(false);
+         }
+         setIsPlayed(!isPlayed);
       }
    };
 
@@ -52,7 +60,6 @@ const WatchPage = () => {
 
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
-      dispatch(getAllMoviesAction({}))
    }, [dispatch, id])
 
    return (
@@ -73,24 +80,31 @@ const WatchPage = () => {
                            { title: 'Xem phim' },
                         ]}
                      />
-                     <div className='size-full rounded-md mt-4 relative'>
-                        <div onClick={playVideo} className={`${isPlayed ? 'hidden' : 'flex'} z-10 items-center justify-center size-full absolute`}>
-                           <div className="xs:size-28 size-12 cursor-pointer popBeat flex items-center justify-center text-4xl rounded-full bg-transparent  absolute">
-                              <i className="fa-solid fa-play fa-2xl text-gray-200 ml-2"></i>
+                     {isLoading ?
+                        <Loader /> :
+                        isError ?
+                           <Empty message="Không tìm thấy phim" /> :
+                           <div className='size-full rounded-md mt-4 relative'>
+                              <div onClick={playVideo} className={`${isPlayed ? 'hidden' : 'flex'} cursor-pointer z-10 items-center justify-center size-full absolute`}>
+                                 <div className="xs:size-28 size-12 cursor-pointer popBeat flex items-center justify-center text-4xl rounded-full bg-transparent  absolute">
+                                    <i className="fa-solid fa-play fa-2xl text-gray-200 ml-2"></i>
+                                 </div>
+                              </div>
+                              <video
+                                 ref={videoRef}
+                                 controls
+                                 onPlay={() => setIsPlayed(true)}
+                                 poster='/images/bgBlack.png'
+                                 playsInline
+                                 controlsList="nodownload"
+                                 className='rounded-md h-[520px] w-full cursor-pointer'
+                                 src={movie?.video}
+                                 title={movie?.title}
+                                 type="video/mp4"
+                              >
+                              </video>
                            </div>
-                        </div>
-                        <video
-                           ref={videoRef}
-                           controls
-                           poster='/images/bgBlack.png'
-                           playsInline
-                           controlsList="nodownload"
-                           className='rounded-md h-[520px] w-full'
-                           onPause={() => setIsPlayed(false)}
-                        >
-                           <source src={movie?.video} />
-                        </video>
-                     </div>
+                     }
                      <div className="h-full mb-2 flex justify-center flex-wrap *:text-lg *:p-2 *:font-semibold *:text-gray-400 ">
                         <div className="hover:bg-gray-700 cursor-pointer">
                            <i className="mr-2 fa-solid fa-forward-fast"></i>

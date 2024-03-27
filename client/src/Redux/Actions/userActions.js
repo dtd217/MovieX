@@ -114,6 +114,19 @@ const userDeleteBookmarkByIdAction = (id) => async (dispatch, getState) => {
    }
 }
 
+// ADD BOOKMARKS ACTIONS
+const userAddBookmarkAction = (movieId) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.ADD_BOOKMARKS_REQUEST });
+      const response = await userApi.addBookmarks(movieId, tokenProtection(getState));
+      dispatch({ type: userConstants.ADD_BOOKMARKS_SUCCESS, payload: response });
+      // toast.success('Theo dõi phim thành công!');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.ADD_BOOKMARKS_FAIL);
+   }
+}
+
 // ADMIN GET ALL USERS ACTIONS
 const adminGetAllUsersAction = () => async (dispatch, getState) => {
    try {
@@ -149,6 +162,7 @@ export {
    userGetBookmarksAction,
    userDeleteBookmarksAction,
    userDeleteBookmarkByIdAction,
+   userAddBookmarkAction,
    adminGetAllUsersAction,
    adminDeleteUserAction
 }

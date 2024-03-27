@@ -46,3 +46,17 @@ export const getTopRatedMoviesAction = () => async (dispatch) => {
       ErrorsAction(error, dispatch, moviesConstants.GET_TOP_RATED_MOVIES_FAIL);
    }
 }
+
+// REVIEW MOVIE ACTIONS
+export const reviewMovieAction = ({ id, review }) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: moviesConstants.REVIEW_MOVIE_REQUEST });
+      const response = await moviesApi.reviewMovieService(id, review, tokenProtection(getState));
+      dispatch({ type: moviesConstants.REVIEW_MOVIE_SUCCESS, payload: response });
+      toast.success("Đánh giá thành công");
+      dispatch({ type: moviesConstants.REVIEW_MOVIE_REQUEST });
+      dispatch(getMovieByIdAction(id));
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.REVIEW_MOVIE_FAIL);
+   }
+}

@@ -78,6 +78,14 @@ const deleteBookmarkById = async (id, token) => {
    return data
 }
 
+// Add new bookmarks
+const addBookmarks = async (movieId, token) => {
+   const { data } = await Axios.post(`/user/bookmarks`, movieId, {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
 // ********** ADMIN APIS **********
 
 // Admin get all users
@@ -107,6 +115,7 @@ export {
    deleteBookmarks,
    deleteBookmarkById,
    getAllUsersService,
-   deleteUserService
+   deleteUserService,
+   addBookmarks
 };
 

@@ -25,7 +25,6 @@ const Login = () => {
       resolver: yupResolver(LoginValidation)
    });
 
-   // On submit
    const onSubmit = (data) => {
       dispatch(loginAction(data))
    }

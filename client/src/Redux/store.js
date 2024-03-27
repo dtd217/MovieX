@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
    userGetBookmarks: User.userGetBookmarksReducer,
    userDeleteBookmarks: User.userDeleteBookmarksReducer,
    userDeleteBookmarkById: User.userDeleteBookmarkByIdReducer,
+   userAddBooksmark: User.userAddBookmarksReducer,
    adminGetAllUsers: User.adminGetAllUsersReducer,
    adminDeleteUser: User.adminDeleteUserReducer,
 
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
    getRandomMovies: Movies.getRandomMoviesReducer,
    getTopRatedMovies: Movies.getTopRatedMoviesReducer,
    getMovieById: Movies.getMovieByIdReducer,
+   reviewMovie: Movies.reviewMovieReducer,
 });
 
 // Lấy userInfo từ localStorage

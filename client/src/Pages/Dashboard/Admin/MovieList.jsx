@@ -55,7 +55,7 @@ const MovieList = () => {
             {isLoading ?
                <Loader /> :
                movies?.length > 0 ?
-                  <>
+                  <div className='overflow-x-auto'>
                      <div className="rounded-md mb-6 flex justify-evenly gap-8 w-[800px] min-w-full">
                         {total.map((item, index) => (
                            <div key={index} className="flex justify-start items-center bg-gray-400 w-full rounded-md px-4 py-6">
@@ -67,7 +67,7 @@ const MovieList = () => {
                            </div>
                         ))}
                      </div>
-                     <table className="w-full text-left rtl:text-right">
+                     <table className="min-w-full w-[800px] text-left rtl:text-right">
                         <thead className="text-gray-800 uppercase bg-gray-100">
                            <tr className='*:text-sm *:px-4 *:py-2 *:border-2 *:whitespace-nowrap'>
                               <th scope="col" className="">Hình ảnh</th>
@@ -110,7 +110,7 @@ const MovieList = () => {
                            <i className="fa-solid fa-forward"></i>
                         </button>
                      </div>
-                  </> :
+                  </div> :
                   <Empty message={"Không tìm thấy phim"} />
             }
          </DashboardLayout>

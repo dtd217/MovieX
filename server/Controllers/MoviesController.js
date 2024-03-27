@@ -118,13 +118,13 @@ const createMovieReview = asyncHandler(async (req, res) => {
       const movie = await Movie.findById(req.params.id)
 
       if (movie) {
-         const alreadyReviewed = movie.reviews.find(
-            (r) => r.userId.toString() === req.user._id.toString()
-         )
-         if (alreadyReviewed) {
-            res.status(400)
-            throw new Error('Bạn đã đánh giá phim này!')
-         }
+         // const alreadyReviewed = movie.reviews.find(
+         //    (r) => r.userId.toString() === req.user._id.toString()
+         // )
+         // if (alreadyReviewed) {
+         //    res.status(400)
+         //    throw new Error('Bạn đã đánh giá phim này!')
+         // }
          const review = {
             userName: req.user.name,
             userId: req.user._id,
@@ -134,7 +134,6 @@ const createMovieReview = asyncHandler(async (req, res) => {
          }
          movie.reviews.push(review)
          movie.reviewNumber = movie.reviews.length
-
          movie.rate = movie.reviews.reduce((acc, item) => item.rate + acc, 0) / movie.reviews.length
 
          await movie.save()

@@ -125,9 +125,6 @@ const MainTable = ({ data, admin, type, user, onDeleteHandler }) => {
                         </td>
                      </tr >
                   ))}
-                  <td colSpan="7" className="bg-gray-100">
-                     <Pagination />
-                  </td>
                </table>
             </div>
             : type === 'categories' && admin ?

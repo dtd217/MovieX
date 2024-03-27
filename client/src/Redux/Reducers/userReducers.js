@@ -130,6 +130,22 @@ export const userDeleteBookmarkByIdReducer = (state = {}, action) => {
    }
 }
 
+// ADD BOOKMARKS
+export const userAddBookmarksReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.ADD_BOOKMARKS_REQUEST:
+         return { isLoading: true };
+      case userConstants.ADD_BOOKMARKS_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.ADD_BOOKMARKS_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.ADD_BOOKMARKS_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
 // ADMIN GET ALL USERS
 export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
    switch (action.type) {
