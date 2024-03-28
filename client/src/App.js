@@ -14,13 +14,13 @@ import Password from './Pages/Dashboard/Password'
 import Bookmarks from './Pages/Dashboard/Bookmarks'
 import MovieList from './Pages/Dashboard/Admin/MovieList'
 import Categories from './Pages/Dashboard/Admin/Categories'
+import MoviesPage from './Pages/MoviesPage'
 import Users from './Pages/Dashboard/Admin/Users'
 import AddMovie from './Pages/Dashboard/Admin/AddMovie'
 import ToastContainer from './Components/Notifications/ToastContainer'
 import { AdminProtectedRouter, ProtectedRouter } from './ProtectedRouter'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
-import MoviesPage from './Pages/MoviesPage'
 import { getAllMoviesAction } from './Redux/Actions/moviesActions'
 import { userGetBookmarksAction } from './Redux/Actions/userActions'
 import toast from 'react-hot-toast'
@@ -39,7 +39,10 @@ const App = () => {
     }
     if (isError || categoriesError) {
       toast.error(isError || categoriesError)
-      dispatch({ type: 'GET_BOOKMARKS_RESET' })
+      dispatch({ type: 'ADD_BOOKMARKS_RESET' })
+    }
+    if (isSuccess) {
+      dispatch({ type: 'ADD_BOOKMARKS_RESET' })
     }
   }, [dispatch, userInfo, isError, categoriesError, isSuccess])
 

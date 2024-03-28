@@ -1,53 +1,45 @@
+import toast from 'react-hot-toast';
 import React, { useEffect } from 'react'
 import Layout from '../../../Layout/Layout'
-import DashboardLayout from '../../../Components/DashboardLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllMoviesAction } from '../../../Redux/Actions/moviesActions';
-import toast from 'react-hot-toast';
-import { Empty } from '../../../Components/Notifications/Empty';
 import Loader from '../../../Components/Notifications/Loader';
+import { Empty } from '../../../Components/Notifications/Empty';
+import DashboardLayout from '../../../Components/DashboardLayout';
+import { adminGetAllUsersAction } from '../../../Redux/Actions/userActions';
 
 const MovieList = () => {
    const dispatch = useDispatch()
-   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
-   const { categories } = useSelector((state) => state.getAllCategories)
+   const { isLoading, isError, movies } = useSelector((state) => state.getAllMovies)
+   const { isLoading: categoriesLoading, isError: categoriesError, categories } = useSelector((state) => state.getAllCategories)
+   const { isLoading: usersLoading, isError: usersError, users } = useSelector((state) => state.adminGetAllUsers)
 
    const total = [
       {
          title: 'Tổng số bộ phim',
-         value: movies?.length,
+         value: isLoading ? 'Đang tải...' : movies?.length || 0,
          background: 'bg-red-500',
          icon: <i className="fa-solid fa-film fa-xl"></i>,
       },
       {
          title: 'Tổng số thể loại',
-         value: categories?.length,
+         value: categoriesLoading ? 'Đang tải...' : categories?.length || 0,
          background: 'bg-blue-500',
          icon: <i className="fa-solid fa-layer-group fa-xl"></i>,
       },
       {
          title: 'Tổng số người dùng',
-         value: 1200000,
+         value: usersLoading ? 'Đang tải...' : users?.length || 0,
          background: 'bg-green-500',
          icon: <i className="fa-solid fa-user fa-xl"></i>,
       }
    ]
 
-   const nextPage = () => {
-      dispatch(getAllMoviesAction({ pageNumber: page + 1 }))
-   }
-
-   const prevPage = () => {
-      dispatch(getAllMoviesAction({ pageNumber: page - 1 }))
-   }
-
    useEffect(() => {
-      if (isError) {
-         toast.error(isError)
+      dispatch(adminGetAllUsersAction())
+      if (isError || categoriesError || usersError) {
+         toast.error(isError || categoriesError || usersError)
       }
-      dispatch(getAllMoviesAction({ pageNumber: 1 }))
-
-   }, [dispatch, isError])
+   }, [dispatch, isError, categoriesError, usersError])
 
    return (
       <Layout>
@@ -102,14 +94,6 @@ const MovieList = () => {
                            </tr >
                         ))}
                      </table>
-                     <div className='w-full flex gap-2 justify-center text-center mt-6 *:py-1.5 *:px-4 *:bg-red-600 *:rounded *:w-fit'>
-                        <button onClick={prevPage} disabled={page === 1} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
-                           <i className="fa-solid fa-backward"></i>
-                        </button>
-                        <button onClick={nextPage} disabled={page === pages} className='hover:opacity-70 transitions disabled:bg-red-800 disabled:opacity-100'>
-                           <i className="fa-solid fa-forward"></i>
-                        </button>
-                     </div>
                   </div> :
                   <Empty message={"Không tìm thấy phim"} />
             }

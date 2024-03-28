@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
    userGetBookmarks: User.userGetBookmarksReducer,
    userDeleteBookmarks: User.userDeleteBookmarksReducer,
    userDeleteBookmarkById: User.userDeleteBookmarkByIdReducer,
-   userAddBooksmark: User.userAddBookmarksReducer,
+   userAddBookmarks: User.userAddBookmarksReducer,
    adminGetAllUsers: User.adminGetAllUsersReducer,
    adminDeleteUser: User.adminDeleteUserReducer,
 

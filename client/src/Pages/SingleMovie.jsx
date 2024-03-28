@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
 import Widget from '../Components/Home/Widget'
@@ -12,19 +12,22 @@ import Movie from '../Components/Movie'
 import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions'
 import toast from 'react-hot-toast'
 import { AddBookmark, CheckIfMovieAddedBookmark } from '../Context/Functionalities'
+import { userDeleteBookmarkByIdAction } from '../Redux/Actions/userActions'
 
 const SingleMovie = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
    const { isError, movie } = useSelector((state) => state.getMovieById)
-   const { isLoading } = useSelector((state) => state.userAddBooksmark)
-   const [isFollowed, setIsFollowed] = useState(false)
+   const { isLoading } = useSelector((state) => state.userAddBookmarks)
    const { userInfo } = useSelector((state) => state.userLogin)
+   const { isLoading: deleteByIdLoading } = useSelector((state) => state.userDeleteBookmarkById)
 
-   const handleFollow = (movie) => {
-      return CheckIfMovieAddedBookmark(movie)
+   const handleDeleteBookmarkById = (id) => {
+      dispatch(userDeleteBookmarkByIdAction(id))
    }
+
+   const handleFollow = () => CheckIfMovieAddedBookmark(movie)
 
    const similarMovies = movies?.filter(m =>
       m?.categories &&
@@ -88,30 +91,27 @@ const SingleMovie = () => {
                         <header className='text-white font-semibold w-full flex justify-center items-center md:items-start h-4/5 md:flex-row flex-col'>
                            <Link to={`/watch/${movie?._id}`} className='w-48 h-72 relative toWatchPage'>
                               <img src={`${movie?.image}`} alt={movie?.title} className='rounded-md min-w-48 h-full mb-6' />
-                              <Space>
-                                 {contextHolder}
-                                 <button
-                                    onClick={(e) => {
-                                       e.preventDefault()
-                                       setIsFollowed(false)
-                                       openNotificationWithIcon('error')
-                                       AddBookmark(movie, dispatch, userInfo)
-                                    }}
-                                    className={`${!isFollowed ? 'hidden' : 'block'} w-fit px-2 py-1 bg-black bg-opacity-80 rounded absolute top-3 left-3 hover:bg-red-600 z-10`}
-                                 ><i className="fa-solid fa-bookmark mr-2"></i>Đã theo dõi
-                                 </button>
-                                 <button
-                                    onClick={(e) => {
-                                       e.preventDefault()
-                                       setIsFollowed(true)
-                                       openNotificationWithIcon('success')
-                                       AddBookmark(movie, dispatch, userInfo)
-                                    }}
-                                    disabled={handleFollow(movie) || isLoading}
-                                    className={`${isFollowed ? 'hidden' : 'block'} w-fit px-2 py-1 bg-black bg-opacity-80 rounded absolute top-3 left-3 hover:bg-red-600 z-10`}
-                                 ><i className="fa-regular fa-bookmark mr-2"></i>Theo dõi
-                                 </button>
-                              </Space>
+                              {contextHolder}
+                              <button
+                                 onClick={(e) => {
+                                    e.preventDefault()
+                                    openNotificationWithIcon('error')
+                                    handleDeleteBookmarkById(movie?._id)
+                                 }}
+                                 disabled={deleteByIdLoading}
+                                 className={`${handleFollow() ? 'block' : 'hidden'} w-fit px-2 py-1 bg-red-600 rounded absolute top-3 left-3 hover:bg-blue-700 z-10`}
+                              ><i className="fa-solid fa-bookmark mr-2"></i>Bỏ theo dõi
+                              </button>
+                              <button
+                                 onClick={(e) => {
+                                    e.preventDefault()
+                                    openNotificationWithIcon('success')
+                                    AddBookmark(movie, dispatch, userInfo)
+                                 }}
+                                 disabled={handleFollow() || isLoading}
+                                 className={`${handleFollow() ? 'hidden' : 'block'} w-fit px-2 py-1 bg-green-500 rounded absolute top-3 left-3 hover:bg-blue-700 z-10`}
+                              ><i className="fa-regular fa-bookmark mr-2"></i>Theo dõi
+                              </button>
                               <div className="w-full py-2 bg-red-700 bg-opacity-70 absolute top-52 uppercase flex items-center justify-center text-2xl">Xem phim</div>
                               <div div className='overlay !absolute top-0'>
                                  <div className="play-icon">

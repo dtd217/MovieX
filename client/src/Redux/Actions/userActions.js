@@ -107,7 +107,6 @@ const userDeleteBookmarkByIdAction = (id) => async (dispatch, getState) => {
       dispatch({ type: userConstants.DELETE_BOOKMARK_BY_ID_REQUEST });
       await userApi.deleteBookmarkById(id, tokenProtection(getState));
       dispatch({ type: userConstants.DELETE_BOOKMARK_BY_ID_SUCCESS });
-      toast.success('Xóa phim thành công!');
    }
    catch (error) {
       ErrorsAction(error, dispatch, userConstants.DELETE_BOOKMARK_BY_ID_FAIL);
@@ -120,7 +119,6 @@ const userAddBookmarkAction = (movieId) => async (dispatch, getState) => {
       dispatch({ type: userConstants.ADD_BOOKMARKS_REQUEST });
       const response = await userApi.addBookmarks(movieId, tokenProtection(getState));
       dispatch({ type: userConstants.ADD_BOOKMARKS_SUCCESS, payload: response });
-      // toast.success('Theo dõi phim thành công!');
    }
    catch (error) {
       ErrorsAction(error, dispatch, userConstants.ADD_BOOKMARKS_FAIL);

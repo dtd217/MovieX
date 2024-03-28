@@ -9,12 +9,24 @@ import { getMovieByIdAction } from '../Redux/Actions/moviesActions';
 import { useParams } from 'react-router-dom';
 import Loader from '../Components/Notifications/Loader';
 import { Empty } from '../Components/Notifications/Empty';
+import { AddBookmark, CheckIfMovieAddedBookmark } from '../Context/Functionalities';
+import { userDeleteBookmarkByIdAction } from '../Redux/Actions/userActions';
+import toast from 'react-hot-toast';
 
 const WatchPage = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const { movies } = useSelector((state) => state.getAllMovies)
    const { isLoading, isError, movie } = useSelector((state) => state.getMovieById)
+   const { isLoading: addBookmarkLoading } = useSelector((state) => state.userAddBookmarks)
+   const { userInfo } = useSelector((state) => state.userLogin)
+   const { isLoading: deleteByIdLoading } = useSelector((state) => state.userDeleteBookmarkById)
+
+   const handleDeleteBookmarkById = (id) => {
+      dispatch(userDeleteBookmarkByIdAction(id))
+   }
+
+   const handleFollow = () => CheckIfMovieAddedBookmark(movie)
 
    const videoRef = useRef(null);
    const [isPlayed, setIsPlayed] = useState(false)
@@ -27,7 +39,6 @@ const WatchPage = () => {
       m.categories.includes(movie.categories[0])
    )
 
-   const [isFollowed, setIsFollowed] = useState(false)
    const [errorNotice, setErrorNotice] = useState(false)
 
    const playVideo = () => {
@@ -60,7 +71,10 @@ const WatchPage = () => {
 
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
-   }, [dispatch, id])
+      if (isError) {
+         toast.error(isError)
+      }
+   }, [dispatch, id, isError])
 
    return (
       <Layout>
@@ -125,21 +139,23 @@ const WatchPage = () => {
                            <i className="mr-2 fa-solid fa-lightbulb"></i>
                            Tắt đèn
                         </div>
-                        <div className="hover:bg-gray-700 cursor-pointer">
+                        <div className={`${handleFollow() ? 'bg-red-600' : ''} hover:bg-gray-700 cursor-pointer`}>
                            {contextHolder}
                            <button
-                              onClick={(e) => {
-                                 setIsFollowed(false)
+                              onClick={() => {
                                  openNotificationWithIcon('error')
+                                 handleDeleteBookmarkById(movie?._id)
                               }}
-                              className={`${!isFollowed ? 'hidden' : 'block'} !text-[#b5e745]`}
-                           ><i className="fa-solid fa-bookmark mr-2"></i>Đã theo dõi</button>
+                              disabled={deleteByIdLoading}
+                              className={`${handleFollow() ? 'block' : 'hidden'} text-white`}
+                           ><i className="fa-solid fa-bookmark mr-2"></i>Bỏ theo dõi</button>
                            <button
-                              onClick={(e) => {
-                                 setIsFollowed(true)
+                              onClick={() => {
                                  openNotificationWithIcon('success')
+                                 AddBookmark(movie, dispatch, userInfo)
                               }}
-                              className={`${isFollowed ? 'hidden' : 'block'}`}
+                              disabled={handleFollow(movie) || addBookmarkLoading}
+                              className={`${handleFollow() ? 'hidden' : 'block'}`}
                            ><i className="fa-regular fa-bookmark mr-2"></i>Theo dõi</button>
                         </div>
                         <div className="hover:bg-gray-700 cursor-pointer">

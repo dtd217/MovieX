@@ -5,14 +5,12 @@ import { Movies } from '../Data/movieData'
 import { useDispatch, useSelector } from 'react-redux'
 import { typeMovieData, yearData } from '../Data/FilterData'
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
-import Loader from '../Components/Notifications/Loader'
-import Movie from '../Components/Movie'
 import toast from 'react-hot-toast'
 import ListMovies from '../Components/ListMovies'
 
 const Filters = () => {
    const dispatch = useDispatch()
-   const { isLoading, isError, movies, page, pages } = useSelector((state) => state.getAllMovies)
+   const { isError, movies } = useSelector((state) => state.getAllMovies)
    const { categories } = useSelector((state) => state.getAllCategories)
 
    const [isFilter, setIsFilter] = useState(false)

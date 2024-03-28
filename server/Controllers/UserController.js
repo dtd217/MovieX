@@ -271,7 +271,7 @@ const deleteBookmarkById = asyncHandler(async (req, res) => {
          // Nếu có phim => xoá phim
          user.bookmarks = user.bookmarks.filter((movieId) => movieId.toString() !== req.params.id)
          await user.save()
-         res.json({ message: 'Xoá phim thành công!' })
+         res.json({ message: 'Bỏ theoi dõi phim thành công!' })
       }
       // Nếu không có user => gửi lỗi
       else {

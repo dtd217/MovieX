@@ -5,7 +5,7 @@ import { userAddBookmarkAction } from '../Redux/Actions/userActions';
 // Check if movie is added to favorites
 const CheckIfMovieAddedBookmark = (movie) => {
    const { bookmarks } = useSelector(state => state.userGetBookmarks);
-   return bookmarks.find(bookmark => bookmark?._id === movie?._id);
+   return bookmarks?.find(bookmark => bookmark?._id === movie?._id);
 }
 
 // Add bookmark functionality

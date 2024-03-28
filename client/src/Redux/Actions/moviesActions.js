@@ -60,3 +60,16 @@ export const reviewMovieAction = ({ id, review }) => async (dispatch, getState) 
       ErrorsAction(error, dispatch, moviesConstants.REVIEW_MOVIE_FAIL);
    }
 }
+
+// DELETE MOVIE ACTIONS
+export const deleteMovieAction = (id) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: moviesConstants.DELETE_MOVIE_REQUEST });
+      const response = await moviesApi.deleteMovieService(id, tokenProtection(getState));
+      dispatch({ type: moviesConstants.DELETE_MOVIE_SUCCESS, payload: response });
+      toast.success("Xoá phim thành công");
+      dispatch(getAllMoviesAction({}));
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.DELETE_MOVIE_FAIL);
+   }
+}
