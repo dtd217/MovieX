@@ -6,12 +6,15 @@ import Loader from '../../../Components/Notifications/Loader';
 import { Empty } from '../../../Components/Notifications/Empty';
 import DashboardLayout from '../../../Components/DashboardLayout';
 import { adminGetAllUsersAction } from '../../../Redux/Actions/userActions';
+import { deleteAllMoviesAction, deleteMovieAction } from '../../../Redux/Actions/moviesActions';
 
 const MovieList = () => {
    const dispatch = useDispatch()
    const { isLoading, isError, movies } = useSelector((state) => state.getAllMovies)
    const { isLoading: categoriesLoading, isError: categoriesError, categories } = useSelector((state) => state.getAllCategories)
    const { isLoading: usersLoading, isError: usersError, users } = useSelector((state) => state.adminGetAllUsers)
+   const { isLoading: deleteLoading, isError: deleteError } = useSelector((state) => state.deleteMovie)
+   const { isLoading: deleteAllLoading, isError: deleteAllError } = useSelector((state) => state.deleteAllMovies)
 
    const total = [
       {
@@ -34,17 +37,25 @@ const MovieList = () => {
       }
    ]
 
+   const deleteMovieHandler = (id) => {
+      window.confirm('Bạn có muốn xoá phim này?') && dispatch(deleteMovieAction(id))
+   }
+
+   const deleteAllMoviesHandler = (id) => {
+      window.confirm('Bạn có muốn xoá toàn bộ phim?') && dispatch(deleteAllMoviesAction())
+   }
+
    useEffect(() => {
       dispatch(adminGetAllUsersAction())
-      if (isError || categoriesError || usersError) {
-         toast.error(isError || categoriesError || usersError)
+      if (isError || categoriesError || usersError || deleteError || deleteAllError) {
+         toast.error(isError || categoriesError || usersError || deleteError, deleteAllError)
       }
-   }, [dispatch, isError, categoriesError, usersError])
+   }, [dispatch, isError, categoriesError, usersError, deleteError, deleteAllError])
 
    return (
       <Layout>
          <DashboardLayout title='Danh sách phim' >
-            {isLoading ?
+            {isLoading || deleteLoading ?
                <Loader /> :
                movies?.length > 0 ?
                   <div className='overflow-x-auto'>
@@ -77,16 +88,20 @@ const MovieList = () => {
                                     <img src={movie.image} className='size-12 rounded-md object-cover' alt={movie.title} />
                                  </div>
                               </td>
-                              <td>{`${movie.title}`.substring(0, 30).slice(0) + "..."}</td>
+                              <td>{`${movie?.title}`.substring(0, 30).slice(0) + "..."}</td>
                               <td>{categories?.map((category) => (movie?.categories?.map((cate) => (cate === category.value ? category.label + ', ' : null))))}</td>
                               <td className="text-center">{movie.year[0]}</td>
                               <td className="text-center">{movie.episode}</td>
                               <td className="text-center">
-                                 <div className="flex flex-col sm:flex-row justify-center *:p-2.5 *:rounded-lg *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                                    <button className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
+                                 <div className="flex flex-col sm:flex-row justify-center *:p-2.5 *:rounded *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
+                                    <button
+                                       className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
                                        <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
                                     </button>
-                                    <button className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
+                                    <button
+                                       onClick={() => deleteMovieHandler(movie?._id)}
+                                       disabled={deleteLoading}
+                                       className='text-gray-100 bg-red-500 transitions hover:bg-gray-600 mt-2 sm:mt-0'>
                                        <i className="fa-solid fa-trash fa-lg mr-1"></i> Xoá
                                     </button>
                                  </div>
@@ -94,6 +109,16 @@ const MovieList = () => {
                            </tr >
                         ))}
                      </table>
+                     {movies?.length > 0 &&
+                        <div className="flex justify-end">
+                           <button
+                              disabled={deleteAllLoading}
+                              onClick={deleteAllMoviesHandler}
+                              className='text-gray-100 text-xl font-semibold bg-red-500 transitions hover:bg-gray-600 mt-6 py-3 px-4 rounded'>
+                              {deleteAllLoading ? 'Đang xoá phim...' : 'Xoá toàn bộ phim'}
+                           </button>
+                        </div>
+                     }
                   </div> :
                   <Empty message={"Không tìm thấy phim"} />
             }

@@ -73,3 +73,55 @@ export const deleteMovieAction = (id) => async (dispatch, getState) => {
       ErrorsAction(error, dispatch, moviesConstants.DELETE_MOVIE_FAIL);
    }
 }
+
+// DELETE ALL MOVIES ACTIONS
+export const deleteAllMoviesAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: moviesConstants.DELETE_ALL_MOVIES_REQUEST });
+      const response = await moviesApi.deleteAllMoviesService(tokenProtection(getState));
+      dispatch({ type: moviesConstants.DELETE_ALL_MOVIES_SUCCESS, payload: response });
+      toast.success("Xoá tất cả phim thành công");
+      dispatch(getAllMoviesAction({}));
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.DELETE_ALL_MOVIES_FAIL);
+   }
+}
+
+// CREATE MOVIE ACTIONS
+export const createMovieAction = (movie) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: moviesConstants.CREATE_MOVIE_REQUEST });
+      const response = await moviesApi.createMovieService(movie, tokenProtection(getState));
+      dispatch({ type: moviesConstants.CREATE_MOVIE_SUCCESS, payload: response });
+      toast.success("Thêm phim thành công");
+      dispatch(resetCharactersAction());
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.CREATE_MOVIE_FAIL);
+   }
+}
+
+// ********** CHARACTERS ACTIONS **********
+
+// ADD CHARACTERS
+export const addCharactersAction = (characters) => async (dispatch, getState) => {
+   dispatch({ type: moviesConstants.ADD_CHARACTERS, payload: characters });
+   localStorage.setItem('characters', JSON.stringify(getState().charactersCRUD.characters));
+}
+
+// DELETE CHARACTERS
+export const deleteCharactersAction = (id) => async (dispatch, getState) => {
+   dispatch({ type: moviesConstants.DELETE_CHARACTERS, payload: id });
+   localStorage.setItem('characters', JSON.stringify(getState().charactersCRUD.characters));
+}
+
+// EDIT CHARACTERS
+export const editCharactersAction = (character) => async (dispatch, getState) => {
+   dispatch({ type: moviesConstants.EDIT_CHARACTERS, payload: character });
+   localStorage.setItem('characters', JSON.stringify(getState().charactersCRUD.characters));
+}
+
+// RESET CHARACTERS
+export const resetCharactersAction = () => async (dispatch) => {
+   dispatch({ type: moviesConstants.RESET_CHARACTERS });
+   localStorage.removeItem('characters');
+}

@@ -32,7 +32,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 866,
       director: "Den Saori",
-      status: "Đang chiếu",
+      status: "in-production",
       studio: "OLM"
    },
    {
@@ -69,7 +69,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 122493,
       director: "Oda Kounosuke, Ishitani Megumi",
-      status: "Đang chiếu",
+      status: "in-production",
       studio: "Toei Animation"
    },
    {
@@ -101,7 +101,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 2216,
       director: "Motonaga Keitarou",
-      status: "Đang chiếu",
+      status: "in-production",
       studio: "Yokohama Animation Lab"
    },
    {
@@ -131,7 +131,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 20289,
       director: "Yamashita Hiroyuki",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Studio Pierrot"
    },
    {
@@ -167,7 +167,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 38821,
       director: "Kodama Kenji",
-      status: "Đang chiếu",
+      status: "in-production",
       studio: "TMS Entertainment"
    },
    {
@@ -203,7 +203,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 9890,
       director: "Kusuba Kouzou",
-      status: "Đang chiếu",
+      status: "in-production",
       studio: "Studio Pierrot, Shin-Ei Animation"
    },
    {
@@ -239,7 +239,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 7690,
       director: "Nakanishi Kazuya",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Nexus"
    },
    {
@@ -275,7 +275,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 32632,
       director: "Abe Noriyuki",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Studio Pierrot"
    },
    {
@@ -309,7 +309,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 656,
       director: "Ishidate Taichi",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Kyoto Animation"
    },
    {
@@ -339,7 +339,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 541,
       director: "Nagasaki Kenji",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Bones"
    },
    {
@@ -375,7 +375,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 332,
       director: "Hosoda Mamoru",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Studio Chizu"
    },
    {
@@ -411,7 +411,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 3535,
       director: "Park Seong-Hu",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "MAPPA"
    },
    {
@@ -447,7 +447,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 6,
       director: "Amemiya Akira",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Trigger"
    },
    {
@@ -481,7 +481,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 170,
       director: "Masui Souichi",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "CloverWorks"
    },
    {
@@ -517,7 +517,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 40,
       director: "Komori Hideto",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Studio Chizu"
    },
    {
@@ -550,7 +550,7 @@ export const MoviesData = [
       language: "Tiếng Việt",
       followNumber: 3390,
       director: "Komori Hideto",
-      status: "Hoàn thành",
+      status: "completed",
       studio: "Toei Company"
    },
 ] 

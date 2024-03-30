@@ -7,6 +7,8 @@ import CastModal from '../../../Components/Modals/CastModal';
 import Select from 'react-select';
 import { CategoriesData } from '../../../Data/categoriesData';
 import { UsersData } from '../../../Data/usersData';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 
@@ -14,6 +16,15 @@ const AddMovie = () => {
    const [openModalAddCast, setOpenModalAddCast] = useState(false);
    const [openModalEditCast, setOpenModalEditCast] = useState(false);
    const [cast, setCast] = useState(null)
+   const [image, setImage] = useState("")
+   const [banner, setBanner] = useState("")
+   const [videoUrl, setVideoUrl] = useState("")
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const { categories } = useSelector((state) => state.getAllCategories)
+   const { isLoading, isError, isSuccess, userInfo } = useSelector((state) => state.createMovie)
+   const { characters } = useSelector((state) => state.charactersCRUD)
 
    const { getRootProps, getInputProps } = useDropzone({
       multiple: false,
@@ -32,6 +43,16 @@ const AddMovie = () => {
          setOpenModalEditCast(true)
    }
 
+   const selectMovieType = [
+      { value: 'movie-ova', label: 'Movie/OVA' },
+      { value: 'tv-series', label: 'TV/Series' },
+   ]
+
+   const selectMovieStatus = [
+      { value: 'in-production', label: 'Đang chiếu' },
+      { value: 'completed', label: 'Hoàn thành' },
+   ]
+
    useEffect(() => {
       if (openModalAddCast === false) {
          setCast()
@@ -47,30 +68,56 @@ const AddMovie = () => {
                   <div className="md:col-span-1 col-span-2 w-full flex flex-col">
                      <label className='text-gray-800 font-semibold text-lg'>Tên phim</label>
                      <input
-                        placeholder='One Piece'
+                        placeholder='Nhập tên phim'
                         type="text"
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400" />
                   </div>
                   <div className="md:col-span-1 col-span-2 w-full flex flex-col">
                      <label className='text-gray-800 font-semibold text-lg'>Thời lượng</label>
                      <input
-                        placeholder='340 tập'
+                        placeholder='Thời lượng phim'
                         type="text"
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400" />
                   </div>
                   <div className="md:col-span-1 col-span-2 w-full flex flex-col">
                      <label className='text-gray-800 font-semibold text-lg'>Ngôn ngữ</label>
                      <input
-                        placeholder='Vietsub'
+                        placeholder='Ngôn ngữ phim'
                         type="text"
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400" />
                   </div>
                   <div className="md:col-span-1 col-span-2 w-full flex flex-col">
                      <label className='text-gray-800 font-semibold text-lg'>Năm</label>
                      <input
-                        placeholder='2021'
+                        placeholder='Năm sản xuất'
                         type="text"
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400" />
+                  </div>
+                  <div className="md:col-span-1 col-span-2 w-full flex flex-col text-gray-800">
+                     <label className='font-semibold text-lg'>Phân loại</label>
+                     <select
+                        className='bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400'
+                        name="rate"
+                     // {...register("rate")}
+                     >
+                        <option>--Chọn phân loại phim--</option>
+                        {selectMovieType.map((item, index) => (
+                           <option key={index} value={item.value}>{item.label}</option>
+                        ))}
+                     </select>
+                  </div>
+                  <div className="md:col-span-1 col-span-2 w-full flex flex-col text-gray-800">
+                     <label className='text-gray-800 font-semibold text-lg'>Trạng thái</label>
+                     <select
+                        className='bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400'
+                        name="rate"
+                     // {...register("rate")}
+                     >
+                        <option className='placeholder:text-gray-200'>--Trạng thái phim--</option>
+                        {selectMovieStatus.map((item, index) => (
+                           <option key={index} value={item.value}>{item.label}</option>
+                        ))}
+                     </select>
                   </div>
 
                   {/* Images */}

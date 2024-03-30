@@ -105,3 +105,38 @@ export const deleteAllMoviesReducer = (state = {}, action) => {
          return state;
    }
 }
+
+// CREATE MOVIE
+export const createMovieReducer = (state = {}, action) => {
+   switch (action.type) {
+      case moviesConstants.CREATE_MOVIE_REQUEST:
+         return { isLoading: true };
+      case moviesConstants.CREATE_MOVIE_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case moviesConstants.CREATE_MOVIE_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case moviesConstants.CREATE_MOVIE_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
+// CHARACTER MOVIE
+export const charactersReducer = (state = { characters: [] }, action) => {
+   switch (action.type) {
+      case moviesConstants.ADD_CHARACTERS:
+         return { characters: [...state.characters, action.payload] };
+      case moviesConstants.EDIT_CHARACTERS:
+         const updatedCharacters = state.characters.map((character) =>
+            character._id === action.payload._id ? character._id : character
+         );
+         return { characters: updatedCharacters };
+      case moviesConstants.DELETE_CHARACTERS:
+         return { ...state, characters: state.characters.filter((character) => character._id !== action.payload) };
+      case moviesConstants.RESET_CHARACTERS:
+         return { characters: [] };
+      default:
+         return state;
+   }
+}

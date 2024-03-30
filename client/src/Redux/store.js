@@ -29,6 +29,10 @@ const rootReducer = combineReducers({
    getTopRatedMovies: Movies.getTopRatedMoviesReducer,
    getMovieById: Movies.getMovieByIdReducer,
    reviewMovie: Movies.reviewMovieReducer,
+   deleteMovie: Movies.deleteMovieReducer,
+   deleteAllMovies: Movies.deleteAllMoviesReducer,
+   createMovie: Movies.createMovieReducer,
+   charactersCRUD: Movies.charactersReducer,
 });
 
 // Lấy userInfo từ localStorage
