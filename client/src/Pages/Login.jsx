@@ -61,7 +61,7 @@ const Login = () => {
                                  placeholder='Nhập email'
                                  required
                               />
-                              {errors.email && <InlineError error={errors.email.message} />}
+                              {errors?.email && <InlineError error={errors?.email.message} />}
                            </div>
                            <div className='mt-4'>
                               <label className="block text-lg font-semibold text-white" htmlFor="password">Mật khẩu</label>
@@ -74,7 +74,7 @@ const Login = () => {
                                  placeholder='Nhập mật khẩu'
                                  required
                               />
-                              {errors.password && <InlineError error={errors.password.message} />}
+                              {errors?.password && <InlineError error={errors?.password.message} />}
                            </div>
                            <div className='flex justify-between items-center mt-5'>
                               <div className='flex items-start'>

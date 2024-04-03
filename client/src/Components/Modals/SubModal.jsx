@@ -21,7 +21,6 @@ const SubModal = ({ openModal, handleCancel, handleOk, category }) => {
                   <Input
                      placeholder={category}
                      className='!placeholder-gray-400 rounded-md'
-                     onChange={(e) => console.log(e.target.value)}
                   />
                </div>
                <div className='mt-2 flex flex-col'>
@@ -30,7 +29,6 @@ const SubModal = ({ openModal, handleCancel, handleOk, category }) => {
                      rows={5}
                      className='!placeholder-gray-400 border-gray-500'
                      placeholder='Mô tả thể loại phim'
-                     onChange={(e) => console.log(e.target.value)}
                   />
                </div>
                <button
@@ -55,7 +53,6 @@ const SubModal = ({ openModal, handleCancel, handleOk, category }) => {
                   <label className='font-semibold text-xl'>Tiêu đề</label>
                   <Input
                      className='!placeholder-gray-400 rounded-md'
-                     onChange={(e) => console.log(e.target.value)}
                   />
                </div>
                <div className='mt-2 flex flex-col'>
@@ -63,7 +60,6 @@ const SubModal = ({ openModal, handleCancel, handleOk, category }) => {
                   <TextArea
                      rows={5}
                      className='!placeholder-gray-400 border-gray-500'
-                     onChange={(e) => console.log(e.target.value)}
                   />
                </div>
                <button

@@ -68,7 +68,7 @@ const MovieRates = ({ movie }) => {
                   <option key={index} value={item.value}>{item.title}</option>
                ))}
             </select>
-            {errors.rate && <InlineError error={errors.rate?.message} />}
+            {errors?.rate && <InlineError error={errors?.rate?.message} />}
             <div className="mt-2 xs:text-2xl">
                <Stars value={watch('rate', false)} />
             </div>
@@ -78,7 +78,7 @@ const MovieRates = ({ movie }) => {
                name="comment"
                {...register("comment")}
             ></textarea>
-            {errors.comment && <InlineError error={errors.comment?.message} />}
+            {errors?.comment && <InlineError error={errors?.comment?.message} />}
             <div>
                {userInfo ?
                   <button

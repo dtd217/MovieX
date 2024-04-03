@@ -103,8 +103,8 @@ export const createMovieAction = (movie) => async (dispatch, getState) => {
 // ********** CHARACTERS ACTIONS **********
 
 // ADD CHARACTERS
-export const addCharactersAction = (characters) => async (dispatch, getState) => {
-   dispatch({ type: moviesConstants.ADD_CHARACTERS, payload: characters });
+export const addCharactersAction = (character) => async (dispatch, getState) => {
+   dispatch({ type: moviesConstants.ADD_CHARACTERS, payload: character });
    localStorage.setItem('characters', JSON.stringify(getState().charactersCRUD.characters));
 }
 

@@ -238,9 +238,11 @@ const deleteAllMovie = asyncHandler(async (req, res) => {
 // @route   POST /api/movies
 // @access  Private/Admin
 const createMovie = asyncHandler(async (req, res) => {
-   const { title, desc, image, banner, categories, language, year, episode, video, rate, reviewNumber, reviews, characters } = req.body
+   // const { title, desc, image, banner, categories, language, year, episode, video, rate, reviewNumber, reviews, characters } = req.body
+   // const movie = new Movie({ title, desc, image, banner, categories, language, year, episode, video, rate, reviewNumber, reviews, characters, userId: req.user._id })
 
-   const movie = new Movie({ title, desc, image, banner, categories, language, year, episode, video, rate, reviewNumber, reviews, characters, userId: req.user._id })
+   const { title, desc, image, banner, categories, language, year, age, studio, director, episode, status, video, characters } = req.body
+   const movie = new Movie({ title, desc, image, banner, categories, language, year, age, studio, director, episode, status, video, characters, userId: req.user._id })
 
    if (movie) {
       const createdMovie = await movie.save()

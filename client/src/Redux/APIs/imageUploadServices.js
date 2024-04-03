@@ -6,7 +6,7 @@ const uploadImageService = async (file, setLoading) => {
       setLoading(true);
       const { data } = await Axios.post('/upload', file);
       setLoading(false);
-      toast.success('Upload ảnh thành công');
+      toast.success('Upload thành công');
       return data;
    }
    catch (error) {

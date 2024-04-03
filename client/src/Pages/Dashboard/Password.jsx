@@ -57,7 +57,7 @@ const Password = () => {
                         placeholder='Nhập mật khẩu cũ'
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400"
                      />
-                     {errors.oldPassword && <InlineError error={errors.oldPassword.message} />}
+                     {errors?.oldPassword && <InlineError error={errors?.oldPassword.message} />}
                   </div>
                   <div className="w-full flex flex-col mt-2">
                      <label className='text-gray-800 font-semibold text-lg' htmlFor="oldPassword">Mật khẩu mới</label>
@@ -69,7 +69,7 @@ const Password = () => {
                         placeholder='Nhập mật khẩu mới'
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400"
                      />
-                     {errors.newPassword && <InlineError error={errors.newPassword.message} />}
+                     {errors?.newPassword && <InlineError error={errors?.newPassword.message} />}
                   </div>
                   <div className="w-full flex flex-col mt-2">
                      <label className='text-gray-800 font-semibold text-lg' htmlFor="oldPassword">Mật khẩu mới</label>
@@ -81,7 +81,7 @@ const Password = () => {
                         placeholder='Xác nhận mật khẩu mới'
                         className="bg-gray-100 rounded border-2 border-gray-400 focus:ring-red-600 focus:border-red-600 text-gray-800 placeholder:text-gray-400"
                      />
-                     {errors.confirmPassword && <InlineError error={errors.confirmPassword.message} />}
+                     {errors?.confirmPassword && <InlineError error={errors?.confirmPassword.message} />}
                   </div>
                </div>
                <div className="flex justify-between md:flex-row flex-col mt-4 *:p-2.5 *:rounded-md">

@@ -129,11 +129,11 @@ export const charactersReducer = (state = { characters: [] }, action) => {
          return { characters: [...state.characters, action.payload] };
       case moviesConstants.EDIT_CHARACTERS:
          const updatedCharacters = state.characters.map((character) =>
-            character._id === action.payload._id ? character._id : character
+            character.id === action.payload.id ? action.payload : character
          );
          return { characters: updatedCharacters };
       case moviesConstants.DELETE_CHARACTERS:
-         return { ...state, characters: state.characters.filter((character) => character._id !== action.payload) };
+         return { ...state, characters: state.characters.filter((character) => character.id !== action.payload) };
       case moviesConstants.RESET_CHARACTERS:
          return { characters: [] };
       default:

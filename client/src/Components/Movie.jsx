@@ -11,7 +11,7 @@ const Movie = ({ movie }) => {
             <span className='text-sm'>{movie?.rate}</span>
          </div>
          <div className='absolute right-1.5 mt-1.5 bg-opacity-80 h-[52px] w-[52px] bg-red-700 flex text-center justify-center items-center rounded-full z-20 text-white'>
-            <span className='text-xs uppercase font-semibold'>{movie?.status}</span>
+            <span className='text-xs uppercase font-semibold'>{movie?.status === 'completed' ? 'Hoàn thành' : 'Đang chiếu'}</span>
          </div>
          <img src={`${movie?.image ? movie?.image : '/images/movie-default.jpg'}`} alt={`/images/${movie?.title}`} className='movie-image' />
          <span className='movie-title bg-opacity-40 text-sm'>{movie?.title}</span>

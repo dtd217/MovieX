@@ -6,7 +6,7 @@ import Stars from '../Components/Stars'
 import { Breadcrumb, Progress, Space, notification } from 'antd';
 import MovieRates from '../Components/Single/MovieRates'
 import MovieInfo from '../Components/Single/MovieInfo'
-import MovieCasts from '../Components/Single/MovieCasts'
+import MovieCharacters from '../Components/Single/MovieCharacters'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from '../Components/Movie'
 import { getAllMoviesAction, getMovieByIdAction } from '../Redux/Actions/moviesActions'
@@ -156,7 +156,7 @@ const SingleMovie = () => {
                            <i className="fa-solid fa-file-lines fa-lg mr-2"></i> Nhân vật
                         </div>
                         <div className='flex lg:flex-row flex-col bg-[#1f282c]'>
-                           <MovieCasts movie={movie} />
+                           <MovieCharacters movie={movie} />
                         </div>
                      </div>
                      <div className="bg-gray-200 rounded mt-5 px-6 py-8">

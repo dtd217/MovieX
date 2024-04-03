@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Widget from '../Components/Home/Widget'
-import { Movies } from '../Data/movieData'
+// import { Movies } from '../Data/movieData'
 import { useDispatch, useSelector } from 'react-redux'
 import { typeMovieData, yearData } from '../Data/FilterData'
 import { getAllMoviesAction } from '../Redux/Actions/moviesActions'
@@ -39,26 +39,26 @@ const Filters = () => {
       setSelectedYear(event.target.value);
       setIsFilter(false);
    }
-   const resultSortedMovies = (selectedTypeSort) => {
-      // if (selectedTypeSort === "nameaz") {
-      //    (Movies.sort((a, b) => (a.title > b.title) ? 1 : -1));
-      // }
-      // else if (selectedTypeSort === "nameza") {
-      //    (Movies.sort((a, b) => (a.title < b.title) ? 1 : -1));
-      // }
-      switch (selectedTypeSort) {
-         case "nameaz":
-            (Movies.sort((a, b) => {
-               return (a.title > b.title) ? 1 : (a.title < b.title) ? -1 : 0;
-            }));
-            break;
-         case "nameza":
-            (Movies.sort((a, b) => (a.title < b.title) ? 1 : (a.title > b.title) ? -1 : 0));
-            break;
-         default:
-            return Movies
-      }
-   }
+   // const resultSortedMovies = (selectedTypeSort) => {
+   //    // if (selectedTypeSort === "nameaz") {
+   //    //    (Movies.sort((a, b) => (a.title > b.title) ? 1 : -1));
+   //    // }
+   //    // else if (selectedTypeSort === "nameza") {
+   //    //    (Movies.sort((a, b) => (a.title < b.title) ? 1 : -1));
+   //    // }
+   //    switch (selectedTypeSort) {
+   //       case "nameaz":
+   //          (Movies.sort((a, b) => {
+   //             return (a.title > b.title) ? 1 : (a.title < b.title) ? -1 : 0;
+   //          }));
+   //          break;
+   //       case "nameza":
+   //          (Movies.sort((a, b) => (a.title < b.title) ? 1 : (a.title > b.title) ? -1 : 0));
+   //          break;
+   //       default:
+   //          return Movies
+   //    }
+   // }
 
    useEffect(() => {
       dispatch(getAllMoviesAction({
@@ -96,7 +96,7 @@ const Filters = () => {
                                     <li>
                                        <button
                                           type='button'
-                                          onClick={resultSortedMovies('nameza')}
+                                          // onClick={resultSortedMovies('nameza')}
                                           className='w-full h-full p-3 text-left hover:bg-gray-600 hover:text-white transitions'>
                                           <i className="fa-solid fa-arrow-down-a-z mr-1"></i>
                                           Tên: Z-A

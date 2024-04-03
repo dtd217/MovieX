@@ -115,8 +115,7 @@ const WatchPage = () => {
                                  src={movie?.video}
                                  title={movie?.title}
                                  type="video/mp4"
-                              >
-                              </video>
+                              ></video>
                            </div>
                      }
                      <div className="h-full mb-2 flex justify-center flex-wrap *:text-lg *:p-2 *:font-semibold *:text-gray-400 ">

@@ -62,7 +62,7 @@ const Register = () => {
                                  placeholder='Nhập tên người dùng'
                                  required
                               />
-                              {errors.name && <InlineError error={errors.name.message} />}
+                              {errors?.name && <InlineError error={errors?.name.message} />}
                            </div>
                            <div className='mt-4'>
                               <label className="block text-lg font-semibold text-white" htmlFor="email">Email</label>
@@ -75,7 +75,7 @@ const Register = () => {
                                  placeholder='Nhập email'
                                  required
                               />
-                              {errors.email && <InlineError error={errors.email.message} />}
+                              {errors?.email && <InlineError error={errors?.email.message} />}
                            </div>
                            <div className='mt-4'>
                               <label className="block text-lg font-semibold text-white" htmlFor="password">Mật khẩu</label>
@@ -88,7 +88,7 @@ const Register = () => {
                                  placeholder='Nhập mật khẩu'
                                  required
                               />
-                              {errors.password && <InlineError error={errors.password.message} />}
+                              {errors?.password && <InlineError error={errors?.password.message} />}
                            </div>
                            <button
                               type="submit"
