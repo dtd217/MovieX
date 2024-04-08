@@ -24,6 +24,7 @@ import { getAllCategoriesAction } from './Redux/Actions/categoriesActions'
 import { getAllMoviesAction } from './Redux/Actions/moviesActions'
 import { userGetBookmarksAction } from './Redux/Actions/userActions'
 import toast from 'react-hot-toast'
+import UpdateMovie from './Pages/Dashboard/Admin/UpdateMovie'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -75,6 +76,7 @@ const App = () => {
               <Route path='/categories' element={<Categories />} />
               <Route path='/users' element={<Users />} />
               <Route path='/add-movie' element={<AddMovie />} />
+              <Route path='/update/:id' element={<UpdateMovie />} />
             </Route>
           </Route>
         </Routes >

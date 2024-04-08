@@ -100,6 +100,19 @@ export const createMovieAction = (movie) => async (dispatch, getState) => {
    }
 }
 
+// UPDATE MOVIE ACTIONS
+export const updateMovieAction = (id, movie) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: moviesConstants.UPDATE_MOVIE_REQUEST });
+      const response = await moviesApi.updateMovieService(id, movie, tokenProtection(getState));
+      dispatch({ type: moviesConstants.UPDATE_MOVIE_SUCCESS, payload: response });
+      toast.success("Cập nhật phim thành công");
+      dispatch(getMovieByIdAction(id));
+   } catch (error) {
+      ErrorsAction(error, dispatch, moviesConstants.UPDATE_MOVIE_FAIL);
+   }
+}
+
 // ********** CHARACTERS ACTIONS **********
 
 // ADD CHARACTERS

@@ -32,6 +32,7 @@ const rootReducer = combineReducers({
    deleteMovie: Movies.deleteMovieReducer,
    deleteAllMovies: Movies.deleteAllMoviesReducer,
    createMovie: Movies.createMovieReducer,
+   updateMovie: Movies.updateMovieReducer,
    charactersCRUD: Movies.charactersReducer,
 });
 

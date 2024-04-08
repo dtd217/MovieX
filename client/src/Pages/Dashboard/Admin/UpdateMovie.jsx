@@ -3,32 +3,48 @@ import Layout from '../../../Layout/Layout'
 import DashboardLayout from '../../../Components/DashboardLayout';
 import CharacterModal from '../../../Components/Modals/CharacterModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { MovieValidation } from '../../../Components/Validation/MovieValidation';
-import { createMovieAction, deleteCharactersAction } from '../../../Redux/Actions/moviesActions';
+import { deleteCharactersAction, getMovieByIdAction, updateMovieAction } from '../../../Redux/Actions/moviesActions';
 import toast from 'react-hot-toast';
 import { InlineError } from '../../../Components/Notifications/Error';
 import { ImagePreview } from '../../../Components/ImagePreview';
 import Uploader from '../../../Components/Uploader';
 
-const AddMovie = () => {
+const UpdateMovie = () => {
+   // window.scroll(0, 0)
    const [movieImage, setMovieImage] = useState("")
    const [movieBanner, setMovieBanner] = useState("")
    const [videoUrl, setVideoUrl] = useState("")
    const [selectedCategories, setSelectedCategories] = useState([]);
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const { id } = useParams()
 
    const { categories } = useSelector((state) => state.getAllCategories)
-   const { isLoading, isError, isSuccess } = useSelector((state) => state.createMovie)
+   const { isLoading, isError, movie } = useSelector((state) => state.getMovieById)
+   const { isLoading: updateLoading, isError: updateError, isSuccess } = useSelector((state) => state.updateMovie)
    const { characters } = useSelector((state) => state.charactersCRUD)
 
-   const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(MovieValidation) });
+   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({ resolver: yupResolver(MovieValidation) });
 
    const onSubmit = (data) => {
-      dispatch(createMovieAction({ ...data, image: movieImage, banner: movieBanner, video: videoUrl, characters }))
+      dispatch(updateMovieAction(movie?._id, {
+         ...data,
+         image: movieImage,
+         banner: movieBanner,
+         video: videoUrl,
+         characters: characters?.length > 0 ? [...movie?.characters, ...characters] : movie?.characters
+      }))
+      console.log({
+         ...data,
+         image: movieImage,
+         banner: movieBanner,
+         video: videoUrl,
+         characters: characters?.length > 0 ? [...movie?.characters, ...characters] : movie?.characters
+      })
    }
 
    const deleteCharacterHandler = (id) => {
@@ -49,24 +65,6 @@ const AddMovie = () => {
    const [openCharacterModal, setOpenCharacterModal] = useState(false);
    const [character, setCharacter] = useState(null);
 
-   useEffect(() => {
-      if (openCharacterModal === false) {
-         setCharacter()
-      }
-      if (isSuccess) {
-         reset({ title: "", desc: "", categories: [], language: "", year: [], episode: "", status: "", type: "" })
-         setMovieImage("")
-         setMovieBanner("")
-         setVideoUrl("")
-         dispatch({ type: "CREATE_MOVIE_RESET" })
-         navigate('/add-movie')
-      }
-      if (isError) {
-         toast.error("Đã xảy ra lỗi, vui lòng thử lại")
-         dispatch({ type: "CREATE_MOVIE_RESET" })
-      }
-   }, [isSuccess, reset, navigate, dispatch, isError, openCharacterModal])
-
    const handleCheckboxChange = (event) => {
       if (event.target.checked) {
          setSelectedCategories((prevSelected) => [...prevSelected, event.target.value]);
@@ -77,9 +75,41 @@ const AddMovie = () => {
       }
    };
 
+   useEffect(() => {
+      if (movie?._id !== id) {
+         dispatch(getMovieByIdAction(id))
+      }
+      else {
+         setValue("title", movie?.title)
+         setValue("desc", movie?.desc)
+         setValue("categories", [...movie?.categories])
+         setValue("language", movie?.language)
+         setValue("year", movie?.year[0])
+         setValue("age", movie?.age)
+         setValue("studio", movie?.studio)
+         setValue("director", movie?.director)
+         setValue("age", movie?.age)
+         setValue("episode", movie?.episode)
+         setValue("status", movie?.status)
+         setValue("type", movie?.type[0])
+         setMovieImage(movie?.image)
+         setMovieBanner(movie?.banner)
+         setVideoUrl(movie?.video)
+         // setValue("characters", [...movie?.characters])
+      }
+      if (isSuccess) {
+         dispatch({ type: "UPDATE_MOVIE_RESET" })
+         navigate(`/movie-list`)
+      }
+      if (updateError) {
+         toast.error("Đã xảy ra lỗi, vui lòng thử̛lại")
+         dispatch({ type: "UPDATE_MOVIE_RESET" })
+      }
+   }, [reset, navigate, dispatch, updateError, isSuccess, id, movie, setValue])
+
    return (
       <Layout>
-         <DashboardLayout title='Thêm phim mới' >
+         <DashboardLayout title='Sửa thông tin phim' >
             <form className="grid sm:grid-cols-2 grid-cols-1 gap-4 *:flex">
                {/* Input */}
                <div className="col-span-2 w-full flex flex-col">
@@ -244,7 +274,7 @@ const AddMovie = () => {
                   <ImagePreview image={videoUrl} name="video" type='video' />
                </div>
 
-               {/* Add characters */}
+               {/* Edit characters */}
                <div className="flex flex-col col-span-2">
                   <label className="font-semibold text-left text-lg text-gray-800 mb-2">Diễn viên</label>
                   <button
@@ -261,7 +291,7 @@ const AddMovie = () => {
                      handleOk={() => setOpenCharacterModal(false)}
                   />
                   <div className="grid grid-cols-1 min-w-fit:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-                     {characters?.length > 0 && characters?.map((user) => (
+                     {movie?.characters?.length > 0 && movie?.characters?.map((user) => (
                         <div className="w-full text-center flex flex-col rounded-md" key={user?.id}>
                            {user?.image ?
                               <img src={user?.image ? user?.image : '/images/user-img.jpg'} alt={user?.name} className='rounded-t sm:w-full' /> :
@@ -283,7 +313,10 @@ const AddMovie = () => {
                                     <span className='ml-1'>Sửa</span>
                                  </button>
                                  <button
-                                    onClick={() => deleteCharacterHandler(user?.id)}
+                                    onClick={(e) => {
+                                       e.preventDefault()
+                                       deleteCharacterHandler(user?.id)
+                                    }}
                                     className='bg-red-600 hover:bg-red-700 cursor-pointer p-2 md:w-1/2 transitions rounded-md'>
                                     <i className='fa-solid fa-trash text-sm sm:text-base'></i> Xoá
                                  </button>
@@ -299,13 +332,13 @@ const AddMovie = () => {
                      />
                   </div>
                </div>
-               
+
                <div className="flex col-span-2 justify-center w-full mt-10 mb-2 *:p-2.5 *:rounded-md">
                   <button
                      type='submit'
                      onClick={handleSubmit(onSubmit)}
                      className='hover:bg-red-700 md:w-1/3 sm:w-3/5 w-full transitions text-xl font-semibold bg-red-600'>
-                     {isLoading ? 'Đang tạo phim...' : 'Thêm phim'}
+                     {updateLoading ? 'Đang cập nhật...' : 'Cập nhật'}
                   </button>
                </div>
             </form>
@@ -314,4 +347,4 @@ const AddMovie = () => {
    )
 }
 
-export default AddMovie
+export default UpdateMovie

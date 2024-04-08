@@ -7,8 +7,10 @@ import { Empty } from '../../../Components/Notifications/Empty';
 import DashboardLayout from '../../../Components/DashboardLayout';
 import { adminGetAllUsersAction } from '../../../Redux/Actions/userActions';
 import { deleteAllMoviesAction, deleteMovieAction } from '../../../Redux/Actions/moviesActions';
+import { Link } from 'react-router-dom';
 
 const MovieList = () => {
+   window.scroll(0, 0)
    const dispatch = useDispatch()
    const { isLoading, isError, movies } = useSelector((state) => state.getAllMovies)
    const { isLoading: categoriesLoading, isError: categoriesError, categories } = useSelector((state) => state.getAllCategories)
@@ -94,9 +96,10 @@ const MovieList = () => {
                               <td className="text-center">{movie.episode}</td>
                               <td className="text-center">
                                  <div className="flex flex-col sm:flex-row justify-center *:p-2.5 *:rounded *:whitespace-nowrap *:sm:text-sm *:flex *:items-center *:justify-center">
-                                    <button
-                                       className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
-                                       <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
+                                    <button className='text-gray-100 bg-green-500 transitions hover:bg-gray-600 sm:mr-2'>
+                                       <Link to={`/update/${movie?._id}`}>
+                                          <i className="fa-solid fa-pen-to-square fa-lg mr-1"></i> Sửa
+                                       </Link>
                                     </button>
                                     <button
                                        onClick={() => deleteMovieHandler(movie?._id)}

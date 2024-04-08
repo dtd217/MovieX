@@ -76,7 +76,7 @@ const Bookmarks = () => {
                                     <span className='text-sm'>{movie?.rate}</span>
                                  </div>
                                  <div className='absolute right-1.5 mt-1.5 bg-opacity-80 h-[52px] w-[52px] bg-red-700 flex text-center justify-center items-center rounded-full z-20 text-white'>
-                                    <span className='text-xs uppercase font-semibold'>{movie?.status}</span>
+                                    <span className='text-xs uppercase font-semibold'>{movie?.status === 'completed' ? 'Hoàn thành' : 'Đang chiếu'}</span>
                                  </div>
                                  <div className='relative'>
                                     <img src={`${movie?.image}`} alt={`/images/${movie?.title}`} className='movie-image' />

@@ -58,6 +58,14 @@ const createMovieService = async (movie, token) => {
    return data
 }
 
+// Edit movie
+const updateMovieService = async (id, movie, token) => {
+   const { data } = await Axios.put(`/movies/${id}`, movie, {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
 export {
    getAllMoviesService,
    getMovieByIdService,
@@ -66,5 +74,6 @@ export {
    reviewMovieService,
    deleteMovieService,
    deleteAllMoviesService,
-   createMovieService
+   createMovieService,
+   updateMovieService
 }
