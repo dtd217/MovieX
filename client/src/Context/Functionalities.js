@@ -13,6 +13,11 @@ const CheckIfMovieBought = (movie) => {
    return cart?.find(m => m?._id === movie?._id);
 }
 
+const CheckIfMovieOrdered = (movie) => {
+   const { orders } = useSelector(state => state.getAllOrders);
+   return orders?.find(m => m?._id === movie?._id);
+}
+
 // Add bookmark functionality
 const AddBookmark = (movie, dispatch, userInfo) => {
    return !userInfo ?

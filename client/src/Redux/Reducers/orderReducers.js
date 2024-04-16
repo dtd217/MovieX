@@ -35,7 +35,7 @@ export const getOrderByIdReducer = (state = { order: {} }, action) => {
       case orderConstants.GET_ORDER_BY_ID_REQUEST:
          return { isLoading: true };
       case orderConstants.GET_ORDER_BY_ID_SUCCESS:
-         return { isLoading: false, orders: action.payload };
+         return { isLoading: false, order: action.payload };
       case orderConstants.GET_ORDER_BY_ID_FAIL:
          return { isLoading: false, isError: action.payload };
       case orderConstants.GET_ORDER_BY_ID_RESET:

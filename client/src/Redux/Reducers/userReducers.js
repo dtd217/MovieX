@@ -194,6 +194,22 @@ export const userDeleteFromCartReducer = (state = {}, action) => {
    }
 }
 
+// DELETE ALL CART
+export const userDeleteAllCartReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.DELETE_ALL_CART_REQUEST:
+         return { isLoading: true };
+      case userConstants.DELETE_ALL_CART_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.DELETE_ALL_CART_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.DELETE_ALL_CART_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
 // ADMIN GET ALL USERS
 export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
    switch (action.type) {

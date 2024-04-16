@@ -112,7 +112,7 @@ const MovieList = () => {
                         ))}
                      </table>
                      {movies?.length > 0 &&
-                        <div className="flex justify-end">
+                        <div className="flex justify-end mb-4">
                            <button
                               disabled={deleteAllLoading}
                               onClick={deleteAllMoviesHandler}

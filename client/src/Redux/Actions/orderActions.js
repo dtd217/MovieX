@@ -31,7 +31,7 @@ const getAllOrdersAction = () => async (dispatch, getState) => {
 const getOrderByIdAction = (id) => async (dispatch, getState) => {
    try {
       dispatch({ type: orderConstants.GET_ORDER_BY_ID_REQUEST })
-      const { response } = await orderApi.getOrderByIdService(id, tokenProtection(getState))
+      const response = await orderApi.getOrderByIdService(id, tokenProtection(getState))
       dispatch({ type: orderConstants.GET_ORDER_BY_ID_SUCCESS, payload: response })
    } catch (error) {
       ErrorsAction(error, dispatch, orderConstants.GET_ORDER_BY_ID_FAIL)

@@ -118,6 +118,14 @@ const deleteMovieFromCart = async (id, token) => {
    return data
 }
 
+// Delete all cart
+const deleteAllMoviesFromCart = async (token) => {
+   const { data } = await Axios.delete(`/user/cart`, {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+   return data
+}
+
 // ********** ADMIN APIS **********
 
 // Admin get all users
@@ -160,6 +168,7 @@ export {
    addBookmarks,
    getCart,
    addMovieToCart,
-   deleteMovieFromCart
+   deleteMovieFromCart,
+   deleteAllMoviesFromCart
 };
 

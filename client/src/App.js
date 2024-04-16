@@ -28,6 +28,7 @@ import UpdateMovie from './Pages/Dashboard/Admin/UpdateMovie'
 import ScrollToTop from './ScrollToTop'
 import MovieCart from './Pages/MovieCart'
 import Orders from './Pages/Dashboard/Admin/Orders'
+import ViewOrder from './Pages/ViewOrder'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -83,6 +84,7 @@ const App = () => {
                 <Route path='/add-movie' element={<AddMovie />} />
                 <Route path='/update/:id' element={<UpdateMovie />} />
                 <Route path='orders' element={<Orders />} />
+                <Route path='/orders/:id' element={<ViewOrder />} />
               </Route>
             </Route>
           </Routes >

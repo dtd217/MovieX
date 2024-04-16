@@ -26,7 +26,7 @@ const createOrder = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getOrderById = asyncHandler(async (req, res) => {
    try {
-      const order = await Order.findById(req.params.id)
+      const order = await Order.findById(req.params.id).populate('orderItems').populate('user')
       if (order) {
          res.json(order)
       }

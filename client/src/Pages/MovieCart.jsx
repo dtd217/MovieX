@@ -2,13 +2,16 @@ import React, { useEffect, useId, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { userDeleteCartAction, userGetCartAction } from '../Redux/Actions/userActions'
+import { userDeleteCartAction, userGetCartAction, userDeleteAllCartAction } from '../Redux/Actions/userActions'
 import { createOrderAction } from '../Redux/Actions/orderActions'
+import { Empty } from '../Components/Notifications/Empty'
+import Loader from '../Components/Notifications/Loader'
+import toast from 'react-hot-toast'
 
 const MovieCart = () => {
    const dispatch = useDispatch()
-   const { isLoading, isError, isSuccess, cart } = useSelector((state) => state.userGetCart)
-   const { isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess, order } = useSelector((state) => state.createOrder)
+   const { isError, isSuccess, cart } = useSelector((state) => state.userGetCart)
+   const { isLoading: orderLoading, isError: orderError } = useSelector((state) => state.createOrder)
    const { userInfo } = useSelector((state) => state.userLogin)
 
    const [paymentMethod, setPaymentMethod] = useState('Paypal')
@@ -31,17 +34,19 @@ const MovieCart = () => {
          taxPrice: tax,
          totalPrice: total
       }))
+      dispatch(userDeleteAllCartAction())
    }
 
    useEffect(() => {
       dispatch(userGetCartAction())
-      if (isError) {
-         dispatch({ type: 'USER_GET_CART_RESET' })
+      if (isError || orderError) {
+         toast.error(isError || orderError)
+         dispatch({ type: isError ? 'USER_GET_CART_RESET' : 'CREATE_ORDER_RESET' })
       }
       if (isSuccess) {
-         dispatch({ type: 'USER_GET_CART_RESET' })
+         toast.success('Đặt hàng thành công')
       }
-   }, [dispatch, isError, isSuccess])
+   }, [dispatch, isError, orderError, isSuccess])
 
    return (
       <Layout>
@@ -49,7 +54,7 @@ const MovieCart = () => {
             <div className="max-w-6xl p-4 mx-auto bg-black xl:rounded">
                <div className='flex justify-between lg:flex-row flex-col'>
                   <div className='w-full flex flex-col justify-center rounded-md h-full bg-gray-800 p-6'>
-                     <h1 className="text-3xl font-bold tracking-tight axu sm:text-4xl">Movie Cart</h1>
+                     <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Movie Cart</h1>
                      <form className='mt-12 md:grid md:grid-cols-12 md:items-start md:gap-x-12'>
                         <section className='col-span-7'>
                            <ul className='border-t border-gray-300'>
@@ -93,7 +98,10 @@ const MovieCart = () => {
                               </div>
                            </dl>
                            <div className="mt-6">
-                              <button onClick={placeOrderHandler} className='w-full rounded-md border-1 border-transparent bg-red-600 px-4 py-3 text-lg font-semibold text-white hover:bg-red-800 transitions'>
+                              <button
+                                 disabled={orderLoading}
+                                 onClick={placeOrderHandler}
+                                 className='w-full rounded-md border-1 border-transparent bg-red-600 px-4 py-3 text-lg font-semibold text-white hover:bg-red-800 transitions'>
                                  Thanh toán
                               </button>
                            </div>

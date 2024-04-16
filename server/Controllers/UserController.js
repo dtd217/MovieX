@@ -349,6 +349,27 @@ const deleteMovieFromCart = asyncHandler(async (req, res) => {
    }
 })
 
+// @desc    Delete all movie from cart
+// @route   DELETE /api/user/cart
+// @access  Private
+const deleteAllMoviesFromCart = asyncHandler(async (req, res) => {
+   try {
+      const user = await User.findById(req.user._id)
+      if (user) {
+         user.cart = []
+         await user.save()
+         res.json({ message: 'Xoá tất cả giờ hàng thành công!' })
+      }
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
 // ********** ADMIN CONTROLLERS **********
 
 // @desc    Get all users
@@ -431,5 +452,6 @@ export {
    updateUser,
    getUserCart,
    addMovieToCart,
-   deleteMovieFromCart
+   deleteMovieFromCart,
+   deleteAllMoviesFromCart
 }

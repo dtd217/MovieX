@@ -162,6 +162,18 @@ const userDeleteCartAction = (movieId) => async (dispatch, getState) => {
    }
 }
 
+// DELETE ALL MOVIES FROM CART ACTIONS
+const userDeleteAllCartAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.DELETE_ALL_CART_REQUEST });
+      const response = await userApi.deleteAllMoviesFromCart(tokenProtection(getState));
+      dispatch({ type: userConstants.DELETE_ALL_CART_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.DELETE_ALL_CART_FAIL);
+   }
+}
+
 // ADMIN GET ALL USERS ACTIONS
 const adminGetAllUsersAction = () => async (dispatch, getState) => {
    try {
@@ -216,5 +228,6 @@ export {
    adminUpdateUserAction,
    userGetCartAction,
    userAddCartAction,
-   userDeleteCartAction
+   userDeleteCartAction,
+   userDeleteAllCartAction
 }

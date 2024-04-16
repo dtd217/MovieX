@@ -12,6 +12,7 @@ import { Empty } from '../Components/Notifications/Empty';
 import { AddBookmark, CheckIfMovieAddedBookmark, AddCart, CheckIfMovieBought } from '../Context/Functionalities';
 import { userDeleteBookmarkByIdAction } from '../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
+import { getAllOrdersAction } from '../Redux/Actions/orderActions';
 
 const WatchPage = () => {
    const { id } = useParams()
@@ -54,6 +55,9 @@ const WatchPage = () => {
       }
    };
 
+   const { orders } = useSelector((state) => state.getAllOrders)
+   console.log(orders?.map(o => o?.orderItems?.map(i => i?.movieId)))
+
    // Notification
    const [api, contextHolder] = notification.useNotification();
    const openNotificationWithIcon = (type) => {
@@ -82,6 +86,7 @@ const WatchPage = () => {
 
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
+      dispatch(getAllOrdersAction())
       if (isError) {
          toast.error(isError)
       }

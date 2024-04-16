@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
    userGetCart: User.userGetCartReducer,
    userAddCart: User.userAddToCartReducer,
    userDeleteCart: User.userDeleteFromCartReducer,
+   useDeleteAllCart: User.userDeleteAllCartReducer,
    adminGetAllUsers: User.adminGetAllUsersReducer,
    adminDeleteUser: User.adminDeleteUserReducer,
    adminUpdateUser: User.adminUpdateUserReducer,

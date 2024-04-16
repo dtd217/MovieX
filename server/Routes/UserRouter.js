@@ -19,6 +19,7 @@ router.delete('/bookmarks/:id', protect, userController.deleteBookmarkById)
 router.get('/cart', protect, userController.getUserCart)
 router.post('/cart', protect, userController.addMovieToCart)
 router.delete('/cart/:id', protect, userController.deleteMovieFromCart)
+router.delete('/cart', protect, userController.deleteAllMoviesFromCart)
 
 // ********** ADMIN ROUTES **********
 router.get('/', protect, admin, userController.getUsers)
