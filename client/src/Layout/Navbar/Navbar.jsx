@@ -37,6 +37,10 @@ const Navbar = () => {
          },
          {
             key: '2',
+            label: (<Link to="/cart" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Giỏ phim</Link>),
+         },
+         {
+            key: '3',
             label: (
                <button onClick={logoutHandler} className='w-full block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg'>
                   <Link to="/login" className='float-left'>
@@ -53,10 +57,14 @@ const Navbar = () => {
          },
          {
             key: '2',
-            label: (<Link to="/bookmarks" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Hộp phim</Link>),
+            label: (<Link to="/cart" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Giỏ phim</Link>),
          },
          {
             key: '3',
+            label: (<Link to="/bookmarks" className="block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg">Hộp phim</Link>),
+         },
+         {
+            key: '4',
             label: (
                <button onClick={logoutHandler} className='w-full block whitespace-nowrap px-6 py-2 hover:bg-gray-600 !text-white text-lg'>
                   <Link to="/login" className='float-left'>

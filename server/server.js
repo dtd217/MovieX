@@ -7,12 +7,14 @@ import userRouter from './Routes/UserRouter.js'
 import moviesRouter from './Routes/MoviesRouter.js'
 import categoriesRouter from './Routes/CategoriesRouter.js'
 import UploadRouter from './Controllers/UploadFile.js'
+import orderRouter from './Routes/OrderRouter.js'
 
 dotenv.config()
 
 const app = express()
 app.use(cors())
 app.use(express.json())
+
 // Connect DB
 connectDB()
 
@@ -24,6 +26,7 @@ app.use('/api/user', userRouter)
 app.use('/api/movies', moviesRouter)
 app.use('/api/categories', categoriesRouter)
 app.use('/api/upload', UploadRouter)
+app.use('/api/orders', orderRouter)
 
 // Error handling middleware
 app.use(errorHandler)

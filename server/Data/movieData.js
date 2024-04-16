@@ -33,7 +33,8 @@ export const MoviesData = [
       followNumber: 866,
       director: "Den Saori",
       status: "in-production",
-      studio: "OLM"
+      studio: "OLM",
+      price: 10
    },
    {
       title: "One Piece - Đảo hải tặc",
@@ -70,7 +71,8 @@ export const MoviesData = [
       followNumber: 122493,
       director: "Oda Kounosuke, Ishitani Megumi",
       status: "in-production",
-      studio: "Toei Animation"
+      studio: "Toei Animation",
+      price: 10
    },
    {
       title: "Hametsu no Oukoku",
@@ -102,7 +104,8 @@ export const MoviesData = [
       followNumber: 2216,
       director: "Motonaga Keitarou",
       status: "in-production",
-      studio: "Yokohama Animation Lab"
+      studio: "Yokohama Animation Lab",
+      price: 10
    },
    {
       title: "Naruto",
@@ -132,7 +135,8 @@ export const MoviesData = [
       followNumber: 20289,
       director: "Yamashita Hiroyuki",
       status: "completed",
-      studio: "Studio Pierrot"
+      studio: "Studio Pierrot",
+      price: 10
    },
    {
       title: "Thám tử lừng danh Conan",
@@ -168,7 +172,8 @@ export const MoviesData = [
       followNumber: 38821,
       director: "Kodama Kenji",
       status: "in-production",
-      studio: "TMS Entertainment"
+      studio: "TMS Entertainment",
+      price: 10
    },
    {
       title: "Doraemon",
@@ -204,7 +209,8 @@ export const MoviesData = [
       followNumber: 9890,
       director: "Kusuba Kouzou",
       status: "in-production",
-      studio: "Studio Pierrot, Shin-Ei Animation"
+      studio: "Studio Pierrot, Shin-Ei Animation",
+      price: 10
    },
    {
       title: "Ta muốn trở thành chúa tể bóng tối",
@@ -240,7 +246,8 @@ export const MoviesData = [
       followNumber: 7690,
       director: "Nakanishi Kazuya",
       status: "completed",
-      studio: "Nexus"
+      studio: "Nexus",
+      price: 10
    },
    {
       title: "Bleach",
@@ -276,7 +283,8 @@ export const MoviesData = [
       followNumber: 32632,
       director: "Abe Noriyuki",
       status: "completed",
-      studio: "Studio Pierrot"
+      studio: "Studio Pierrot",
+      price: 10
    },
    {
       title: "Violet Evergarden: Hồi Ức Không Quên",
@@ -310,7 +318,8 @@ export const MoviesData = [
       followNumber: 656,
       director: "Ishidate Taichi",
       status: "completed",
-      studio: "Kyoto Animation"
+      studio: "Kyoto Animation",
+      price: 10
    },
    {
       title: "Boku no Hero Academia the Movie: Futari no Hero",
@@ -340,7 +349,8 @@ export const MoviesData = [
       followNumber: 541,
       director: "Nagasaki Kenji",
       status: "completed",
-      studio: "Bones"
+      studio: "Bones",
+      price: 10
    },
    {
       title: "Belle: Rồng và Công Chúa Tàn Nhang",
@@ -376,7 +386,8 @@ export const MoviesData = [
       followNumber: 332,
       director: "Hosoda Mamoru",
       status: "completed",
-      studio: "Studio Chizu"
+      studio: "Studio Chizu",
+      price: 10
    },
    {
       title: "Jujutsu Kaisen 0: Chú Thuật Hồi Chiến",
@@ -412,7 +423,8 @@ export const MoviesData = [
       followNumber: 3535,
       director: "Park Seong-Hu",
       status: "completed",
-      studio: "MAPPA"
+      studio: "MAPPA",
+      price: 10
    },
    {
       title: "Gridman Universe",
@@ -448,7 +460,8 @@ export const MoviesData = [
       followNumber: 6,
       director: "Amemiya Akira",
       status: "completed",
-      studio: "Trigger"
+      studio: "Trigger",
+      price: 10
    },
    {
       title: "Hội Chứng Tuổi Thanh Xuân: Em Gái Xuất Hành",
@@ -482,7 +495,8 @@ export const MoviesData = [
       followNumber: 170,
       director: "Masui Souichi",
       status: "completed",
-      studio: "CloverWorks"
+      studio: "CloverWorks",
+      price: 10
    },
    {
       title: "Macross Δ Movie 2: Zettai Live!!!",
@@ -518,7 +532,8 @@ export const MoviesData = [
       followNumber: 40,
       director: "Komori Hideto",
       status: "completed",
-      studio: "Studio Chizu"
+      studio: "Studio Chizu",
+      price: 10
    },
    {
       title: "Revice Forward: Kamen Rider Live & Evil & Demons",
@@ -551,6 +566,7 @@ export const MoviesData = [
       followNumber: 3390,
       director: "Komori Hideto",
       status: "completed",
-      studio: "Toei Company"
+      studio: "Toei Company",
+      price: 10
    },
 ] 

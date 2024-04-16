@@ -14,7 +14,6 @@ import { ImagePreview } from '../../../Components/ImagePreview';
 import Uploader from '../../../Components/Uploader';
 
 const UpdateMovie = () => {
-   // window.scroll(0, 0)
    const [movieImage, setMovieImage] = useState("")
    const [movieBanner, setMovieBanner] = useState("")
    const [videoUrl, setVideoUrl] = useState("")
@@ -24,7 +23,7 @@ const UpdateMovie = () => {
    const { id } = useParams()
 
    const { categories } = useSelector((state) => state.getAllCategories)
-   const { isLoading, isError, movie } = useSelector((state) => state.getMovieById)
+   const { movie } = useSelector((state) => state.getMovieById)
    const { isLoading: updateLoading, isError: updateError, isSuccess } = useSelector((state) => state.updateMovie)
    const { characters } = useSelector((state) => state.charactersCRUD)
 
@@ -38,13 +37,6 @@ const UpdateMovie = () => {
          video: videoUrl,
          characters: characters?.length > 0 ? [...movie?.characters, ...characters] : movie?.characters
       }))
-      console.log({
-         ...data,
-         image: movieImage,
-         banner: movieBanner,
-         video: videoUrl,
-         characters: characters?.length > 0 ? [...movie?.characters, ...characters] : movie?.characters
-      })
    }
 
    const deleteCharacterHandler = (id) => {
@@ -95,7 +87,6 @@ const UpdateMovie = () => {
          setMovieImage(movie?.image)
          setMovieBanner(movie?.banner)
          setVideoUrl(movie?.video)
-         // setValue("characters", [...movie?.characters])
       }
       if (isSuccess) {
          dispatch({ type: "UPDATE_MOVIE_RESET" })

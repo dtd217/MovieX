@@ -146,6 +146,54 @@ export const userAddBookmarksReducer = (state = {}, action) => {
    }
 }
 
+// GET ALL CART
+export const userGetCartReducer = (state = { cart: [] }, action) => {
+   switch (action.type) {
+      case userConstants.GET_CART_REQUEST:
+         return { isLoading: true };
+      case userConstants.GET_CART_SUCCESS:
+         return { isLoading: false, cart: action.payload };
+      case userConstants.GET_CART_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.GET_CART_RESET:
+         return { cart: [] };
+      default:
+         return state;
+   }
+}
+
+// ADD TO CART
+export const userAddToCartReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.ADD_CART_REQUEST:
+         return { isLoading: true };
+      case userConstants.ADD_CART_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.ADD_CART_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.ADD_CART_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
+// DELETE FROM CART
+export const userDeleteFromCartReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.DELETE_CART_REQUEST:
+         return { isLoading: true };
+      case userConstants.DELETE_CART_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.DELETE_CART_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.DELETE_CART_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
 // ADMIN GET ALL USERS
 export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
    switch (action.type) {
@@ -172,6 +220,22 @@ export const adminDeleteUserReducer = (state = {}, action) => {
       case userConstants.DELETE_USER_FAIL:
          return { isLoading: false, isError: action.payload };
       case userConstants.DELETE_USER_RESET:
+         return {};
+      default:
+         return state;
+   }
+}
+
+// ADMIN UPDATE USER
+export const adminUpdateUserReducer = (state = {}, action) => {
+   switch (action.type) {
+      case userConstants.UPDATE_USER_REQUEST:
+         return { isLoading: true };
+      case userConstants.UPDATE_USER_SUCCESS:
+         return { isLoading: false, isSuccess: true };
+      case userConstants.UPDATE_USER_FAIL:
+         return { isLoading: false, isError: action.payload };
+      case userConstants.UPDATE_USER_RESET:
          return {};
       default:
          return state;

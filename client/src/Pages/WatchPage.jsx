@@ -9,7 +9,7 @@ import { getMovieByIdAction } from '../Redux/Actions/moviesActions';
 import { useParams } from 'react-router-dom';
 import Loader from '../Components/Notifications/Loader';
 import { Empty } from '../Components/Notifications/Empty';
-import { AddBookmark, CheckIfMovieAddedBookmark } from '../Context/Functionalities';
+import { AddBookmark, CheckIfMovieAddedBookmark, AddCart, CheckIfMovieBought } from '../Context/Functionalities';
 import { userDeleteBookmarkByIdAction } from '../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 
@@ -68,6 +68,17 @@ const WatchPage = () => {
             duration: 2,
          });
    };
+
+   const downloadMovie = (movieSrc, movieName) => {
+      const link = document.createElement('a')
+      link.href = movieSrc
+      link.download = movieName
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+   }
+
+   const handleBought = () => CheckIfMovieBought(movie)
 
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
@@ -171,9 +182,19 @@ const WatchPage = () => {
                            <i className="mr-2 fa-solid fa-camera"></i>
                            Chụp ảnh
                         </div>
-                        <div className="hover:bg-gray-700 cursor-pointer">
-                           <i className="mr-2 fa-solid fa-download"></i>
-                           Tải về
+                        <div className='hover:bg-gray-700 cursor-pointer'>
+                           {handleBought ?
+                              <button
+                                 className='hover:bg-gray-700 cursor-pointer'
+                                 onClick={() => AddCart(movie, dispatch, userInfo)}>
+                                 <i className="mr-2 fa-solid fa-bag-shopping"></i>Mua ngay
+                              </button> :
+                              <button
+                                 className='hover:bg-gray-700 cursor-pointer'
+                                 onClick={() => downloadMovie(movie?.video, movie?.title)}>
+                                 <i className="mr-2 fa-solid fa-download"></i>Tải xuống
+                              </button>
+                           }
                         </div>
                         <div className="hover:bg-gray-700 cursor-pointer">
                            <i className="mr-2 fa-solid fa-clock-rotate-left"></i>

@@ -125,6 +125,43 @@ const userAddBookmarkAction = (movieId) => async (dispatch, getState) => {
    }
 }
 
+// GET MOVIE FROM CART ACTIONS
+const userGetCartAction = () => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.GET_CART_REQUEST });
+      const response = await userApi.getCart(tokenProtection(getState));
+      dispatch({ type: userConstants.GET_CART_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.GET_CART_FAIL);
+   }
+}
+
+// ADD MOVIE TO CART ACTIONS
+const userAddCartAction = (movieId) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.ADD_CART_REQUEST });
+      const response = await userApi.addMovieToCart(movieId, tokenProtection(getState));
+      dispatch({ type: userConstants.ADD_CART_SUCCESS, payload: response });
+      toast.success('Thêm vào giỏ phim thành công!');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.ADD_CART_FAIL);
+   }
+}
+
+// DELETE MOVIE FROM CART ACTIONS
+const userDeleteCartAction = (movieId) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.DELETE_CART_REQUEST });
+      const response = await userApi.deleteMovieFromCart(movieId, tokenProtection(getState));
+      dispatch({ type: userConstants.DELETE_CART_SUCCESS, payload: response });
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.DELETE_CART_FAIL);
+   }
+}
+
 // ADMIN GET ALL USERS ACTIONS
 const adminGetAllUsersAction = () => async (dispatch, getState) => {
    try {
@@ -150,6 +187,19 @@ const adminDeleteUserAction = (id) => async (dispatch, getState) => {
    }
 }
 
+// ADMIN UPDATE USER ACTIONS
+const adminUpdateUserAction = (user) => async (dispatch, getState) => {
+   try {
+      dispatch({ type: userConstants.UPDATE_USER_REQUEST });
+      const response = await userApi.updateUserService(user, tokenProtection(getState));
+      dispatch({ type: userConstants.UPDATE_USER_SUCCESS, payload: response });
+      toast.success('Cập nhật người dùng thành công');
+   }
+   catch (error) {
+      ErrorsAction(error, dispatch, userConstants.UPDATE_USER_FAIL);
+   }
+}
+
 export {
    loginAction,
    registerAction,
@@ -162,5 +212,9 @@ export {
    userDeleteBookmarkByIdAction,
    userAddBookmarkAction,
    adminGetAllUsersAction,
-   adminDeleteUserAction
+   adminDeleteUserAction,
+   adminUpdateUserAction,
+   userGetCartAction,
+   userAddCartAction,
+   userDeleteCartAction
 }

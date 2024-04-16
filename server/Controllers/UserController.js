@@ -90,17 +90,13 @@ const loginUser = asyncHandler(async (req, res) => {
 const updateUserProfile = asyncHandler(async (req, res) => {
    const { name, email, avatar } = req.body
    try {
-      // Tìm user trong db
       const user = await User.findById(req.user._id)
-      // Nếu user tồn tại => update user
       if (user) {
          user.name = name || user.name
          user.email = email || user.email
          user.avatar = avatar || user.avatar
 
          const updatedUser = await user.save()
-
-         // Gửi dữ liệu và token của user cho client
          res.json({
             _id: updatedUser._id,
             name: updatedUser.name,
@@ -110,7 +106,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             token: generateToken(updatedUser._id),
          })
       }
-      // Nếu user không có hoặc password không giống => gửi thông báo lỗi
       else {
          res.status(400)
          throw new Error('Người dùng không tồn tại')
@@ -284,6 +279,76 @@ const deleteBookmarkById = asyncHandler(async (req, res) => {
    }
 })
 
+// @desc    Get user cart
+// @route   GET /api/user/cart
+// @access  Private
+const getUserCart = asyncHandler(async (req, res) => {
+   try {
+      const user = await User.findById(req.user._id).populate('cart')
+      if (user) {
+         res.json(user.cart)
+      }
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Add movie to cart
+// @route   POST /api/user/cart
+// @access  Private
+const addMovieToCart = asyncHandler(async (req, res) => {
+   const { movieId } = req.body
+   try {
+      const user = await User.findById(req.user._id)
+      if (user) {
+         if (user.cart.includes(movieId)) {
+            res.status(400)
+            throw new Error('Phim đã được thêm vào giỏ hàng')
+         }
+         user.cart.push(movieId)
+         await user.save()
+         res.json(user.cart)
+      }
+      else {
+         res.status(404)
+         throw new Error('Không tìm thấy phim')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Delete movie from cart
+// @route   DELETE /api/user/cart
+// @access  Private
+const deleteMovieFromCart = asyncHandler(async (req, res) => {
+   try {
+      const user = await User.findById(req.user._id)
+      if (user) {
+         if (!user.cart.includes(req.params.id)) {
+            res.status(400)
+            throw new Error('Không tìm thấy phim')
+         }
+         user.cart = user.cart.filter((movieId) => movieId.toString() !== req.params.id)
+         await user.save()
+         res.json({ message: 'Xoá phim thành công!' })
+      }
+      else {
+         res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
 // ********** ADMIN CONTROLLERS **********
 
 // @desc    Get all users
@@ -291,7 +356,6 @@ const deleteBookmarkById = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
    try {
-      // Tìm tất cả users trong db
       const users = await User.find({})
       res.json(users)
    }
@@ -305,21 +369,45 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const deleteUsers = asyncHandler(async (req, res) => {
    try {
-      // Tìm user trong db
       const user = await User.findById(req.params.id)
-      // Nếu có user => xoá user
       if (user) {
-         // Nếu user là admin => gửi lỗi
          if (user.isAdmin) {
             res.status(400)
             throw new Error('Không thể xoá admin')
          }
-         // Xoá user
          await user.deleteOne()
          res.json({ message: 'Xoá người dùng thành công' })
       }
       else {
          res.status(404)
+         throw new Error('Người dùng không tồn tại')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+// @desc    Update user
+// @route   PUT /api/user/:id
+// @access  Private/Admin
+const updateUser = asyncHandler(async (req, res) => {
+   try {
+      const user = await User.findById(req.params.id)
+      if (user) {
+         user.isAdmin = req.body.isAdmin
+         const updatedUser = await user.save()
+         res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            avatar: updatedUser.avatar,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id),
+         })
+      }
+      else {
+         res.status(400)
          throw new Error('Người dùng không tồn tại')
       }
    }
@@ -340,4 +428,8 @@ export {
    deleteBookmarkById,
    getUsers,
    deleteUsers,
+   updateUser,
+   getUserCart,
+   addMovieToCart,
+   deleteMovieFromCart
 }

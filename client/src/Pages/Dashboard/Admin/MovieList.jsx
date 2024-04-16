@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast';
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import Layout from '../../../Layout/Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../../Components/Notifications/Loader';
@@ -7,10 +8,8 @@ import { Empty } from '../../../Components/Notifications/Empty';
 import DashboardLayout from '../../../Components/DashboardLayout';
 import { adminGetAllUsersAction } from '../../../Redux/Actions/userActions';
 import { deleteAllMoviesAction, deleteMovieAction } from '../../../Redux/Actions/moviesActions';
-import { Link } from 'react-router-dom';
 
 const MovieList = () => {
-   window.scroll(0, 0)
    const dispatch = useDispatch()
    const { isLoading, isError, movies } = useSelector((state) => state.getAllMovies)
    const { isLoading: categoriesLoading, isError: categoriesError, categories } = useSelector((state) => state.getAllCategories)

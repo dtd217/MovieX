@@ -54,12 +54,18 @@ const DashboardLayout = ({ children, title }) => {
             },
             {
                key: 5,
+               icon: '/images/dashboard-icon/orders.png',
+               href: '/orders',
+               title: 'Đơn hàng',
+            },
+            {
+               key: 6,
                icon: '/images/dashboard-icon/change-password.png',
                href: '/password',
                title: 'Đổi mật khẩu',
             },
             {
-               key: 6,
+               key: 7,
                icon: '/images/dashboard-icon/bookmark.png',
                href: '/bookmarks',
                title: 'Theo dõi',

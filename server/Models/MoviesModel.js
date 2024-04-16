@@ -108,6 +108,10 @@ const MovieSchema = new mongoose.Schema({
       required: true,
       default: 0
    },
+   price: {
+      type: Number,
+      required: true
+   }
 }, { timestamps: true })
 
 export default mongoose.model('Movie', MovieSchema)

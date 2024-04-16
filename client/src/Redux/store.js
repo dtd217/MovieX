@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import * as User from "./Reducers/userReducers";
 import * as Categories from "./Reducers/categoriesReducers";
 import * as Movies from "./Reducers/moviesReducers";
+import * as Order from "./Reducers/orderReducers";
 
 const rootReducer = combineReducers({
    // User Reducers
@@ -14,8 +15,12 @@ const rootReducer = combineReducers({
    userDeleteBookmarks: User.userDeleteBookmarksReducer,
    userDeleteBookmarkById: User.userDeleteBookmarkByIdReducer,
    userAddBookmarks: User.userAddBookmarksReducer,
+   userGetCart: User.userGetCartReducer,
+   userAddCart: User.userAddToCartReducer,
+   userDeleteCart: User.userDeleteFromCartReducer,
    adminGetAllUsers: User.adminGetAllUsersReducer,
    adminDeleteUser: User.adminDeleteUserReducer,
+   adminUpdateUser: User.adminUpdateUserReducer,
 
    // Category Reducers
    getAllCategories: Categories.getAllCategoriesReducer,
@@ -34,14 +39,22 @@ const rootReducer = combineReducers({
    createMovie: Movies.createMovieReducer,
    updateMovie: Movies.updateMovieReducer,
    charactersCRUD: Movies.charactersReducer,
+
+   // Order Reducers
+   createOrder: Order.createOrderReducer,
+   getAllOrders: Order.getAllOrdersReducer,
+   getOrderById: Order.getOrderByIdReducer,
 });
 
 // Lấy userInfo từ localStorage
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
 
+const cartFromStorage = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [];
+
 // InitialState
 const initialState = {
    userLogin: { userInfo: userInfoFromStorage },
+   userCart: { cartItems: cartFromStorage },
 };
 
 export const store = configureStore({

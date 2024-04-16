@@ -16,9 +16,13 @@ router.get('/bookmarks', protect, userController.getUserBookmarks)
 router.post('/bookmarks', protect, userController.addBookmarks)
 router.delete('/bookmarks', protect, userController.deleteBookmarks)
 router.delete('/bookmarks/:id', protect, userController.deleteBookmarkById)
+router.get('/cart', protect, userController.getUserCart)
+router.post('/cart', protect, userController.addMovieToCart)
+router.delete('/cart/:id', protect, userController.deleteMovieFromCart)
 
 // ********** ADMIN ROUTES **********
 router.get('/', protect, admin, userController.getUsers)
 router.delete('/:id', protect, admin, userController.deleteUsers)
+router.put('/:id', protect, admin, userController.updateUser)
 
 export default router

@@ -25,6 +25,9 @@ import { getAllMoviesAction } from './Redux/Actions/moviesActions'
 import { userGetBookmarksAction } from './Redux/Actions/userActions'
 import toast from 'react-hot-toast'
 import UpdateMovie from './Pages/Dashboard/Admin/UpdateMovie'
+import ScrollToTop from './ScrollToTop'
+import MovieCart from './Pages/MovieCart'
+import Orders from './Pages/Dashboard/Admin/Orders'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -51,35 +54,39 @@ const App = () => {
     <>
       <ToastContainer />
       <Router>
-        <Routes>
-          {/* PUBLIC ROUTES */}
-          <Route path='/' element={<HomePage />} />
-          <Route path='/tv-series' element={<TvSeries />} />
-          <Route path='/movie-ova' element={<MovieOVA />} />
-          <Route path='/filters' element={<Filters />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/movies/:id' element={<SingleMovie />} />
-          <Route path='/movies/search/:search' element={<MoviesPage />} />
-          <Route path='/watch/:id' element={<WatchPage />} />
-          <Route path='*' element={<NotFound />} />
+        <ScrollToTop>
+          <Routes>
+            {/* PUBLIC ROUTES */}
+            <Route path='/' element={<HomePage />} />
+            <Route path='/tv-series' element={<TvSeries />} />
+            <Route path='/movie-ova' element={<MovieOVA />} />
+            <Route path='/filters' element={<Filters />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/movies/:id' element={<SingleMovie />} />
+            <Route path='/movies/search/:search' element={<MoviesPage />} />
+            <Route path='/watch/:id' element={<WatchPage />} />
+            <Route path='/cart' element={<MovieCart />} />
+            <Route path='*' element={<NotFound />} />
 
-          {/* PRIVATE ROUTES */}
-          <Route element={<ProtectedRouter />}>
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/password' element={<Password />} />
-            <Route path='/bookmarks' element={<Bookmarks />} />
+            {/* PRIVATE ROUTES */}
+            <Route element={<ProtectedRouter />}>
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/password' element={<Password />} />
+              <Route path='/bookmarks' element={<Bookmarks />} />
 
-            {/* ADMIN ROUTES */}
-            <Route element={<AdminProtectedRouter />}>
-              <Route path='/movie-list' element={<MovieList />} />
-              <Route path='/categories' element={<Categories />} />
-              <Route path='/users' element={<Users />} />
-              <Route path='/add-movie' element={<AddMovie />} />
-              <Route path='/update/:id' element={<UpdateMovie />} />
+              {/* ADMIN ROUTES */}
+              <Route element={<AdminProtectedRouter />}>
+                <Route path='/movie-list' element={<MovieList />} />
+                <Route path='/categories' element={<Categories />} />
+                <Route path='/users' element={<Users />} />
+                <Route path='/add-movie' element={<AddMovie />} />
+                <Route path='/update/:id' element={<UpdateMovie />} />
+                <Route path='orders' element={<Orders />} />
+              </Route>
             </Route>
-          </Route>
-        </Routes >
+          </Routes >
+        </ScrollToTop>
       </Router >
     </>
   )
