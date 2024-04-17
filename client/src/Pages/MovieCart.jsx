@@ -1,14 +1,13 @@
-import React, { useEffect, useId, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userDeleteCartAction, userGetCartAction, userDeleteAllCartAction } from '../Redux/Actions/userActions'
 import { createOrderAction } from '../Redux/Actions/orderActions'
-import { Empty } from '../Components/Notifications/Empty'
-import Loader from '../Components/Notifications/Loader'
 import toast from 'react-hot-toast'
 
 const MovieCart = () => {
+   const navigate = useNavigate()
    const dispatch = useDispatch()
    const { isError, isSuccess, cart } = useSelector((state) => state.userGetCart)
    const { isLoading: orderLoading, isError: orderError } = useSelector((state) => state.createOrder)
@@ -35,6 +34,9 @@ const MovieCart = () => {
          totalPrice: total
       }))
       dispatch(userDeleteAllCartAction())
+      setTimeout(() => {
+         navigate('/order-success')
+      }, 1000)
    }
 
    useEffect(() => {

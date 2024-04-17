@@ -28,7 +28,8 @@ import UpdateMovie from './Pages/Dashboard/Admin/UpdateMovie'
 import ScrollToTop from './ScrollToTop'
 import MovieCart from './Pages/MovieCart'
 import Orders from './Pages/Dashboard/Admin/Orders'
-import ViewOrder from './Pages/ViewOrder'
+import ViewOrder from './Pages/Dashboard/Admin/ViewOrder'
+import OrderSuccess from './Pages/OrderSuccess'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -68,6 +69,7 @@ const App = () => {
             <Route path='/movies/search/:search' element={<MoviesPage />} />
             <Route path='/watch/:id' element={<WatchPage />} />
             <Route path='/cart' element={<MovieCart />} />
+            <Route path='/order-success' element={<OrderSuccess />} />
             <Route path='*' element={<NotFound />} />
 
             {/* PRIVATE ROUTES */}

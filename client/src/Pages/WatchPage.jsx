@@ -9,7 +9,7 @@ import { getMovieByIdAction } from '../Redux/Actions/moviesActions';
 import { useParams } from 'react-router-dom';
 import Loader from '../Components/Notifications/Loader';
 import { Empty } from '../Components/Notifications/Empty';
-import { AddBookmark, CheckIfMovieAddedBookmark, AddCart, CheckIfMovieBought } from '../Context/Functionalities';
+import { AddBookmark, CheckIfMovieAddedBookmark, AddCart } from '../Context/Functionalities';
 import { userDeleteBookmarkByIdAction } from '../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 import { getAllOrdersAction } from '../Redux/Actions/orderActions';
@@ -56,7 +56,13 @@ const WatchPage = () => {
    };
 
    const { orders } = useSelector((state) => state.getAllOrders)
-   console.log(orders?.map(o => o?.orderItems?.map(i => i?.movieId)))
+   const handleOrder = () => {
+      const checkOrder = orders?.find(o => o?.orderItems?.some(m => m?._id === id))
+      if (checkOrder === undefined) {
+         return false
+      }
+      return true
+   }
 
    // Notification
    const [api, contextHolder] = notification.useNotification();
@@ -81,8 +87,6 @@ const WatchPage = () => {
       link.click()
       document.body.removeChild(link)
    }
-
-   const handleBought = () => CheckIfMovieBought(movie)
 
    useEffect(() => {
       dispatch(getMovieByIdAction(id))
@@ -188,16 +192,16 @@ const WatchPage = () => {
                            Chụp ảnh
                         </div>
                         <div className='hover:bg-gray-700 cursor-pointer'>
-                           {handleBought ?
-                              <button
-                                 className='hover:bg-gray-700 cursor-pointer'
-                                 onClick={() => AddCart(movie, dispatch, userInfo)}>
-                                 <i className="mr-2 fa-solid fa-bag-shopping"></i>Mua ngay
-                              </button> :
+                           {handleOrder() ?
                               <button
                                  className='hover:bg-gray-700 cursor-pointer'
                                  onClick={() => downloadMovie(movie?.video, movie?.title)}>
                                  <i className="mr-2 fa-solid fa-download"></i>Tải xuống
+                              </button> :
+                              <button
+                                 className='hover:bg-gray-700 cursor-pointer'
+                                 onClick={() => AddCart(movie, dispatch, userInfo)}>
+                                 <i className="mr-2 fa-solid fa-bag-shopping"></i>Mua ngay
                               </button>
                            }
                         </div>
