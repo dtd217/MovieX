@@ -11,21 +11,39 @@ const OrderSchema = new mongoose.Schema({
       ref: 'Movie',
       required: true
    }],
-   paymentMethod: {
-      type: String,
-      required: true
-   },
    itemsPrice: {
       type: Number,
-      required: true
+      required: true,
+      default: 0
    },
    taxPrice: {
       type: Number,
-      required: true
+      required: true,
+      default: 0
    },
    totalPrice: {
       type: Number,
-      required: true
+      required: true,
+      default: 0
+   },
+   paymentMethod: {
+      type: String,
+      required: true,
+      default: 'Paypal'
+   },
+   paymentResult: {
+      id: { type: String },
+      status: { type: String },
+      update_time: { type: String },
+      email_address: { type: String },
+   },
+   isPaid: {
+      type: Boolean,
+      required: true,
+      default: false
+   },
+   paidAt: {
+      type: Date
    }
 }, { timestamps: true })
 

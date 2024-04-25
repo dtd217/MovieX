@@ -57,6 +57,7 @@
     "rc-drawer": "^6.5.2",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.11.0",
+    "react-paypal-button-v2": "^2.6.3",
     "react-router-dom": "^6.16.0",
     "react-select": "^5.8.0",
     "react-share": "^4.4.1",

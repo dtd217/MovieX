@@ -45,6 +45,7 @@ const rootReducer = combineReducers({
    createOrder: Order.createOrderReducer,
    getAllOrders: Order.getAllOrdersReducer,
    getOrderById: Order.getOrderByIdReducer,
+   payOrder: Order.payOrderReducer,
 });
 
 // Lấy userInfo từ localStorage

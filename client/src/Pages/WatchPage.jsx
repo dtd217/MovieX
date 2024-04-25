@@ -22,6 +22,7 @@ const WatchPage = () => {
    const { isLoading: addBookmarkLoading } = useSelector((state) => state.userAddBookmarks)
    const { userInfo } = useSelector((state) => state.userLogin)
    const { isLoading: deleteByIdLoading } = useSelector((state) => state.userDeleteBookmarkById)
+   const { orders } = useSelector((state) => state.getAllOrders)
 
    const handleDeleteBookmarkById = (id) => {
       dispatch(userDeleteBookmarkByIdAction(id))
@@ -55,16 +56,14 @@ const WatchPage = () => {
       }
    };
 
-   const { orders } = useSelector((state) => state.getAllOrders)
    const handleOrder = () => {
-      const checkOrder = orders?.find(o => o?.orderItems?.some(m => m?._id === id))
+      const checkOrder = orders?.find(o => o?.paymentResult?.status === "COMPLETED") && orders?.find(o => o?.orderItems?.some(m => m?._id === id))
       if (checkOrder === undefined) {
          return false
       }
       return true
    }
 
-   // Notification
    const [api, contextHolder] = notification.useNotification();
    const openNotificationWithIcon = (type) => {
       type === 'success' ?

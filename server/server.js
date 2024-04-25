@@ -27,6 +27,9 @@ app.use('/api/movies', moviesRouter)
 app.use('/api/categories', categoriesRouter)
 app.use('/api/upload', UploadRouter)
 app.use('/api/orders', orderRouter)
+app.get('/api/config/paypal', (req, res) => {
+   res.send(process.env.PAYPAL_CLIENT_ID)
+})
 
 // Error handling middleware
 app.use(errorHandler)

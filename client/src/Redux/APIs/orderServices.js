@@ -24,4 +24,12 @@ const getAllOrdersService = async (token) => {
    return data
 }
 
-export { createOrderService, getAllOrdersService, getOrderByIdService }
+// Pay oder
+const payOrderService = async (id, paymentResult, token) => {
+   const { data } = await Axios.put(`/orders/${id}/pay`, paymentResult, {
+      headers: { Authorization: `Bearer ${token}` }
+   });
+   return data
+}
+
+export { createOrderService, getAllOrdersService, getOrderByIdService, payOrderService }

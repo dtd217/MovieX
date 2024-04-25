@@ -66,4 +66,32 @@ const deleteAllOrders = asyncHandler(async (req, res) => {
    }
 })
 
-export { createOrder, getOrderById, getAllOrders, deleteAllOrders }
+// @desc    Pay order
+// @route   PUT /api/orders/:id/pay
+// @access  Private
+const payOrder = asyncHandler(async (req, res) => {
+   try {
+      const order = await Order.findById(req.params.id)
+      if (order) {
+         order.isPaid = true
+         order.paidAt = Date.now()
+         order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.email_address
+         }
+         const updatedOrder = await order.save()
+         res.json(updatedOrder)
+      }
+      else {
+         res.status(404)
+         throw new Error('Không tìm thấy đơn hàng')
+      }
+   }
+   catch (error) {
+      res.status(400).json({ message: error.message })
+   }
+})
+
+export { createOrder, getOrderById, getAllOrders, deleteAllOrders, payOrder }

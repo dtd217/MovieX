@@ -69,7 +69,7 @@ const App = () => {
             <Route path='/movies/search/:search' element={<MoviesPage />} />
             <Route path='/watch/:id' element={<WatchPage />} />
             <Route path='/cart' element={<MovieCart />} />
-            <Route path='/order-success' element={<OrderSuccess />} />
+            <Route path='/order/success' element={<OrderSuccess />} />
             <Route path='*' element={<NotFound />} />
 
             {/* PRIVATE ROUTES */}

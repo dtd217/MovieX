@@ -65,23 +65,23 @@ const Orders = () => {
                      <>
                         {orders?.map((order, index) => (
                            <div className='border-gray-300 border-2 rounded-md transitions text-black bg-gray-100 overflow-x-auto w-[800px] min-w-full'>
-                              <dl class="flex items-center border-gray-900 p-4 justify-between">
+                              <dl className="flex items-center border-gray-900 p-4 justify-between">
                                  <div>
-                                    <dt class="font-semibold text-lg">Mã đơn hàng</dt>
-                                    <dd class="mt-1">{order?._id ? (order?._id).slice(0, 8) : `order${index + 1}`}</dd>
+                                    <dt className="font-semibold text-lg">Mã đơn hàng</dt>
+                                    <dd className="mt-1">{order?._id ? (order?._id).slice(0, 8) : `order${index + 1}`}</dd>
                                  </div>
                                  <div>
-                                    <dt class="font-semibold text-lg">Ngày giao dịch</dt>
-                                    <dd class="mt-1">
+                                    <dt className="font-semibold text-lg">Ngày giao dịch</dt>
+                                    <dd className="mt-1">
                                        <time datetime="2021-07-06">{moment(order?.createdAt).format('DD/MM/YYYY HH:mm')}</time>
                                     </dd>
                                  </div>
                                  <div>
-                                    <dt class="font-semibold text-lg">Tổng</dt>
-                                    <dd class="font-semibold mt-1 text-center">${order?.totalPrice}</dd>
+                                    <dt className="font-semibold text-lg">Tổng</dt>
+                                    <dd className="font-semibold mt-1 text-center">${order?.totalPrice}</dd>
                                  </div>
                                  <div>
-                                    <Link to={`/orders/${order?._id}`} class="flex items-center justify-center rounded-md bg-red-500 text-white px-4 py-2.5">
+                                    <Link to={`/orders/${order?._id}`} className="flex items-center justify-center rounded-md bg-red-500 text-white px-4 py-2.5">
                                        <span>Xem đơn hàng</span>
                                     </Link>
                                  </div>
