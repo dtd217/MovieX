@@ -29,6 +29,7 @@ const Navbar = () => {
       navigate('/login');
       toast.success('Bạn đã đăng xuất');
    }
+
    const items = userInfo?.isAdmin ?
       ([
          {
@@ -76,8 +77,10 @@ const Navbar = () => {
       ]);
    const [isOpened, setIsOpened] = useState(false);
    const [isClicked, setIsClicked] = useState(false);
+   const [activedTab, setActivedTab] = useState('/');
    const activeTab = window.location.href
-   const tabLink = "http://localhost:3000/"
+   const tabLink = window.location.href
+
    const isActive = (tab) => {
       return activeTab.includes(tab)
    }
@@ -208,7 +211,7 @@ const Navbar = () => {
                      </form>
                      <ul className="flex flex-col p-4 lg:p-0 mt-4 font-medium rounded-md lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 bg-gray-800 lg:bg-black">
                         <li>
-                           <Link to="/" className={`${activeTab === tabLink ? 'bg-red-600 text-white hover:bg-red-600 hover:text-white' : ''} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`} aria-current="page">Trang chủ</Link>
+                           <Link to="/" className={`${!isActive('tv-series') && !isActive('movie-ova') && 'bg-red-600 text-white hover:bg-red-600 hover:text-white'} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`} aria-current="page">Trang chủ</Link>
                         </li>
                         <li>
                            <Link to="/tv-series" className={`${isActive('tv-series') ? 'bg-red-600 text-white hover:bg-red-600 hover:text-white' : ''} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`}>TV/Series</Link>
@@ -221,7 +224,7 @@ const Navbar = () => {
                   (<div className="items-center justify-between lg:flex w-auto hidden">
                      <ul className="flex p-0 font-medium rounded-md flex-row space-x-8 mt-0 border-0 bg-black">
                         <li>
-                           <Link to="/" className={`${activeTab === tabLink ? 'bg-red-600 text-white hover:bg-red-600 hover:text-white' : ''} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`} aria-current="page">Trang chủ</Link>
+                           <Link to="/" className={`${!isActive('tv-series') && !isActive('movie-ova') && 'bg-red-600 text-white hover:bg-red-600 hover:text-white'} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`} aria-current="page">Trang chủ</Link>
                         </li>
                         <li>
                            <Link to="/tv-series" className={`${isActive('tv-series') ? 'bg-red-600 text-white hover:bg-red-600 hover:text-white' : ''} block py-1.5 px-3 rounded hover:bg-gray-200 hover:text-red-700 transitions uppercase font-bold`}>TV/Series</Link>
