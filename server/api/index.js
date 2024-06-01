@@ -20,6 +20,7 @@ connectDB()
 
 // Main route
 app.get('/', (req, res) => res.send('API is running...'))
+app.get('/', (req, res) => res.status(200).json('API is running...'))
 
 // Other routes
 app.use('/api/user', userRouter)
