@@ -7,10 +7,6 @@
       {
          "src": "*.js",
          "use": "@vercel/node"
-      },
-      {
-         "src": "api/*",
-         "use": "@vercel/node"
       }
    ]
 }
